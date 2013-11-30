@@ -1,0 +1,184 @@
+/*
+ * Copyright (c) 2012, 2013 Oracle and/or its affiliates.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * This file is available and licensed under the following license:
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  - Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the distribution.
+ *  - Neither the name of Oracle nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+ 
+/*
+ * Style sheet for Layout Sample
+ */
+
+.pane {
+    -fx-background-color: #8fbc8f;
+}
+
+.grid {
+    -fx-background-color: white;
+    
+}
+
+.vbox {
+/*    -fx-background-image: url("graphics/arrow_t_up_right.png");
+    -fx-background-size: 96, 205;
+    -fx-background-repeat: no-repeat;*/
+    -fx-border-color: black;
+    
+}
+
+.scroll-pane {
+	-fx-background-color: #525252;
+}
+
+.anchor-pane {
+	-fx-background-color: #525252;
+}
+.hbox {
+    -fx-background-color: #383838;
+}
+
+
+
+.tab-pane {
+	-fx-background-color: white;
+}
+
+.text-input {
+	-fx-background-color: #595959;
+}
+
+.table-view {
+	-fx-background-color: #595959;
+}
+
+.tab {
+	-fx-background-color: #383838;
+	-fx-text-fill: white;
+}
+
+.button {
+    /*-fx-padding: 5 22 5 22;*/   
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 1;
+
+    -fx-background-radius: 0;
+
+    -fx-background-color: #595959;
+  
+     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+}
+
+.text-field {
+	-fx-border-color: #e2e2e2;
+    -fx-border-width: 1;
+
+    -fx-background-radius: 0;
+
+    -fx-background-color: #595959;
+  
+     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+}
+
+.choice-box {
+	-fx-border-color: #e2e2e2;
+    -fx-border-width: 1;
+
+    -fx-background-radius: 0;
+
+    -fx-background-color: #595959;
+  
+     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+}
+
+.combo-box  {
+	-fx-border-color: #e2e2e2;
+    -fx-border-width: 1;
+
+    -fx-background-radius: 0;
+
+    -fx-background-color: #595959;
+  
+     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+}
+
+.btn-red {
+	-fx-background-color: #DB001A;
+}
+
+.button:hover{
+    -fx-background-color: #9E9E9E;
+}
+
+.button:pressed, .button:default:hover:pressed
+{
+  -fx-background-color: white;
+  -fx-text-fill: #1d1d1d;
+}
+
+.button:focused
+{
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled
+{
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+#hbox-custom {
+/*    -fx-background-image: url("graphics/cloud.png");
+    -fx-background-size: 60,69;
+    -fx-padding: 18 3 18 6;*/
+    -fx-padding: 8;
+    -fx-background-radius: 5.0; 
+}
+
+.flow-tile {
+    -fx-padding: 10.0 3.0 5.0 0.0;
+    -fx-hgap: 4;
+    -fx-vgap: 4;
+}
+
+#button-custom {
+/*    -fx-rotate: 45;*/
+    -fx-text-alignment: center;
+}
