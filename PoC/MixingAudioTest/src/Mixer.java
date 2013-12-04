@@ -65,7 +65,7 @@ public class Mixer{
     public static Boolean manuelMixing() throws UnsupportedAudioFileException, IOException {
         WaveFile file1 = new WaveFile(f1);
         WaveFile file2 = new WaveFile(f2);
-        file1.mixWave(file2.getData(), file2.getDataSize(), outputFile);
+        file1.mixWave(file2.getData(), file2.getDataSize(), outputFile, 5);
         return true;
     }
 }

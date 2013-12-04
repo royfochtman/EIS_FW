@@ -137,7 +137,7 @@ public class WaveFile {
        }
    }
 
-   private DataOutputStream writeHeader(DataOutputStream out) throws IOException {
+   private DataOutputStream writeHeader(DataOutputStream out, long chunkSize) throws IOException {
        //DataOutputStream out = new DataOutputStream(new ByteArrayOutputStream());
        // write the wav file per the wav file format
        out.writeBytes("RIFF");                 // 00 - RIFF
@@ -163,12 +163,14 @@ public class WaveFile {
      * @throws IOException
      */
    public void concatenateWave(byte[] dataToAdd, long dataToAddSize, File destFile) throws IOException {
-       DataOutputStream out = writeHeader(writeFile(destFile));
+       DataOutputStream out = writeHeader(writeFile(destFile), 40 + dataSize + dataToAddSize + 882000);
+       byte[] emptyBytes = new byte[882000];  //sampleRate*bitsPerSample/8*numChannels
        if(out != null)
        {
-           out.write(ByteHelper.intToByteArray((int) dataSize + (int) dataToAddSize), 0, 4);
-           ByteBuffer buff = ByteBuffer.allocate((int)dataSize + (int)dataToAddSize).order(ByteOrder.LITTLE_ENDIAN);
+           out.write(ByteHelper.intToByteArray((int) dataSize + (int) dataToAddSize  + emptyBytes.length), 0, 4);
+           ByteBuffer buff = ByteBuffer.allocate((int)dataSize + (int)dataToAddSize  + emptyBytes.length).order(ByteOrder.LITTLE_ENDIAN);
            buff.put(data);
+           buff.put(emptyBytes);
            buff.put(dataToAdd);
            out.write(buff.array());
            out.close();
@@ -187,36 +189,80 @@ public class WaveFile {
      * @param destFile
      * @throws IOException
      */
-   public void mixWave(byte[] dataToMix, long dataToMixSize, File destFile) throws IOException {
-       DataOutputStream out = writeHeader(writeFile(destFile));
+   public void mixWave(byte[] dataToMix, long dataToMixSize, File destFile, int second) throws IOException {
+       DataOutputStream out;
        byte[] mixedData;
-       if(dataSize >= dataToMixSize){
+       int startByte = 0;
+       if(second > 0)
+           startByte = 44100 * 2 * 2 * second;
+       if(dataSize >= dataToMixSize + startByte){
            mixedData = new byte[(int)dataSize];
+           out = writeHeader(writeFile(destFile), 40 + dataSize);
            out.write(ByteHelper.intToByteArray((int) dataSize), 0, 4);
        }
        else{
-           mixedData = new byte[(int)dataToMixSize];
-           out.write(ByteHelper.intToByteArray((int) dataToMixSize), 0, 4);
+           mixedData = new byte[(int)dataToMixSize + startByte];
+           out = writeHeader(writeFile(destFile), 40 + dataToMixSize + startByte);
+           out.write(ByteHelper.intToByteArray((int) dataToMixSize + startByte), 0, 4);
        }
-
+       int j = 0;
        for(int i=0; i<mixedData.length; i++)
        {
-           float samplef1 = 0;
-           float samplef2 = 0;
-           if(i<dataSize)
-               samplef1 = data[i] / 128.0f;
-           if(i<dataToMixSize)
-               samplef2 = dataToMix[i] / 128.0f;
+           byte mixedByte = 0;
+           if(i<startByte)
+               mixedByte = data[i];
+           else
+           {
+               float samplef1 = 0;
+               float samplef2 = 0;
+               if(i<dataSize)
+                   samplef1 = data[i] / 128.0f;
+               if(j<dataToMixSize)
+                   samplef2 = dataToMix[j++] / 128.0f;
 
-           float mixed = samplef1 + samplef2;
-           // hard clipping
-           if (mixed > 1.0f)  mixed = 1.0f;
-           if (mixed < -1.0f) mixed = -1.0f;
+               float mixed = samplef1 + samplef2;
+               // hard clipping
+               if (mixed > 1.0f)  mixed = 1.0f;
+               if (mixed < -1.0f) mixed = -1.0f;
 
-           byte mixedByte = (byte) (mixed *128.0f);
+               mixedByte = (byte) (mixed *128.0f);
+           }
            mixedData[i] = mixedByte;
        }
        out.write(mixedData);
        out.close();
    }
+
+
+   /*public long getApproximateBytePositionForMiliseconds(byte[] data, long ms) {
+
+        long bytePosition = -1;
+
+        try {
+           *//*AudioFile audioFile = AudioFileIO.read(file);
+            AudioHeader audioHeader = audioFile.getAudioHeader();*//*
+            long startByte = data[0];
+
+            long bytePosForMs = (long)(startByte + ())
+
+            if (audioHeader instanceof MP3AudioHeader) {
+                MP3AudioHeader mp3AudioHeader = (MP3AudioHeader) audioHeader;
+                long audioStartByte = mp3AudioHeader.getMp3StartByte();
+                long audioSize = file.length() - audioStartByte;
+                long frameCount = mp3AudioHeader.getNumberOfFrames();
+                long frameSize = audioSize / frameCount;
+
+                double frameDurationInMs = (mp3AudioHeader.getPreciseTrackLength() / (double) frameCount) * 1000;
+                double framesForMs = ms / frameDurationInMs;
+                long bytePositionForMs = (long) (audioStartByte + (framesForMs * frameSize));
+                bytePosition = bytePositionForMs;
+            }
+
+            return bytePosition;
+
+        } catch (Exception e) {
+            return bytePosition;
+        }
+
+    }*/
 }
