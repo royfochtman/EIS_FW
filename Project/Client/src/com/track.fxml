@@ -15,7 +15,7 @@
       <children>
         <AnchorPane prefHeight="55.0" prefWidth="127.0">
           <children>
-            <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="true">
+            <ImageView fx:id="instrumentIcon" fitHeight="35.0" fitWidth="35.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="true">
               <image>
                 <Image url="@icons/PNG/16px/apple.png" />
               </image>
@@ -25,13 +25,13 @@
                 <Font size="16.0" fx:id="x7" />
               </font>
             </Label>
-            <CheckBox layoutX="91.0" layoutY="19.0" mnemonicParsing="false" text="" />
+            <CheckBox fx:id="trackActivated" layoutX="91.0" layoutY="19.0" mnemonicParsing="false" text="" />
           </children>
         </AnchorPane>
         <Separator orientation="VERTICAL" prefHeight="200.0" />
         <StackPane prefHeight="55.0" prefWidth="1095.0">
           <children>
-            <HBox maxWidth="-Infinity" prefHeight="55.0" prefWidth="1124.0">
+            <HBox fx:id="trackBeats" maxWidth="-Infinity" prefHeight="55.0" prefWidth="1124.0">
               <children>
                 <Rectangle arcHeight="0.0" arcWidth="0.0" fill="#000833" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
                 <Rectangle arcHeight="0.0" arcWidth="0.0" fill="#002966" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
