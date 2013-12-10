@@ -16,6 +16,9 @@ public class VariationTrack extends GlobalObject {
 
     public VariationTrack() {
         super.setDataClass(VariationTrack.class);
+        variation = null;
+        track = null;
+        startTimeOnTrack = 0L;
     }
 
     public VariationTrack(int id, Variation variation, Track track, Long startTimeOnTrack) {
@@ -48,5 +51,12 @@ public class VariationTrack extends GlobalObject {
 
     public void setStartTimeOnTrack(Long startTimeOnTrack) {
         this.startTimeOnTrack = startTimeOnTrack;
+    }
+
+    public boolean isValid() {
+        if(variation != null && track != null && startTimeOnTrack >= 0L && startTimeOnTrack < track.getLength())
+            return true;
+        else
+            return false;
     }
 }

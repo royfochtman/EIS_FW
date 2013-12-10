@@ -19,6 +19,11 @@ public class Track extends GlobalObject {
 
     public Track() {
         super.setDataClass(Track.class);
+        workingArea = null;
+        instrument = null;
+        volume = 0;
+        name = "";
+        length = 0L;
     }
 
     public Track(int id, WorkingArea workingArea, Instrument instrument, int volume, String name, Long length) {
@@ -61,6 +66,9 @@ public class Track extends GlobalObject {
     }
 
     public void setName(String name) {
+        if(name == null)
+            name = "";
+
         this.name = name;
     }
 
@@ -70,5 +78,12 @@ public class Track extends GlobalObject {
 
     public void setLength(Long length) {
         this.length = length;
+    }
+
+    public boolean isValid() {
+        if(workingArea != null && instrument != null && volume >= 0 && !name.isEmpty() && length >= 0L)
+            return true;
+        else
+            return false;
     }
 }

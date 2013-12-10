@@ -2,6 +2,7 @@ package com.musicbox.util.database.entities;
 
 import com.musicbox.util.Instrument;
 import com.musicbox.util.globalobject.GlobalObject;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +20,11 @@ public class MusicSegment extends GlobalObject {
 
     public MusicSegment() {
         super.setDataClass(MusicSegment.class);
+        name = "";
+        instrument = null;
+        owner = "";
+        audioPath = "";
+        length = 0L;
     }
 
     public MusicSegment(int id, String name, Instrument instrument, String owner, String audioPath, Long length) {
@@ -36,6 +42,9 @@ public class MusicSegment extends GlobalObject {
     }
 
     public void setName(String name) {
+        if(name == null)
+            name = "";
+
         this.name = name;
     }
 
@@ -52,6 +61,9 @@ public class MusicSegment extends GlobalObject {
     }
 
     public void setOwner(String owner) {
+        if(owner == null)
+            owner = "";
+
         this.owner = owner;
     }
 
@@ -60,6 +72,9 @@ public class MusicSegment extends GlobalObject {
     }
 
     public void setAudioPath(String audioPath) {
+        if(audioPath == null)
+            audioPath = "";
+
         this.audioPath = audioPath;
     }
 
@@ -69,5 +84,13 @@ public class MusicSegment extends GlobalObject {
 
     public void setLength(Long length) {
         this.length = length;
+    }
+
+    public boolean isValid() {
+        if(!name.isEmpty() && instrument != null && !owner.isEmpty()
+                && !audioPath.isEmpty() && length >= 0L)
+            return true;
+        else
+            return false;
     }
 }

@@ -19,8 +19,6 @@ import com.musicbox.util.database.entities.*;
  */
 public abstract class DatabaseManager {
     private static Connection connect = null;
-    private static Statement queryStatement = null;
-    private static PreparedStatement preparedStatement = null;
     private static String connectionString = null;
 
     /*
@@ -74,190 +72,334 @@ public abstract class DatabaseManager {
     }
 
     public static MusicRoom getMusicRoomById(int id) {
-        ResultSet result = executeQuery(null, MUSIC_ROOM, ID + "=" + id, null);
-        if(result == null)
-            return null;
+        ResultSet resultSet = executeSelect(null, MUSIC_ROOM, ID + "=" + id, null);
+        return convertResultSetToMusicRoom(resultSet);
+    }
 
-        MusicRoom musicRoom = new MusicRoom();
-        try {
-            result.first();  //only one row is needed => move cursor to the first row of the ResultSet
-            musicRoom.setId(result.getInt(ID));
-            musicRoom.setName(result.getString(NAME));
-            result.close();
-            return musicRoom;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static MusicRoom getMusicRoomByName(String name) {
+        ResultSet resultSet = executeSelect(null, MUSIC_ROOM, NAME + "= '" + name + "'", null);
+        return convertResultSetToMusicRoom(resultSet);
     }
 
     public static WorkingArea getWorkingAreaById(int id) {
-        ResultSet result = executeQuery(null, WORKING_AREA, ID + "==" + id, null);
-        if(result == null)
-            return null;
+        ResultSet resultSet = executeSelect(null, WORKING_AREA, ID + "=" + id, null);
+        return convertResultSetToWorkingArea(resultSet);
+    }
 
-        WorkingArea workingArea = new WorkingArea();
-        try {
-            result.first();  //only one row is needed => move cursor to the first row of the ResultSet
-            workingArea.setId(result.getInt(ID));
-            workingArea.setName(result.getString(NAME));
-            workingArea.setBeat(result.getFloat(BEAT));
-            workingArea.setTempo(result.getInt(TEMPO));
-            workingArea.setOwner(result.getString(OWNER));
-            workingArea.setWorkingAreaType(Enum.valueOf(WorkingAreaType.class,result.getString(TYPE)));
-            workingArea.setMusicRoom(getMusicRoomById(result.findColumn(MUSIC_ROOM_ID)));
-            workingArea.setLength(result.getLong(LENGTH));
-            result.close();
-            return workingArea;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static WorkingArea getWorkingAreaByMusicRoomId(int id) {
+        ResultSet resultSet = executeSelect(null, WORKING_AREA, MUSIC_ROOM_ID + "=" + id, null);
+        return convertResultSetToWorkingArea(resultSet);
     }
 
     public static Track getTrackById(int id) {
-        ResultSet result = executeQuery(null, TRACK, ID + "==" + id, null);
-        if(result == null)
-            return null;
-
-        Track track = new Track();
-        try {
-            result.first();  //only one row is needed => move cursor to the first row of the ResultSet
-            track.setId(result.getInt(ID));
-            track.setName(result.getString(NAME));
-            track.setVolume(result.getInt(VOLUME));
-            track.setInstrument(Enum.valueOf(Instrument.class,result.getString(INSTRUMENT)));
-            track.setWorkingArea(getWorkingAreaById(result.findColumn(WORKING_AREA_ID)));
-            track.setLength(result.getLong(LENGTH));
-            result.close();
-            return track;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        ResultSet resultSet = executeSelect(null, TRACK, ID + "=" + id, null);
+        return convertResultSetToTrack(resultSet);
     }
 
     public static MusicSegment getMusicSegmentById(int id) {
-        ResultSet result = executeQuery(null, MUSIC_SEGMENT, ID + "==" + id, null);
-        if(result == null)
-            return null;
-
-        MusicSegment musicSegment = new MusicSegment();
-        try {
-            result.first();  //only one row is needed => move cursor to the first row of the ResultSet
-            musicSegment.setId(result.getInt(ID));
-            musicSegment.setName(result.getString(NAME));
-            musicSegment.setAudioPath(result.getString(AUDIO_PATH));
-            musicSegment.setInstrument(Enum.valueOf(Instrument.class,result.getString(INSTRUMENT)));
-            musicSegment.setOwner(result.getString(OWNER));
-            musicSegment.setLength(result.getLong(LENGTH));
-            result.close();
-            return musicSegment;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        ResultSet resultSet = executeSelect(null, MUSIC_SEGMENT, ID + "=" + id, null);
+        return convertResultSetToMusicSegment(resultSet);
     }
 
     public static Variation getVariationById(int id) {
-        ResultSet result = executeQuery(null, VARIATION, ID + "==" + id, null);
-        if(result == null)
-            return null;
-
-        Variation variation = new Variation();
-        try {
-            result.first();  //only one row is needed => move cursor to the first row of the ResultSet
-            variation.setId(result.getInt(ID));
-            variation.setName(result.getString(NAME));
-            variation.setOwner(result.getString(OWNER));
-            variation.setStartTime(result.getLong(START_TIME));
-            variation.setEndTime(result.getLong(END_TIME));
-            variation.setMusicSegment(getMusicSegmentById(result.getInt(MUSIC_SEGMENT_ID)));
-            result.close();
-            return variation;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        ResultSet resultSet = executeSelect(null, VARIATION, ID + "=" + id, null);
+        return convertResultSetToVariation(resultSet);
     }
 
     public static VariationTrack getVariationTrackById(int id) {
-        ResultSet result = executeQuery(null, VARIATION_TRACK, ID + "==" + id, null);
-        if(result == null)
-            return null;
-
-        VariationTrack variationTrack = new VariationTrack();
-        try {
-            result.first();  //only one row is needed => move cursor to the first row of the ResultSet
-            variationTrack.setId(result.getInt(ID));
-            variationTrack.setStartTimeOnTrack(result.getLong(START_TIME));
-            variationTrack.setVariation(getVariationById(result.getInt(VARIATION_ID)));
-            variationTrack.setTrack(getTrackById(result.getInt(TRACK_ID)));
-            result.close();
-            return variationTrack;
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            return null;
-        }
+        ResultSet resultSet = executeSelect(null, VARIATION_TRACK, ID + "=" + id, null);
+        return convertResultSetToVariationTrack(resultSet);
     }
 
     /**
      * Inserts a new MusicRoom-Object to the database
-     * @param musicRoom the id-attribute is not needed, because the database defines the id-value.
+     * @param musicRoom the id-attribute is not needed, because it's auto increment.
      *                  So the id attribute of the musicRoom-Object can have any value.
      * @return true, if data saved successfully
      */
     public static boolean insertMusicRoom(MusicRoom musicRoom) {
         try {
-            if(musicRoom.getName() == null || musicRoom.getName().isEmpty())
+            if(!musicRoom.isValid())
                 return false;
 
-            preparedStatement = connect.prepareStatement("INSERT INTO " + MUSIC_ROOM + " VALUES(default, ?)");
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO " + MUSIC_ROOM + " VALUES(default, ?)");
             preparedStatement.setString(1, musicRoom.getName());
             preparedStatement.executeUpdate();
+            preparedStatement.close();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
+    }
 
+    public static boolean insertWorkingArea(WorkingArea workingArea) {
+        try {
+            if(!workingArea.isValid())
+                return false;
 
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO " + WORKING_AREA + " VALUES(default, ?, ?, ?, ?, ?, ?, ?)");
+            preparedStatement.setInt(1, workingArea.getMusicRoom().getId());
+            preparedStatement.setString(2, workingArea.getName());
+            preparedStatement.setInt(3, workingArea.getTempo());
+            preparedStatement.setString(4, workingArea.getOwner());
+            preparedStatement.setString(5, workingArea.getWorkingAreaType().toString());
+            preparedStatement.setFloat(6, workingArea.getBeat());
+            preparedStatement.setLong(7, workingArea.getLength());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean insertTrack(Track track) {
+        try {
+            if(!track.isValid())
+                return false;
+
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO " + TRACK + " VALUES(default, ?, ?, ?, ?, ?)");
+            preparedStatement.setInt(1, track.getWorkingArea().getId());
+            preparedStatement.setString(2, track.getInstrument().toString());
+            preparedStatement.setInt(3, track.getVolume());
+            preparedStatement.setString(4, track.getName());
+            preparedStatement.setLong(5, track.getLength());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean insertVariation(Variation variation) {
+        try {
+            if(!variation.isValid())
+                return false;
+
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO " + VARIATION + " VALUES(default, ?, ?, ?, ?, ?)");
+            preparedStatement.setInt(1, variation.getMusicSegment().getId());
+            preparedStatement.setString(2, variation.getName());
+            preparedStatement.setLong(3, variation.getStartTime());
+            preparedStatement.setLong(4, variation.getEndTime());
+            preparedStatement.setString(5, variation.getOwner());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean insertVariationTrack(VariationTrack variationTrack) {
+        try {
+            if(!variationTrack.isValid())
+                return false;
+
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO " + VARIATION + " VALUES(default, ?, ?, ?)");
+            preparedStatement.setInt(1, variationTrack.getVariation().getId());
+            preparedStatement.setInt(2, variationTrack.getTrack().getId());
+            preparedStatement.setLong(3, variationTrack.getStartTimeOnTrack());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean insertMusicSegment(MusicSegment musicSegment) {
+        try {
+            if(!musicSegment.isValid())
+                return false;
+
+            PreparedStatement preparedStatement = connect.prepareStatement("INSERT INTO " + VARIATION + " VALUES(default, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, musicSegment.getName());
+            preparedStatement.setString(2, musicSegment.getInstrument().toString());
+            preparedStatement.setString(3, musicSegment.getOwner());
+            preparedStatement.setString(4, musicSegment.getAudioPath());
+            preparedStatement.setLong(5, musicSegment.getLength());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
     /**
-     * Put all params together to one MySQL query and execute this new query.
-     * @param columns columns which have to be selected. if it's null or empty => SELECT * ....
+     * Put all params together to one MySQL SELECT-query and execute this new query.
+     * @param columns columns which have to be selected. Is NULL for SELECT *
      * @param table table from which the data have to be chosen
-     * @param whereClause
-     * @param orderBy
+     * @param whereClause Where-Clause
+     * @param orderBy OrderBy-Clause
      * @return
      */
-    private static ResultSet executeQuery(String[] columns, String table, String whereClause, String orderBy){
+    private static ResultSet executeSelect(String[] columns, String table, String whereClause, String orderBy){
         try {
-            queryStatement = connect.createStatement();
-            if(queryStatement != null) {
+            Statement selectStatement = connect.createStatement();
+            if(selectStatement != null) {
                 String query = "SELECT ";
 
                 if(columns == null || columns.length == 0)
-                    query += "* ";
+                    query += "*";
                 else {
                     for(int i=0; i<columns.length; i++)
                         query += (i == columns.length - 1) ? columns[i] : columns[i] + ", ";  //only set a comma, if it's not the last column
                 }
 
-                query += "FROM " + table;
+                query += " FROM " + table;
                 query += " WHERE " + whereClause;
 
                 if(orderBy != null && !orderBy.isEmpty())
                     query += " " + orderBy;
 
-                return queryStatement.executeQuery(query);
+                return selectStatement.executeQuery(query);
             }
             return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    private static MusicRoom convertResultSetToMusicRoom(ResultSet resultSet){
+        try {
+            if(resultSet == null || resultSet.getFetchSize() == 0)
+                return null;
+
+            MusicRoom musicRoom = new MusicRoom();
+            resultSet.first();  //only one row is needed => move cursor to the first row of the ResultSet
+            musicRoom.setId(resultSet.getInt(ID));
+            musicRoom.setName(resultSet.getString(NAME));
+            resultSet.close();
+            return musicRoom;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private static WorkingArea convertResultSetToWorkingArea(ResultSet resultSet) {
+        try {
+            if(resultSet == null || resultSet.getFetchSize() == 0)
+                return null;
+
+            WorkingArea workingArea = new WorkingArea();
+            resultSet.first();  //only one row is needed => move cursor to the first row of the ResultSet
+            workingArea.setId(resultSet.getInt(ID));
+            workingArea.setName(resultSet.getString(NAME));
+            workingArea.setBeat(resultSet.getFloat(BEAT));
+            workingArea.setTempo(resultSet.getInt(TEMPO));
+            workingArea.setOwner(resultSet.getString(OWNER));
+            workingArea.setWorkingAreaType(Enum.valueOf(WorkingAreaType.class,resultSet.getString(TYPE)));
+            workingArea.setMusicRoom(getMusicRoomById(resultSet.findColumn(MUSIC_ROOM_ID)));
+            workingArea.setLength(resultSet.getLong(LENGTH));
+            resultSet.close();
+
+            return workingArea;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private static Track convertResultSetToTrack(ResultSet resultSet) {
+        try {
+            if(resultSet == null || resultSet.getFetchSize() == 0)
+                return null;
+
+            Track track = new Track();
+            resultSet.first();  //only one row is needed => move cursor to the first row of the ResultSet
+            track.setId(resultSet.getInt(ID));
+            track.setName(resultSet.getString(NAME));
+            track.setVolume(resultSet.getInt(VOLUME));
+            track.setInstrument(Enum.valueOf(Instrument.class,resultSet.getString(INSTRUMENT)));
+            track.setWorkingArea(getWorkingAreaById(resultSet.findColumn(WORKING_AREA_ID)));
+            track.setLength(resultSet.getLong(LENGTH));
+            resultSet.close();
+
+            return track;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private static MusicSegment convertResultSetToMusicSegment(ResultSet resultSet) {
+        try {
+            if(resultSet == null || resultSet.getFetchSize() == 0)
+                return null;
+
+            MusicSegment musicSegment = new MusicSegment();
+            resultSet.first();  //only one row is needed => move cursor to the first row of the ResultSet
+            musicSegment.setId(resultSet.getInt(ID));
+            musicSegment.setName(resultSet.getString(NAME));
+            musicSegment.setAudioPath(resultSet.getString(AUDIO_PATH));
+            musicSegment.setInstrument(Enum.valueOf(Instrument.class,resultSet.getString(INSTRUMENT)));
+            musicSegment.setOwner(resultSet.getString(OWNER));
+            musicSegment.setLength(resultSet.getLong(LENGTH));
+            resultSet.close();
+
+            return musicSegment;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private static Variation convertResultSetToVariation(ResultSet resultSet) {
+        try {
+            if(resultSet == null || resultSet.getFetchSize() == 0)
+                return null;
+
+            Variation variation = new Variation();
+            resultSet.first();  //only one row is needed => move cursor to the first row of the ResultSet
+            variation.setId(resultSet.getInt(ID));
+            variation.setName(resultSet.getString(NAME));
+            variation.setOwner(resultSet.getString(OWNER));
+            variation.setStartTime(resultSet.getLong(START_TIME));
+            variation.setEndTime(resultSet.getLong(END_TIME));
+            variation.setMusicSegment(getMusicSegmentById(resultSet.getInt(MUSIC_SEGMENT_ID)));
+            resultSet.close();
+
+            return variation;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    private static VariationTrack convertResultSetToVariationTrack(ResultSet resultSet) {
+        try {
+            if(resultSet == null || resultSet.getFetchSize() == 0)
+                return null;
+
+            VariationTrack variationTrack = new VariationTrack();
+            resultSet.first();  //only one row is needed => move cursor to the first row of the ResultSet
+            variationTrack.setId(resultSet.getInt(ID));
+            variationTrack.setStartTimeOnTrack(resultSet.getLong(START_TIME));
+            variationTrack.setVariation(getVariationById(resultSet.getInt(VARIATION_ID)));
+            variationTrack.setTrack(getTrackById(resultSet.getInt(TRACK_ID)));
+            resultSet.close();
+
+            return variationTrack;
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            return null;
+        }
+
     }
 }

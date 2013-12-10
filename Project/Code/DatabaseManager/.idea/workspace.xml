@@ -7,15 +7,16 @@
     <file path="/fragment.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386510412840" ignored="false" />
     <file path="/Instrument.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386424778543" ignored="false" />
     <file path="/WorkingAreaType.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386424943375" ignored="false" />
-    <file path="/GlobalObject.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386428473630" ignored="false" />
-    <file path="/MusicRoom.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386425661946" ignored="false" />
-    <file path="/WorkingArea.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386426145814" ignored="false" />
-    <file path="/Track.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386426053638" ignored="false" />
-    <file path="/MusicSegment.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386427881450" ignored="false" />
-    <file path="/Variation.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386509674416" ignored="false" />
+    <file path="/GlobalObject.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386688234940" ignored="false" />
+    <file path="/MusicRoom.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386688781222" ignored="false" />
+    <file path="/WorkingArea.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386689787146" ignored="false" />
+    <file path="/Track.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386689287627" ignored="false" />
+    <file path="/MusicSegment.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386689160620" ignored="false" />
+    <file path="/Variation.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386689381553" ignored="false" />
     <file path="/VariationPosition.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386427230794" ignored="false" />
-    <file path="/DatabaseManager.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386515735373" ignored="false" />
+    <file path="/DatabaseManager.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386691715009" ignored="false" />
     <file path="/DatabaseManagerTest.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386514899604" ignored="false" />
+    <file path="/VariationTrack.java" changelist="3d13516d-6082-4113-89fb-db7a025323d6" time="1386688599882" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,20 +80,84 @@
       <file leaf-file-name="DatabaseManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/musicbox/util/database/DatabaseManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="225" column="8" selection-start="9108" selection-end="9108" vertical-scroll-proportion="0.49337748">
+            <state line="102" column="93" selection-start="4069" selection-end="4069" vertical-scroll-proportion="0.14101058">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#setConnection#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#getConnectionString#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#getMusicRoomById#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#getMusicRoomByName#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#getWorkingAreaById#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#getWorkingAreaByMusicRoomId#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#getTrackById#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#getMusicSegmentById#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#getVariationById#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#getVariationTrackById#0;class#DatabaseManager#0" expanded="false" />
                 <element signature="method#insertMusicRoom#0;class#DatabaseManager#0" expanded="false" />
-                <element signature="method#executeQuery#0;class#DatabaseManager#0" expanded="false" />
-                <marker date="1386515777029" expanded="true" signature="8806:8855" placeholder="INSERT INTO ..." />
+                <element signature="method#insertWorkingArea#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#insertTrack#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#insertVariation#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#insertVariationTrack#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#insertMusicSegment#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#executeSelect#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#convertResultSetToMusicRoom#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#convertResultSetToWorkingArea#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#convertResultSetToTrack#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#convertResultSetToMusicSegment#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#convertResultSetToVariation#0;class#DatabaseManager#0" expanded="false" />
+                <element signature="method#convertResultSetToVariationTrack#0;class#DatabaseManager#0" expanded="false" />
+                <marker date="1386691748674" expanded="true" signature="5005:5054" placeholder="INSERT INTO ..." />
+                <marker date="1386691748674" expanded="true" signature="5576:5645" placeholder="INSERT INTO ..." />
+                <marker date="1386691748674" expanded="true" signature="6577:6633" placeholder="INSERT INTO ..." />
+                <marker date="1386691748674" expanded="true" signature="7415:7475" placeholder="INSERT INTO ..." />
+                <marker date="1386691748674" expanded="true" signature="8287:8341" placeholder="INSERT INTO ..." />
+                <marker date="1386691748674" expanded="true" signature="9038:9098" placeholder="INSERT INTO ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Instrument.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/Instrument.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="12" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="class#300:382" expanded="false" />
+                <element signature="method#toString#0;class#300:382" expanded="false" />
+                <element signature="class#395:475" expanded="false" />
+                <element signature="class#495:584" expanded="false" />
+                <element signature="class#600:685" expanded="false" />
+                <element signature="class#697:776" expanded="false" />
+                <element signature="class#787:866" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorkingArea.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/WorkingArea.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="98" column="29" selection-start="2245" selection-end="2245" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#WorkingArea#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#WorkingArea#1;class#WorkingArea#0" expanded="false" />
+                <element signature="method#getMusicRoom#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#setMusicRoom#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#getName#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#setName#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#getTempo#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#setTempo#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#getOwner#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#setOwner#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#getWorkingAreaType#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#setWorkingAreaType#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#getBeat#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#setBeat#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#getLength#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#setLength#0;class#WorkingArea#0" expanded="false" />
+                <element signature="method#isValid#0;class#WorkingArea#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -101,7 +166,7 @@
       <file leaf-file-name="DatabaseManagerTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Testing/com/musicbox/junit/DatabaseManagerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="67" selection-start="1718" selection-end="1718" vertical-scroll-proportion="0.0">
+            <state line="48" column="70" selection-start="1587" selection-end="1587" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -119,11 +184,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/util/Instrument.java" />
-        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/util/WorkingAreaType.java" />
-        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/entities/MusicRoom.java" />
-        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/entities/VariationPosition.java" />
-        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/entities/Variation.java" />
         <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/entities/Track.java" />
         <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/entities/WorkingArea.java" />
         <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/database/entities/MusicSegment.java" />
@@ -131,8 +191,14 @@
         <option value="$PROJECT_DIR$/src/com/musicbox/database/manager/DatabaseManager.java" />
         <option value="$PROJECT_DIR$/src/com/musicbox/junit/DatabaseManagerTest.java" />
         <option value="$PROJECT_DIR$/junit/com/musicbox/junit/DatabaseManagerTest.java" />
-        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/Variation.java" />
         <option value="$PROJECT_DIR$/Testing/com/musicbox/junit/DatabaseManagerTest.java" />
+        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/globalobject/GlobalObject.java" />
+        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/VariationTrack.java" />
+        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/MusicRoom.java" />
+        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/MusicSegment.java" />
+        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/Track.java" />
+        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/Variation.java" />
+        <option value="$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/WorkingArea.java" />
         <option value="$PROJECT_DIR$/src/com/musicbox/util/database/DatabaseManager.java" />
       </list>
     </option>
@@ -204,6 +270,10 @@
               <option name="myItemId" value="Testing" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="junit" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -216,10 +286,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="database" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -256,6 +322,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DatabaseManager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DatabaseManager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DatabaseEntities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="globalobject" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -578,8 +670,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14034152" sideWeight="0.6709265" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3290735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14407684" sideWeight="0.9339723" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.066027686" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -652,126 +744,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/VariationTrack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="5" selection-start="1278" selection-end="1278" vertical-scroll-proportion="0.55859804">
-          <folding>
-            <element signature="method#VariationTrack#0;class#VariationTrack#0" expanded="false" />
-            <element signature="method#VariationTrack#1;class#VariationTrack#0" expanded="false" />
-            <element signature="method#getVariation#0;class#VariationTrack#0" expanded="false" />
-            <element signature="method#setVariation#0;class#VariationTrack#0" expanded="false" />
-            <element signature="method#getTrack#0;class#VariationTrack#0" expanded="false" />
-            <element signature="method#setTrack#0;class#VariationTrack#0" expanded="false" />
-            <element signature="method#getStartTimeOnTrack#0;class#VariationTrack#0" expanded="false" />
-            <element signature="method#setStartTimeOnTrack#0;class#VariationTrack#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/MusicRoom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="677" selection-end="677" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="method#MusicRoom#0;class#MusicRoom#0" expanded="false" />
-            <element signature="method#MusicRoom#1;class#MusicRoom#0" expanded="false" />
-            <element signature="method#getName#0;class#MusicRoom#0" expanded="false" />
-            <element signature="method#setName#0;class#MusicRoom#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/WorkingAreaType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="51" selection-start="261" selection-end="261" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="class#274:355" expanded="false" />
-            <element signature="class#367:447" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/Instrument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="6" selection-start="383" selection-end="383" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#300:382" expanded="false" />
-            <element signature="method#toString#0;class#300:382" expanded="false" />
-            <element signature="class#395:475" expanded="false" />
-            <element signature="class#495:584" expanded="false" />
-            <element signature="class#600:685" expanded="false" />
-            <element signature="class#697:776" expanded="false" />
-            <element signature="class#787:866" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/WorkingArea.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="5" selection-start="2115" selection-end="2115" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#WorkingArea#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#WorkingArea#1;class#WorkingArea#0" expanded="false" />
-            <element signature="method#getMusicRoom#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#setMusicRoom#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#getName#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#setName#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#getTempo#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#setTempo#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#getOwner#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#setOwner#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#getWorkingAreaType#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#setWorkingAreaType#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#getBeat#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#setBeat#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#getLength#0;class#WorkingArea#0" expanded="false" />
-            <element signature="method#setLength#0;class#WorkingArea#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/Variation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="24" selection-start="24" selection-end="24" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="method#Variation#0;class#Variation#0" expanded="false" />
-            <element signature="method#Variation#1;class#Variation#0" expanded="false" />
-            <element signature="method#getMusicSegment#0;class#Variation#0" expanded="false" />
-            <element signature="method#setMusicSegment#0;class#Variation#0" expanded="false" />
-            <element signature="method#getName#0;class#Variation#0" expanded="false" />
-            <element signature="method#setName#0;class#Variation#0" expanded="false" />
-            <element signature="method#getStartTime#0;class#Variation#0" expanded="false" />
-            <element signature="method#setStartTime#0;class#Variation#0" expanded="false" />
-            <element signature="method#getEndTime#0;class#Variation#0" expanded="false" />
-            <element signature="method#setEndTime#0;class#Variation#0" expanded="false" />
-            <element signature="method#getOwner#0;class#Variation#0" expanded="false" />
-            <element signature="method#setOwner#0;class#Variation#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/org/junit/runner/Result.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="20" selection-start="1834" selection-end="1834" vertical-scroll-proportion="-16.08">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/org/junit/runner/notification/Failure.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="31" selection-start="690" selection-end="690" vertical-scroll-proportion="-10.88">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/org/junit/runner/notification/RunNotifier.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="16" selection-start="1045" selection-end="1045" vertical-scroll-proportion="-6.84">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/org/junit/internal/runners/model/EachTestNotifier.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="16" selection-start="490" selection-end="490" vertical-scroll-proportion="-7.48">
@@ -807,9 +779,169 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/WorkingAreaType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="32" selection-start="308" selection-end="308" vertical-scroll-proportion="0.2596945">
+          <folding>
+            <element signature="class#367:447" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/globalobject/GlobalObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="58" selection-start="1066" selection-end="1066" vertical-scroll-proportion="0.57931846">
+          <folding>
+            <element signature="method#getDataClass#0;class#GlobalObject#0" expanded="false" />
+            <element signature="method#setDataClass#0;class#GlobalObject#0" expanded="false" />
+            <element signature="method#getId#0;class#GlobalObject#0" expanded="false" />
+            <element signature="method#setId#0;class#GlobalObject#0" expanded="false" />
+            <element signature="method#equals#0;class#GlobalObject#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/MusicSegment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="19" selection-start="2192" selection-end="2192" vertical-scroll-proportion="0.880141">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#MusicSegment#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#MusicSegment#1;class#MusicSegment#0" expanded="false" />
+            <element signature="method#getName#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#setName#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#getInstrument#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#setInstrument#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#getOwner#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#setOwner#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#getAudioPath#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#setAudioPath#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#getLength#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#setLength#0;class#MusicSegment#0" expanded="false" />
+            <element signature="method#isValid#0;class#MusicSegment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/Variation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="16" selection-start="2191" selection-end="2191" vertical-scroll-proportion="0.840188">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Variation#0;class#Variation#0" expanded="false" />
+            <element signature="method#Variation#1;class#Variation#0" expanded="false" />
+            <element signature="method#getMusicSegment#0;class#Variation#0" expanded="false" />
+            <element signature="method#setMusicSegment#0;class#Variation#0" expanded="false" />
+            <element signature="method#getName#0;class#Variation#0" expanded="false" />
+            <element signature="method#setName#0;class#Variation#0" expanded="false" />
+            <element signature="method#getStartTime#0;class#Variation#0" expanded="false" />
+            <element signature="method#setStartTime#0;class#Variation#0" expanded="false" />
+            <element signature="method#getEndTime#0;class#Variation#0" expanded="false" />
+            <element signature="method#setEndTime#0;class#Variation#0" expanded="false" />
+            <element signature="method#getOwner#0;class#Variation#0" expanded="false" />
+            <element signature="method#setOwner#0;class#Variation#0" expanded="false" />
+            <element signature="method#isValid#0;class#Variation#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/Track.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="29" selection-start="1850" selection-end="1850" vertical-scroll-proportion="0.840188">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Track#0;class#Track#0" expanded="false" />
+            <element signature="method#Track#1;class#Track#0" expanded="false" />
+            <element signature="method#getWorkingArea#0;class#Track#0" expanded="false" />
+            <element signature="method#setWorkingArea#0;class#Track#0" expanded="false" />
+            <element signature="method#getInstrument#0;class#Track#0" expanded="false" />
+            <element signature="method#setInstrument#0;class#Track#0" expanded="false" />
+            <element signature="method#getVolume#0;class#Track#0" expanded="false" />
+            <element signature="method#setVolume#0;class#Track#0" expanded="false" />
+            <element signature="method#getName#0;class#Track#0" expanded="false" />
+            <element signature="method#setName#0;class#Track#0" expanded="false" />
+            <element signature="method#getLength#0;class#Track#0" expanded="false" />
+            <element signature="method#setLength#0;class#Track#0" expanded="false" />
+            <element signature="method#isValid#0;class#Track#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/VariationTrack.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="29" selection-start="1378" selection-end="1378" vertical-scroll-proportion="0.63924795">
+          <folding>
+            <element signature="method#VariationTrack#0;class#VariationTrack#0" expanded="false" />
+            <element signature="method#VariationTrack#1;class#VariationTrack#0" expanded="false" />
+            <element signature="method#getVariation#0;class#VariationTrack#0" expanded="false" />
+            <element signature="method#setVariation#0;class#VariationTrack#0" expanded="false" />
+            <element signature="method#getTrack#0;class#VariationTrack#0" expanded="false" />
+            <element signature="method#setTrack#0;class#VariationTrack#0" expanded="false" />
+            <element signature="method#getStartTimeOnTrack#0;class#VariationTrack#0" expanded="false" />
+            <element signature="method#setStartTimeOnTrack#0;class#VariationTrack#0" expanded="false" />
+            <element signature="method#isValid#0;class#VariationTrack#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/MusicRoom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="28" selection-start="772" selection-end="772" vertical-scroll-proportion="0.43948296">
+          <folding>
+            <element signature="method#MusicRoom#0;class#MusicRoom#0" expanded="false" />
+            <element signature="method#MusicRoom#1;class#MusicRoom#0" expanded="false" />
+            <element signature="method#getName#0;class#MusicRoom#0" expanded="false" />
+            <element signature="method#setName#0;class#MusicRoom#0" expanded="false" />
+            <element signature="method#isValid#0;class#MusicRoom#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/database/entities/WorkingArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="29" selection-start="2245" selection-end="2245" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#WorkingArea#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#WorkingArea#1;class#WorkingArea#0" expanded="false" />
+            <element signature="method#getMusicRoom#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#setMusicRoom#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#getName#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#setName#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#getTempo#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#setTempo#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#getOwner#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#setOwner#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#getWorkingAreaType#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#setWorkingAreaType#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#getBeat#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#setBeat#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#getLength#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#setLength#0;class#WorkingArea#0" expanded="false" />
+            <element signature="method#isValid#0;class#WorkingArea#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DatabaseEntities/src/com/musicbox/util/Instrument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="12" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#300:382" expanded="false" />
+            <element signature="method#toString#0;class#300:382" expanded="false" />
+            <element signature="class#395:475" expanded="false" />
+            <element signature="class#495:584" expanded="false" />
+            <element signature="class#600:685" expanded="false" />
+            <element signature="class#697:776" expanded="false" />
+            <element signature="class#787:866" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Testing/com/musicbox/junit/DatabaseManagerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="67" selection-start="1718" selection-end="1718" vertical-scroll-proportion="0.0">
+        <state line="48" column="70" selection-start="1587" selection-end="1587" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -818,20 +950,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/musicbox/util/database/DatabaseManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="225" column="8" selection-start="9108" selection-end="9108" vertical-scroll-proportion="0.49337748">
+        <state line="102" column="93" selection-start="4069" selection-end="4069" vertical-scroll-proportion="0.14101058">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#setConnection#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#getConnectionString#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#getMusicRoomById#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#getMusicRoomByName#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#getWorkingAreaById#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#getWorkingAreaByMusicRoomId#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#getTrackById#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#getMusicSegmentById#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#getVariationById#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#getVariationTrackById#0;class#DatabaseManager#0" expanded="false" />
             <element signature="method#insertMusicRoom#0;class#DatabaseManager#0" expanded="false" />
-            <element signature="method#executeQuery#0;class#DatabaseManager#0" expanded="false" />
-            <marker date="1386515777029" expanded="true" signature="8806:8855" placeholder="INSERT INTO ..." />
+            <element signature="method#insertWorkingArea#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#insertTrack#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#insertVariation#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#insertVariationTrack#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#insertMusicSegment#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#executeSelect#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#convertResultSetToMusicRoom#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#convertResultSetToWorkingArea#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#convertResultSetToTrack#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#convertResultSetToMusicSegment#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#convertResultSetToVariation#0;class#DatabaseManager#0" expanded="false" />
+            <element signature="method#convertResultSetToVariationTrack#0;class#DatabaseManager#0" expanded="false" />
+            <marker date="1386691748674" expanded="true" signature="5005:5054" placeholder="INSERT INTO ..." />
+            <marker date="1386691748674" expanded="true" signature="5576:5645" placeholder="INSERT INTO ..." />
+            <marker date="1386691748674" expanded="true" signature="6577:6633" placeholder="INSERT INTO ..." />
+            <marker date="1386691748674" expanded="true" signature="7415:7475" placeholder="INSERT INTO ..." />
+            <marker date="1386691748674" expanded="true" signature="8287:8341" placeholder="INSERT INTO ..." />
+            <marker date="1386691748674" expanded="true" signature="9038:9098" placeholder="INSERT INTO ..." />
           </folding>
         </state>
       </provider>
@@ -897,7 +1047,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>DatabaseEntities</last-edited>
+          <last-edited>DatabaseManager</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Time: 15:02
  * To change this template use File | Settings | File Templates.
  */
-public class GlobalObject implements Serializable {
+public abstract class GlobalObject implements Serializable {
     private int id;
     private Class dataClass;
 
@@ -41,4 +41,10 @@ public class GlobalObject implements Serializable {
 
         return false;
     }
+
+    /**
+     * Checks if the attributes of the Object have correct values
+     * @return true, if all attributes have correct values
+     */
+    public abstract boolean isValid();
 }

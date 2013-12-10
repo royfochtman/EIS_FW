@@ -14,6 +14,7 @@ public class MusicRoom extends GlobalObject{
 
     public MusicRoom() {
         super.setDataClass(MusicRoom.class);
+        name = "";
     }
 
     public MusicRoom(int id, String name) {
@@ -27,6 +28,16 @@ public class MusicRoom extends GlobalObject{
     }
 
     public void setName(String name) {
+        if(name == null)
+            name = "";
+
         this.name = name;
+    }
+
+    public boolean isValid(){
+        if(!name.isEmpty())
+            return true;
+        else
+            return false;
     }
 }

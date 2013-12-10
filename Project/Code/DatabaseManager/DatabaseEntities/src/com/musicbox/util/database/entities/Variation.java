@@ -1,6 +1,7 @@
 package com.musicbox.util.database.entities;
 
 import com.musicbox.util.globalobject.GlobalObject;
+import com.sun.istack.internal.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +19,11 @@ public class Variation extends GlobalObject {
 
     public Variation() {
         super.setDataClass(Variation.class);
+        musicSegment = null;
+        name = "";
+        startTime = 0L;
+        endTime = 0L;
+        owner = "";
     }
 
     public Variation(int id, MusicSegment musicSegment, String name, Long startTime, long endTime, String owner) {
@@ -43,6 +49,9 @@ public class Variation extends GlobalObject {
     }
 
     public void setName(String name) {
+        if(name == null)
+            name = "";
+
         this.name = name;
     }
 
@@ -67,6 +76,18 @@ public class Variation extends GlobalObject {
     }
 
     public void setOwner(String owner) {
+        if(owner == null)
+            owner = "";
         this.owner = owner;
+    }
+
+    public boolean isValid() {
+        if(!name.isEmpty() && !owner.isEmpty() && musicSegment != null &&
+                startTime >= 0L && startTime < musicSegment.getLength() &&  endTime >= 0L &&  endTime <= musicSegment.getLength())
+            return true;
+        else
+            return false;
+
+
     }
 }

@@ -48,6 +48,9 @@ public class WorkingArea extends GlobalObject {
     }
 
     public void setName(String name) {
+        if(name == null)
+            name = "";
+
         this.name = name;
     }
 
@@ -64,6 +67,8 @@ public class WorkingArea extends GlobalObject {
     }
 
     public void setOwner(String owner) {
+        if(owner == null)
+            owner = "";
         this.owner = owner;
     }
 
@@ -89,5 +94,13 @@ public class WorkingArea extends GlobalObject {
 
     public void setLength(Long length) {
         this.length = length;
+    }
+
+    public boolean isValid() {
+        if(musicRoom != null && !name.isEmpty() && tempo >= 0 && workingAreaType != null && beat >= 0F && length >=0L) {
+            if((workingAreaType == WorkingAreaType.PRIVATE && !owner.isEmpty()) || workingAreaType == WorkingAreaType.PUBLIC)
+                return true;
+        }
+        return false;
     }
 }
