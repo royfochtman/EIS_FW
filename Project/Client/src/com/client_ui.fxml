@@ -15,23 +15,25 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.Controller">
   <children>
-    <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="610.0" prefWidth="1200.0" visible="true" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
+    <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="636.0" prefWidth="1200.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
       <items>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" minHeight="100.0" minWidth="0.0" prefHeight="166.0" prefWidth="1198.0">
           <children>
             <ScrollPane prefHeight="301.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <content>
-                <VBox fx:id="composeAreaVBox" prefHeight="205.0" prefWidth="1357.0">
+                <StackPane prefHeight="314.0" prefWidth="1198.0">
                   <children>
+                    <VBox fx:id="composeAreaVBox" prefHeight="205.0" prefWidth="1357.0" />
+                    <AnchorPane fx:id="timelineAnchorPane" prefHeight="200.0" prefWidth="200.0" />
                   </children>
-                </VBox>
+                </StackPane>
               </content>
             </ScrollPane>
           </children>
         </AnchorPane>
         <AnchorPane maxHeight="600.0" minHeight="100.0" minWidth="0.0" prefHeight="476.0" prefWidth="1198.0">
           <children>
-            <SplitPane dividerPositions="0.36246786632390743" focusTraversable="true" orientation="VERTICAL" prefHeight="539.0" prefWidth="1198.0" AnchorPane.bottomAnchor="-84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
+            <SplitPane dividerPositions="" focusTraversable="true" orientation="VERTICAL" prefHeight="539.0" prefWidth="1198.0" AnchorPane.bottomAnchor="-84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
               <items>
                 <AnchorPane depthTest="INHERIT" minHeight="0.0" minWidth="0.0" prefHeight="154.0" prefWidth="1196.0" styleClass="anchor-pane">
                   <children>
@@ -53,11 +55,11 @@
                             <Insets right="3.0" fx:id="x5" />
                           </HBox.margin>
                         </Separator>
-                        <Button cancelButton="false" defaultButton="false" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" styleClass="btn-red" text="">
+                        <Button fx:id="btnRecordTracksArea" cancelButton="false" defaultButton="false" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
                           <graphic>
                             <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                               <image>
-                                <Image url="@icons/PNG/16px/radio-unchecked.png" />
+                                <Image url="@icons/PNG/16px/button_rec.png" />
                               </image>
                             </ImageView>
                           </graphic>
@@ -65,7 +67,7 @@
                             <Insets left="5.0" top="6.0" fx:id="x6" />
                           </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="" HBox.margin="$x6">
+                        <Button fx:id="btnCutTracksArea" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="" HBox.margin="$x6">
                           <graphic>
                             <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                               <image>
@@ -88,7 +90,7 @@
                             <Insets left="5.0" right="5.0" />
                           </HBox.margin>
                         </Separator>
-                        <TextField alignment="CENTER_LEFT" prefWidth="111.0" promptText="Search" text="">
+                        <TextField fx:id="textFieldSearch" alignment="CENTER_LEFT" prefWidth="111.0" promptText="Search" text="">
                           <HBox.margin>
                             <Insets left="4.0" top="14.0" fx:id="x1" />
                           </HBox.margin>
@@ -102,7 +104,10 @@
                           </HBox.margin>
                         </ImageView>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label font="$x7" prefHeight="47.0" prefWidth="41.0" text="Show" textAlignment="LEFT" textFill="$x2" underline="false" wrapText="false">
+                        <Label prefHeight="47.0" prefWidth="41.0" text="Show" textAlignment="LEFT" textFill="$x2" underline="false" wrapText="false">
+                          <font>
+                            <Font size="12.0" fx:id="x4" />
+                          </font>
                           <HBox.margin>
                             <Insets left="10.0" />
                           </HBox.margin>
@@ -116,7 +121,7 @@
                             </FXCollections>
                           </items>
                         </ChoiceBox>
-                        <Label font="$x7" prefHeight="47.0" prefWidth="77.0" text="Sorted by" textAlignment="LEFT" textFill="$x2" underline="false" wrapText="false">
+                        <Label font="$x4" prefHeight="47.0" prefWidth="77.0" text="Sorted by" textAlignment="LEFT" textFill="$x2" underline="false" wrapText="false">
                           <HBox.margin>
                             <Insets left="10.0" />
                           </HBox.margin>
@@ -155,27 +160,6 @@
                         </AnchorPane>
                       </content>
                     </ScrollPane>
-                  </children>
-                </AnchorPane>
-                <AnchorPane maxHeight="600.0" minHeight="100.0" minWidth="0.0" prefHeight="435.0" prefWidth="1196.0">
-                  <children>
-                    <TabPane prefHeight="253.0" prefWidth="1196.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                      <tabs>
-                        <Tab text="Davids Session">
-                          <content>
-                            <AnchorPane prefHeight="106.0" prefWidth="1196.0" styleClass="anchor-pane" />
-                          </content>
-                        </Tab>
-                        <Tab text="Roys Session">
-                          <content>
-                            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                          </content>
-                        </Tab>
-                      </tabs>
-                      <tooltip>
-                        <Tooltip text="Here you will find the private sessions of your friends." />
-                      </tooltip>
-                    </TabPane>
                   </children>
                 </AnchorPane>
               </items>
@@ -237,11 +221,11 @@
                   </HBox.margin>
                 </Label>
                 <Separator orientation="VERTICAL" prefHeight="200.0" HBox.margin="$x5" />
-                <Button fx:id="btnRecComposeArea" cancelButton="false" defaultButton="false" mnemonicParsing="false" onAction="#recComposeArea" prefHeight="35.0" prefWidth="35.0" styleClass="btn-red" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
+                <Button fx:id="btnRecComposeArea" cancelButton="false" defaultButton="false" mnemonicParsing="false" onAction="#recComposeArea" prefHeight="35.0" prefWidth="35.0" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
                   <graphic>
                     <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
-                        <Image url="@icons/PNG/16px/radio-unchecked.png" />
+                        <Image url="@icons/PNG/16px/button_rec.png" />
                       </image>
                     </ImageView>
                   </graphic>
@@ -249,7 +233,7 @@
                     <Tooltip text="Start a new record" />
                   </tooltip>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
+                <Button fx:id="btnPlayComposeArea" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
                   <graphic>
                     <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
@@ -258,7 +242,7 @@
                     </ImageView>
                   </graphic>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
+                <Button fx:id="btnStopComposeArea" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
                   <graphic>
                     <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
@@ -272,12 +256,12 @@
                     <Insets left="4.0" />
                   </HBox.margin>
                 </Separator>
-                <Label font="$x7" prefHeight="47.0" prefWidth="60.0" text="Tempo" textAlignment="LEFT" textFill="$x2" underline="false" wrapText="false">
+                <Label font="$x4" prefHeight="47.0" prefWidth="60.0" text="Tempo" textAlignment="LEFT" textFill="$x2" underline="false" wrapText="false">
                   <HBox.margin>
                     <Insets left="10.0" />
                   </HBox.margin>
                 </Label>
-                <TextField prefWidth="35.000099999997474" promptText="" text="130">
+                <TextField id="tempoTextField" fx:id="textFieldTempo" prefWidth="35.000099999997474" promptText="" text="130">
                   <HBox.margin>
                     <Insets top="14.0" />
                   </HBox.margin>
@@ -320,7 +304,7 @@
                 </Button>
                 <AnchorPane prefHeight="47.0" prefWidth="597.0">
                   <children>
-                    <Button cancelButton="false" defaultButton="false" layoutX="538.0" layoutY="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
+                    <Button fx:id="btnConfig" cancelButton="false" defaultButton="false" layoutX="538.0" layoutY="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
                       <graphic>
                         <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                           <image>
@@ -329,7 +313,7 @@
                         </ImageView>
                       </graphic>
                     </Button>
-                    <Button cancelButton="false" defaultButton="false" layoutX="482.0" layoutY="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
+                    <Button fx:id="btnChat" cancelButton="false" defaultButton="false" layoutX="482.0" layoutY="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
                       <graphic>
                         <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                           <image>

@@ -15,12 +15,12 @@
       <children>
         <AnchorPane prefHeight="55.0" prefWidth="127.0">
           <children>
-            <ImageView fx:id="instrumentIcon" fitHeight="35.0" fitWidth="35.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="true">
+            <ImageView id="instrumentIcon" fx:id="imageViewInstrument" fitHeight="35.0" fitWidth="35.0" layoutX="7.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="true">
               <image>
                 <Image url="@icons/PNG/16px/apple.png" />
               </image>
             </ImageView>
-            <Label layoutX="43.0" layoutY="17.0" text="Guitar" textFill="#bfbfbf">
+            <Label fx:id="labelName" layoutX="43.0" layoutY="17.0" text="Guitar" textFill="#bfbfbf">
               <font>
                 <Font size="16.0" fx:id="x7" />
               </font>

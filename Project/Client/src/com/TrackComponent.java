@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -19,9 +20,12 @@ import java.io.IOException;
 public class TrackComponent extends HBox {
 
     @FXML private HBox trackHBox;
-    @FXML private ImageView instrumentIcon;
+    @FXML private ImageView imageViewInstrument;
+    @FXML private Label labelName;
     @FXML private CheckBox trackActivated;
     @FXML private HBox trackBeats;
+
+    private int bpm = 0;
 
     //instrument, name, and length muss übergeben werden.
     public TrackComponent(String name, String instrument, int songLength, int bpm) {
@@ -30,35 +34,33 @@ public class TrackComponent extends HBox {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
-        //call setBeats;
-
-
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        this.setId(name + "TrackComponent");
+        if(name != null) {
+            labelName.setText(name);
+        }
+
         setBeats(songLength, bpm);
     }
 
     public ImageView getInstrumentIcon() {
-        return instrumentIcon;
+        return imageViewInstrument;
     }
 
     public void setInstrumentIcon(ImageView newInstrumentIcon) {
-        instrumentIcon = newInstrumentIcon;
-    }
-
-    public CheckBox getTrackActivated() {
-        return trackActivated;
+        imageViewInstrument = newInstrumentIcon;
     }
 
     public HBox getTrackBeats() {
         return trackBeats;
     }
 
-    public void setBeats(double songLenght, int bpm) {
-        double numberOfBeats = (songLenght/1000)/60 * bpm;
+    public void setBeats(double songLength, int bpm) {
+        double numberOfBeats = (songLength/1000)/60 * bpm;
 
         for(int i = 0; i< numberOfBeats; i++) {
             Rectangle rect = RectangleBuilder.create()
@@ -70,12 +72,11 @@ public class TrackComponent extends HBox {
                     .build();
             trackBeats.getChildren().add((Node) rect);
         }
-
     }
 
-    public void updateBeats(double songLenght, int bpm) {
+    public void updateBeats(double songLength, int bpm) {
         int oldNumberOfBeats = trackBeats.getChildren().size();
-        double numberOfBeats = Math.abs(((songLenght/1000)/60 * bpm) - oldNumberOfBeats);
+        double numberOfBeats = Math.abs(((songLength/1000)/60 * bpm) - oldNumberOfBeats);
 
         for(int i = 0; i< numberOfBeats; i++) {
             Rectangle rect = RectangleBuilder.create()
@@ -89,5 +90,22 @@ public class TrackComponent extends HBox {
         }
     }
 
+    public String getName() {
+        return labelName.getText();
+    }
+
+    public void setName(String name) {
+        labelName.setText(name);
+    }
+
+    public boolean isActivated() {
+        return trackActivated.isSelected();
+    }
+
+    public void setInstrument() {
+        //setinstrument
+    }
+
+    //get instrument
 
 }

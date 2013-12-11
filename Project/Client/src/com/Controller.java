@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -17,20 +19,23 @@ import javafx.scene.shape.RectangleBuilder;
 
 public class Controller {
 
+    @FXML private Button btnCutTracksArea;
+    @FXML private TextField textFieldSearch;
     @FXML private VBox composeAreaVBox;
     @FXML private Button btnNewTrack;
+    @FXML private AnchorPane timelineAnchorPane;
 
     @FXML
     void initialize() {
         Rectangle timeline = RectangleBuilder.create()
-                                            .x(100)
+                                            .x(117)
                                             .height(composeAreaVBox.getHeight())
-                                            .width(4)
+                                            .width(1)
                                             .fill(Color.YELLOW)
                                             .arcHeight(0).arcWidth(0)
                                             .build();
         timeline.heightProperty().bind((ObservableValue<? extends Number>) composeAreaVBox.heightProperty());
-        composeAreaVBox.getChildren().add((Node) timeline);
+        timelineAnchorPane.getChildren().add((Node) timeline);
 
     }
 
@@ -43,7 +48,7 @@ public class Controller {
     }
 
     public void newTrack(ActionEvent actionEvent) {
-        TrackComponent track = new TrackComponent(null, null, 60000, 130);
+        TrackComponent track = new TrackComponent("G1", null, 60000, 130);
         composeAreaVBox.getChildren().add( (Node) track);
     }
 
