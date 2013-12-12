@@ -26,13 +26,13 @@ public class WorkingArea extends GlobalObject {
     public WorkingArea(int id, MusicRoom musicRoom, String name, int tempo, String owner, WorkingAreaType workingAreaType, float beat, Long length) {
         super.setDataClass(WorkingArea.class);
         super.setId(id);
-        this.musicRoom = musicRoom;
-        this.name = name;
-        this.tempo = tempo;
-        this.owner = owner;
-        this.workingAreaType = workingAreaType;
-        this.beat = beat;
-        this.length = length;
+        setMusicRoom(musicRoom);
+        setName(name);
+        setTempo(tempo);
+        setOwner(owner);
+        setWorkingAreaType(workingAreaType);
+        setBeat(beat);
+        setLength(length);
     }
 
     public MusicRoom getMusicRoom() {

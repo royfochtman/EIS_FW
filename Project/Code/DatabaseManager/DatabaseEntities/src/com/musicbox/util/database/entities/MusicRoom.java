@@ -20,7 +20,7 @@ public class MusicRoom extends GlobalObject{
     public MusicRoom(int id, String name) {
         super.setDataClass(MusicRoom.class);
         super.setId(id);
-        this.name = name;
+        setName(name);
     }
 
     public String getName() {

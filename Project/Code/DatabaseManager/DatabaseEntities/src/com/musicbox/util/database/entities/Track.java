@@ -29,12 +29,11 @@ public class Track extends GlobalObject {
     public Track(int id, WorkingArea workingArea, Instrument instrument, int volume, String name, Long length) {
         super.setDataClass(Track.class);
         super.setId(id);
-
-        this.workingArea = workingArea;
-        this.instrument = instrument;
-        this.volume = volume;
-        this.name = name;
-        this.length = length;
+        setWorkingArea(workingArea);
+        setInstrument(instrument);
+        setName(name);
+        setLength(length);
+        setVolume(volume);
     }
 
     public WorkingArea getWorkingArea() {

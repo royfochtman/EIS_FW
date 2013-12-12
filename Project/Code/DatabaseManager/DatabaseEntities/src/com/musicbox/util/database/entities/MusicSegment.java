@@ -30,11 +30,11 @@ public class MusicSegment extends GlobalObject {
     public MusicSegment(int id, String name, Instrument instrument, String owner, String audioPath, Long length) {
         super.setDataClass(MusicSegment.class);
         super.setId(id);
-        this.name = name;
-        this.instrument = instrument;
-        this.owner = owner;
-        this.audioPath = audioPath;
-        this.length = length;
+        setName(name);
+        setInstrument(instrument);
+        setOwner(owner);
+        setAudioPath(audioPath);
+        setLength(length);
     }
 
     public String getName() {

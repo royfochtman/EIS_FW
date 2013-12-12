@@ -24,9 +24,9 @@ public class VariationTrack extends GlobalObject {
     public VariationTrack(int id, Variation variation, Track track, Long startTimeOnTrack) {
         super.setDataClass(VariationTrack.class);
         super.setId(id);
-        this.variation = variation;
-        this.track = track;
-        this.startTimeOnTrack = startTimeOnTrack;
+        setVariation(variation);
+        setTrack(track);
+        setStartTimeOnTrack(startTimeOnTrack);
     }
 
     public Variation getVariation() {

@@ -29,11 +29,11 @@ public class Variation extends GlobalObject {
     public Variation(int id, MusicSegment musicSegment, String name, Long startTime, long endTime, String owner) {
         super.setDataClass(Variation.class);
         super.setId(id);
-        this.musicSegment = musicSegment;
-        this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.owner = owner;
+        setMusicSegment(musicSegment);
+        setName(name);
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setOwner(owner);
     }
 
     public MusicSegment getMusicSegment() {
