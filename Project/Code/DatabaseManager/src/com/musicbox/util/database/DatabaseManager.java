@@ -21,6 +21,7 @@ public abstract class DatabaseManager {
     private static String connectionString = null;
     private static PreparedStatement preparedStatement = null;
 
+    //<editor-fold desc="Region: MySQL-Constants">
     /**
      * The constants below represents the database tables and columns.
      * They are needed to assemble the MySQL queries.
@@ -48,6 +49,7 @@ public abstract class DatabaseManager {
     private static final String VARIATION_ID = "variation_id";
     private static final String TRACK_ID = "track_id";
     private static final String MUSIC_SEGMENT_ID = "music_segment_id";
+    //</editor-fold>
 
     /**
      * Create connection based on Connections-String in conn-param.
@@ -72,17 +74,17 @@ public abstract class DatabaseManager {
     }
 
     public static ArrayList<MusicRoom> getMusicRoomById(int musicRoomId) {
-        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM + " WHERE " + ID + " = ?", new Object[]{ musicRoomId });
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM + " WHERE " + ID + " = ? LIMIT 1", new Object[]{ musicRoomId });
         return convertResultSetToMusicRoomArrayList(resultSet);
     }
 
     public static ArrayList<MusicRoom> getMusicRoomByName(String musicRoomName) {
-        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM + " WHERE " + NAME + "=?", new Object[]{ musicRoomName });
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM + " WHERE " + NAME + "=? LIMIT 1", new Object[]{ musicRoomName });
         return convertResultSetToMusicRoomArrayList(resultSet);
     }
 
     public static ArrayList<WorkingArea> getWorkingAreaById(int workingAreaId) {
-        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + WORKING_AREA + " WHERE " + ID + "=?", new Object[]{ workingAreaId });
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + WORKING_AREA + " WHERE " + ID + "=? LIMIT 1", new Object[]{ workingAreaId });
         return convertResultSetToWorkingAreaArrayList(resultSet);
     }
 
@@ -92,7 +94,7 @@ public abstract class DatabaseManager {
     }
 
     public static ArrayList<Track> getTrackById(int trackId) {
-        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + TRACK + " WHERE " + ID + "=?", new Object[]{ trackId });
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + TRACK + " WHERE " + ID + "=? LIMIT 1", new Object[]{ trackId });
         return convertResultSetToTrackArrayList(resultSet);
     }
 
@@ -102,17 +104,27 @@ public abstract class DatabaseManager {
     }
 
     public static ArrayList<MusicSegment> getMusicSegmentById(int musicSegmentId) {
-        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_SEGMENT + " WHERE " + ID + "=?", new Object[]{ musicSegmentId });
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_SEGMENT + " WHERE " + ID + "=? LIMIT 1", new Object[]{ musicSegmentId });
         return convertResultSetToMusicSegmentArrayList(resultSet);
     }
 
     public static ArrayList<Variation> getVariationById(int variationId) {
-        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION + " WHERE " + ID + "=?", new Object[]{ variationId });
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION + " WHERE " + ID + "=? LIMIT 1", new Object[]{ variationId });
         return convertResultSetToVariationArrayList(resultSet);
     }
 
     public static ArrayList<VariationTrack> getVariationTrackById(int variationTrackId) {
-        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + ID + "=?", new Object[]{ variationTrackId });
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + ID + "=? LIMIT 1", new Object[]{ variationTrackId });
+        return convertResultSetToVariationTrackArrayList(resultSet);
+    }
+
+    public static ArrayList<VariationTrack> getVariationTrackByTrackId(int trackId){
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + TRACK_ID + "=?", new Object[]{trackId});
+        return convertResultSetToVariationTrackArrayList(resultSet);
+    }
+
+    public static ArrayList<VariationTrack> getVariationTrackByVariationId(int variationId){
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + VARIATION_ID + "=?", new Object[]{variationId});
         return convertResultSetToVariationTrackArrayList(resultSet);
     }
 
@@ -173,6 +185,66 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    public static boolean updateWorkingArea(WorkingArea workingArea) {
+        if(workingArea.isValid())
+            return executePreparedUpdate("UPDATE " + WORKING_AREA + " SET " + MUSIC_ROOM_ID + "=?, " + NAME + "=?, "
+                    + TEMPO + "=?, " + OWNER + "=?, " + TYPE + "=?, " + BEAT + "=?, " + LENGTH + "=? " + "WHERE " + ID + " = ?",
+                    new Object[]{workingArea.getMusicRoom().getId(), workingArea.getName(), workingArea.getTempo(), workingArea.getOwner(), workingArea.getWorkingAreaType().toString(),
+                    workingArea.getBeat(), workingArea.getLength(), workingArea.getId()});
+        return false;
+    }
+
+    public static boolean updateTrack(Track track) {
+        if(track.isValid())
+            return executePreparedUpdate("UPDATE " + TRACK + " SET " + WORKING_AREA_ID + "=?, " + INSTRUMENT + "=?, "
+                    + VOLUME + "=?, " + NAME + "=?, " + LENGTH + "=? " + "WHERE " + ID + " = ?",
+                    new Object[]{track.getWorkingArea().getId(), track.getInstrument().toString(), track.getVolume(),
+                            track.getName(), track.getLength(), track.getId()});
+        return false;
+    }
+
+    public static boolean updateVariation(Variation variation) {
+        if(variation.isValid())
+            return executePreparedUpdate("UPDATE " + VARIATION + " SET " + MUSIC_SEGMENT_ID + "=?, " + NAME + "=?, "
+                    + START_TIME + "=?, " + END_TIME + "=?, " + OWNER+ "=? " + "WHERE " + ID + " = ?",
+                    new Object[]{variation.getMusicSegment().getId(), variation.getName(), variation.getStartTime(),
+                            variation.getEndTime(), variation.getOwner(), variation.getId()});
+        return false;
+    }
+
+    public static boolean updateVariationTrack(VariationTrack variationTrack) {
+        if(variationTrack.isValid())
+            return executePreparedUpdate("UPDATE " + VARIATION_TRACK + " SET " + VARIATION_ID + "=?, " + TRACK_ID + "=?, "
+                    + START_TIME + "=? " + "WHERE " + ID + " = ?",
+                    new Object[]{variationTrack.getVariation().getId(), variationTrack.getTrack().getId(),
+                            variationTrack.getStartTimeOnTrack(), variationTrack.getId()});
+        return false;
+    }
+
+    public static boolean updateMusicSegment(MusicSegment musicSegment) {
+        if(musicSegment.isValid())
+            return executePreparedUpdate("UPDATE " + MUSIC_SEGMENT + " SET " + NAME + "=?, " + INSTRUMENT + "=?, "
+                    + OWNER + "=?, " + AUDIO_PATH + "=?, " + LENGTH + "=? " + "WHERE " + ID + " = ?",
+                    new Object[]{musicSegment.getName(), musicSegment.getInstrument().toString(), musicSegment.getOwner(),
+                            musicSegment.getAudioPath(), musicSegment.getLength(), musicSegment.getId()});
+        return false;
+    }
+
+    public static boolean deleteTrackById(int trackId) {
+        return executePreparedUpdate("DELETE FROM " + TRACK + " WHERE " + ID + "=?", new Object[]{trackId});
+    }
+
+    public static boolean deleteVariationById(int variationId) {
+        return executePreparedUpdate("DELETE FROM " + VARIATION + " WHERE " + ID + "=?", new Object[]{variationId});
+    }
+
+    public static boolean deleteVariationTrackById(int variationTrackId) {
+        return executePreparedUpdate("DELETE FROM " + VARIATION_TRACK + " WHERE " + ID + "=?", new Object[]{variationTrackId});
+    }
+
+    public static boolean deleteMusicSegmentById(int musicSegmentId) {
+        return executePreparedUpdate("DELETE FROM " + MUSIC_SEGMENT + " WHERE " + ID + "=?", new Object[]{musicSegmentId});
+    }
 
     private static boolean executePreparedUpdate(String preparedUpdateString, Object[] values) {
         if(preparedUpdateString == null || preparedUpdateString.isEmpty())
