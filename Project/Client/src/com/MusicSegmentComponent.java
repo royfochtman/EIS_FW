@@ -19,7 +19,7 @@ public class MusicSegmentComponent extends AnchorPane {
     @FXML HBox musicSegmentActions;
 
 
-    public MusicSegmentComponent(String name, float length) {
+    public MusicSegmentComponent(String name, float length, double width) {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 getClass().getResource("/com/musicSegment.fxml"));
         fxmlLoader.setRoot(this);
@@ -32,8 +32,9 @@ public class MusicSegmentComponent extends AnchorPane {
         }
         this.setId(name + "MusicSegmentComponent");
         if(name != null) {
-            musicSegmentName.setText(name + " (" + length + " ms)");
+            musicSegmentName.setText(" (" + length + " ms)");
         }
+        musicSegmentRectangle.setWidth(width);
 
     }
 

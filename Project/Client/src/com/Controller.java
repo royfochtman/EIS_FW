@@ -48,11 +48,14 @@ public class Controller {
     private Mixer mixer;
     private boolean inputSelected = false;
 
+    private int bpm;
+
     /**
      * This method will be called when the FXML is loaded and is the initial configuration of the controller.
      */
     @FXML
     void initialize() {
+        bpm = 120;
         timeline = RectangleBuilder.create()
                                             .x(117)
                                             .height(composeAreaVBox.getHeight())
@@ -82,7 +85,7 @@ public class Controller {
     }
 
     public void newTrack(ActionEvent actionEvent) {
-        TrackComponent track = new TrackComponent("G1", null, 60000, 130);
+        TrackComponent track = new TrackComponent("G1", null, 60000, bpm);
         composeAreaVBox.getChildren().add((Node) track);
     }
 
@@ -159,11 +162,15 @@ public class Controller {
     }    */
 
     public void addNewMusicSegment(String name, float length) {
-
-        MusicSegmentComponent musicSegment = new MusicSegmentComponent(name, length);
+        double musicSegmentWidth = convertLengthToWidth(length);
+        MusicSegmentComponent musicSegment = new MusicSegmentComponent(name, length, musicSegmentWidth);
         flowPaneTracksArea.getChildren().add((Node) musicSegment);
 
 
+    }
+
+    public double convertLengthToWidth(double length) {
+        return ((length/1000)/60)*bpm*15;
     }
 
 
