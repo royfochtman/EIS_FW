@@ -17,17 +17,22 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -39,6 +44,11 @@ public class Controller {
     @FXML private AnchorPane timelineAnchorPane;
     @FXML private Menu menuInputSetup;
     @FXML private FlowPane flowPaneTracksArea;
+    @FXML private Button btnRecordTracksArea;
+    @FXML private ImageView imageViewRecordTracksArea;
+    @FXML private ImageView imageViewRecordComposeArea;
+    @FXML private ImageView imageViewStop;
+    @FXML private AnchorPane anchorPaneWindow;
 
 
     private Transition timelineTransition;
@@ -47,14 +57,18 @@ public class Controller {
     private ToggleGroup toggleGroup;
     private Mixer mixer;
     private boolean inputSelected = false;
+    private boolean recording = false;
 
     private int bpm;
+
+    final Text dragText = new Text(500, 100, "drag me");
 
     /**
      * This method will be called when the FXML is loaded and is the initial configuration of the controller.
      */
     @FXML
     void initialize() {
+
         bpm = 120;
         timeline = RectangleBuilder.create()
                                             .x(117)
@@ -69,6 +83,26 @@ public class Controller {
         inputLoader = new InputLoader();
         loadInputs();
 
+
+        dragText.setOnDragDetected(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                System.out.println("Drag Entered");
+        /* drag was detected, start a drag-and-drop gesture*/
+        /* allow any transfer mode */
+                Dragboard db = dragText.startDragAndDrop(TransferMode.ANY);
+
+        /* Put a string on a dragboard */
+                ClipboardContent content = new ClipboardContent();
+                content.putString(dragText.getText());
+                db.setContent(content);
+
+                event.consume();
+            }
+        });
+        flowPaneTracksArea.getChildren().add((Node) dragText);
+
+        //flowPaneTracksArea.prefWidthProperty().bind((anchorPaneWindow.prefWidthProperty()));
+
     }
 
     public VBox getComposeAreaVBox() {
@@ -78,6 +112,7 @@ public class Controller {
 
     public void handleRecComposeArea(ActionEvent actionEvent) {
         if(inputSelected == true) {
+            recording = true;
             inputLoader.record();
         } else {
             System.out.println("Choose an input");
@@ -99,9 +134,13 @@ public class Controller {
      * @param actionEvent
      */
     public void handleStopComposeArea(ActionEvent actionEvent) {
-       float length = inputLoader.stop();
-       timelineTransition.stop();
-       addNewMusicSegment("New Music Segment", length);
+        if(recording == true) {
+            float length = inputLoader.stop();
+            timelineTransition.stop();
+            addNewMusicSegment("New Music Segment", length);
+            recording = false;
+        } else System.out.println("Nothing to stop");
+
     }
 
     /**
@@ -174,4 +213,33 @@ public class Controller {
     }
 
 
+    public void handleRecordTracksArea(ActionEvent actionEvent) {
+        if(recording == true) {
+            float length = inputLoader.stop();
+            timelineTransition.stop();
+            addNewMusicSegment("New Music Segment", length);
+            recording = false;
+            imageViewRecordTracksArea.setImage(imageViewRecordComposeArea.getImage());
+        } else if(inputSelected == true) {
+                recording = true;
+                inputLoader.record();
+                imageViewRecordTracksArea.setImage(imageViewStop.getImage());
+            } else {
+                System.out.println("Choose an input");
+        }
+    }
+
+    public void handleCutTracksArea(ActionEvent actionEvent) {
+    }
+
+    public void handleConfig(ActionEvent actionEvent) {
+    }
+
+    public void handleChat(ActionEvent actionEvent) {
+
+    }
+
+    public void showControlls(ActionEvent actionEvent) {
+
+    }
 }
