@@ -80,9 +80,34 @@ public class Track extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(workingArea != null && instrument != null && volume >= 0 && !name.isEmpty() && length >= 0L)
+        if(getId() > 0 && workingArea != null && instrument != null && volume >= 0 && (name != null && !name.isEmpty()) && length != null &&  length >= 0L)
             return true;
         else
             return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Track track = (Track)obj;
+        return getId() == track.getId()
+                && volume == track.getVolume()
+                && instrument != null && instrument.equals(track.getInstrument())
+                && name != null && name.equals(track.getName())
+                && length != null && length.equals(track.getLength())
+                && workingArea != null && workingArea.equals(track.workingArea);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (workingArea != null ? workingArea.hashCode() : 0);
+        result = 31 * result + (instrument != null ? instrument.hashCode() : 0);
+        result = 31 * result + volume;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
+        return result;
     }
 }

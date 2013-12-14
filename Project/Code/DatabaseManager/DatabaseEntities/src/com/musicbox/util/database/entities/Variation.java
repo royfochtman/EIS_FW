@@ -26,7 +26,7 @@ public class Variation extends GlobalObject {
         owner = "";
     }
 
-    public Variation(int id, MusicSegment musicSegment, String name, Long startTime, long endTime, String owner) {
+    public Variation(int id, MusicSegment musicSegment, String name, Long startTime, Long endTime, String owner) {
         super.setDataClass(Variation.class);
         super.setId(id);
         setMusicSegment(musicSegment);
@@ -82,12 +82,34 @@ public class Variation extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(!name.isEmpty() && !owner.isEmpty() && musicSegment != null &&
-                startTime >= 0L && startTime < musicSegment.getLength() &&  endTime >= 0L &&  endTime <= musicSegment.getLength())
+        if(getId() > 0 && name != null && !name.isEmpty() && owner != null && !owner.isEmpty() && musicSegment != null && startTime != null && endTime != null
+                && startTime >= 0L && startTime < musicSegment.getLength() &&  endTime > 0L &&  endTime <= musicSegment.getLength())
             return true;
         else
             return false;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
+        Variation variation = (Variation)obj;
+        return getId() == variation.getId()
+                && name != null && name.equals(variation.getName())
+                && startTime != null && startTime.equals(variation.getStartTime())
+                && endTime!= null && endTime.equals(variation.getEndTime())
+                && owner != null && owner.equals(variation.getOwner())
+                && musicSegment != null && musicSegment.equals(variation.getMusicSegment());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = musicSegment != null ? musicSegment.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
+        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        return result;
     }
 }

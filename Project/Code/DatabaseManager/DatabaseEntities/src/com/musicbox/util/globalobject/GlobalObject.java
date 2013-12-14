@@ -30,21 +30,16 @@ public abstract class GlobalObject implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof GlobalObject) {
-            if(this.getDataClass().equals(((GlobalObject)obj).getDataClass())){
-                if(this.getId() == ((GlobalObject)obj).getId())
-                    return true;
-            }
-        }
-
-        return false;
-    }
 
     /**
      * Checks if the attributes of the Object have correct values
      * @return true, if all attributes have correct values
      */
     public abstract boolean isValid();
+
+    @Override
+    public abstract boolean equals(Object obj);
+
+    @Override
+    public abstract int hashCode();
 }

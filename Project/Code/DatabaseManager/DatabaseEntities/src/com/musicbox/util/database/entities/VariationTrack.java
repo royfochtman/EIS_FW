@@ -54,9 +54,29 @@ public class VariationTrack extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(variation != null && track != null && startTimeOnTrack >= 0L && startTimeOnTrack < track.getLength())
+        if(getId() > 0 && variation != null && track != null && startTimeOnTrack >= 0L && startTimeOnTrack < track.getLength())
             return true;
         else
             return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        VariationTrack variationTrack = (VariationTrack) obj;
+        return getId() == variationTrack.getId()
+                && startTimeOnTrack != null && startTimeOnTrack.equals(variationTrack.getStartTimeOnTrack())
+                && variation != null && variation.equals(variationTrack.getVariation())
+                && track != null && track.equals(variationTrack.getTrack());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = variation != null ? variation.hashCode() : 0;
+        result = 31 * result + (track != null ? track.hashCode() : 0);
+        result = 31 * result + (startTimeOnTrack != null ? startTimeOnTrack.hashCode() : 0);
+        return result;
     }
 }

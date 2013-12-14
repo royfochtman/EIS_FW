@@ -35,9 +35,27 @@ public class MusicRoom extends GlobalObject{
     }
 
     public boolean isValid(){
-        if(!name.isEmpty())
+        if(getId() > 0 && name != null && !name.isEmpty())
             return true;
         else
             return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        MusicRoom musicRoom = (MusicRoom) obj;
+
+        return getId() == musicRoom.getId()
+                && (name != null && name.equals(musicRoom.getName()));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }

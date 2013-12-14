@@ -6,7 +6,7 @@ import com.sun.istack.internal.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
- * User: David
+ * User: David Wachs
  * Date: 07.12.13
  * Time: 15:23
  * To change this template use File | Settings | File Templates.
@@ -16,6 +16,7 @@ public class MusicSegment extends GlobalObject {
     private Instrument instrument;
     private String owner;
     private String audioPath;
+
     private Long length;
 
     public MusicSegment() {
@@ -87,10 +88,36 @@ public class MusicSegment extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(!name.isEmpty() && instrument != null && !owner.isEmpty()
-                && !audioPath.isEmpty() && length >= 0L)
+        if(getId() > 0 && name != null && !name.isEmpty() && instrument != null && owner != null && !owner.isEmpty()
+                && !audioPath.isEmpty() && length != null && length >= 0L)
             return true;
         else
             return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        MusicSegment musicSegment = (MusicSegment) obj;
+
+        return getId() == musicSegment.getId()
+                && name != null && name.equals(musicSegment.getName())
+                && instrument != null && instrument.equals(musicSegment.getInstrument())
+                && owner != null && owner.equals(musicSegment.getOwner())
+                && audioPath != null && audioPath.equals(musicSegment.getAudioPath())
+                && length != null && length.equals(musicSegment.getLength());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (instrument != null ? instrument.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (audioPath != null ? audioPath.hashCode() : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
+        return result;
     }
 }

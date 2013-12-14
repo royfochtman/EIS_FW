@@ -97,10 +97,39 @@ public class WorkingArea extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(musicRoom != null && !name.isEmpty() && tempo >= 0 && workingAreaType != null && beat >= 0F && length >=0L) {
-            if((workingAreaType == WorkingAreaType.PRIVATE && !owner.isEmpty()) || workingAreaType == WorkingAreaType.PUBLIC)
+        if(getId() > 0 && musicRoom != null && name != null && !name.isEmpty() && tempo > 0 && workingAreaType != null && beat > 0F && length != null && length >=0L) {
+            if((workingAreaType == WorkingAreaType.PRIVATE && owner != null && !owner.isEmpty()) || workingAreaType == WorkingAreaType.PUBLIC)
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        WorkingArea workingArea = (WorkingArea) obj;
+        return getId() == workingArea.getId()
+                && tempo == workingArea.getTempo()
+                && beat == workingArea.getBeat()
+                && name != null && name.equals(workingArea.getName())
+                && owner != null && owner.equals(workingArea.getOwner())
+                && workingAreaType != null && workingAreaType.equals(workingArea.getWorkingAreaType())
+                && length != null && length.equals(workingArea.getLength())
+                && musicRoom != null && musicRoom.equals(workingArea.getMusicRoom());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (musicRoom != null ? musicRoom.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + tempo;
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (workingAreaType != null ? workingAreaType.hashCode() : 0);
+        result = 31 * result + (beat != +0.0f ? Float.floatToIntBits(beat) : 0);
+        result = 31 * result + (length != null ? length.hashCode() : 0);
+        return result;
     }
 }
