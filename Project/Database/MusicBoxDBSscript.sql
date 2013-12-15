@@ -34,10 +34,10 @@ CREATE TABLE IF NOT EXISTS `musicbox`.`working_area` (
   `length` MEDIUMTEXT NOT NULL COMMENT 'in Milliseconds',
   PRIMARY KEY (`id`),
   INDEX `MusicRoom_ID_idx` (`music_room_id` ASC),
-  CONSTRAINT `MusicRoom_ID`
+  CONSTRAINT `MusicRoom_WorkingArea`
     FOREIGN KEY (`music_room_id`)
     REFERENCES `musicbox`.`music_room` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -49,33 +49,40 @@ DROP TABLE IF EXISTS `musicbox`.`music_segment` ;
 
 CREATE TABLE IF NOT EXISTS `musicbox`.`music_segment` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `music_room_id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `instrument` ENUM('Guitar', 'Electric Guitar', 'Keyboard', 'Bass Guitar', 'Drums', 'Piano' ) NOT NULL,
   `owner` VARCHAR(45) NOT NULL,
   `audio_path` VARCHAR(100) NOT NULL,
-  `length` MEDIUMTEXT NOT NULL,
-  PRIMARY KEY (`id`))
+  `length` MEDIUMTEXT NOT NULL COMMENT 'in Milliseconds',
+  PRIMARY KEY (`id`),
+  INDEX `MusicRoom_ID_idx` (`music_room_id` ASC),
+  CONSTRAINT `MusicRoom_MusicSegment`
+    FOREIGN KEY (`music_room_id`)
+    REFERENCES `musicbox`.`music_room` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `musicbox`.`varation`
+-- Table `musicbox`.`variation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `musicbox`.`varation` ;
+DROP TABLE IF EXISTS `musicbox`.`variation` ;
 
-CREATE TABLE IF NOT EXISTS `musicbox`.`varation` (
+CREATE TABLE IF NOT EXISTS `musicbox`.`variation` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `music_segment_id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `start_time` MEDIUMTEXT NOT NULL,
-  `end_time` MEDIUMTEXT NOT NULL,
+  `start_time` MEDIUMTEXT NOT NULL COMMENT 'in Milliseconds',
+  `end_time` MEDIUMTEXT NOT NULL COMMENT 'in Milliseconds',
   `owner` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `MusicSegment_ID_idx` (`music_segment_id` ASC),
-  CONSTRAINT `MusicSegment_ID`
+  CONSTRAINT `MusicSegment_Variation`
     FOREIGN KEY (`music_segment_id`)
     REFERENCES `musicbox`.`music_segment` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -91,13 +98,13 @@ CREATE TABLE IF NOT EXISTS `musicbox`.`track` (
   `instrument` ENUM('Guitar', 'Electric Guitar', 'Keyboard', 'Bass Guitar', 'Drums', 'Piano' ) NOT NULL,
   `volume` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `length` MEDIUMTEXT NOT NULL,
+  `length` MEDIUMTEXT NOT NULL COMMENT 'in Milliseconds',
   PRIMARY KEY (`id`),
   INDEX `WorkingArea_ID_idx` (`working_area_id` ASC),
-  CONSTRAINT `WorkingArea_ID`
+  CONSTRAINT `WorkingArea_Track`
     FOREIGN KEY (`working_area_id`)
     REFERENCES `musicbox`.`working_area` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -111,19 +118,19 @@ CREATE TABLE IF NOT EXISTS `musicbox`.`variation_track` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `variation_id` INT NOT NULL,
   `track_id` INT NOT NULL,
-  `start_time` MEDIUMTEXT NOT NULL,
+  `start_time` MEDIUMTEXT NOT NULL COMMENT 'in Milliseconds',
   PRIMARY KEY (`id`),
   INDEX `Variation_ID_idx` (`variation_id` ASC),
   INDEX `Track_ID_idx` (`track_id` ASC),
-  CONSTRAINT `Variation_ID`
+  CONSTRAINT `Variation_VariationTrack`
     FOREIGN KEY (`variation_id`)
-    REFERENCES `musicbox`.`varation` (`id`)
-    ON DELETE NO ACTION
+    REFERENCES `musicbox`.`variation` (`id`)
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `Track_ID`
+  CONSTRAINT `Track_VariationTrack`
     FOREIGN KEY (`track_id`)
     REFERENCES `musicbox`.`track` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
