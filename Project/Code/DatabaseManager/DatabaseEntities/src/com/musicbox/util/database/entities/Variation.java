@@ -82,7 +82,7 @@ public class Variation extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(getId() > 0 && name != null && !name.isEmpty() && owner != null && !owner.isEmpty() && musicSegment != null && startTime != null && endTime != null
+        if(getId() > 0 && name != null && !name.isEmpty() && owner != null && !owner.isEmpty() && musicSegment != null && musicSegment.isValid() && startTime != null && endTime != null
                 && startTime >= 0L && startTime < musicSegment.getLength() &&  endTime > 0L &&  endTime <= musicSegment.getLength())
             return true;
         else
@@ -105,7 +105,8 @@ public class Variation extends GlobalObject {
 
     @Override
     public int hashCode() {
-        int result = musicSegment != null ? musicSegment.hashCode() : 0;
+        int result = getId();
+        result = 31 * result + (musicSegment != null ? musicSegment.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);

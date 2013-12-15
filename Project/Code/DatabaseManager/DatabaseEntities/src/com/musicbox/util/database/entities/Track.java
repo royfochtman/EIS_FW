@@ -76,11 +76,11 @@ public class Track extends GlobalObject {
     }
 
     public void setLength(Long length) {
-        this.length = length;
+            this.length = length;
     }
 
     public boolean isValid() {
-        if(getId() > 0 && workingArea != null && instrument != null && volume >= 0 && (name != null && !name.isEmpty()) && length != null &&  length >= 0L)
+        if(getId() > 0 && workingArea != null && workingArea.isValid() && instrument != null && volume >= 0 && (name != null && !name.isEmpty()) && length != null &&  length >= 0L)
             return true;
         else
             return false;

@@ -16,8 +16,8 @@ public class MusicSegment extends GlobalObject {
     private Instrument instrument;
     private String owner;
     private String audioPath;
-
     private Long length;
+    private MusicRoom musicRoom;
 
     public MusicSegment() {
         super.setDataClass(MusicSegment.class);
@@ -28,7 +28,7 @@ public class MusicSegment extends GlobalObject {
         length = 0L;
     }
 
-    public MusicSegment(int id, String name, Instrument instrument, String owner, String audioPath, Long length) {
+    public MusicSegment(int id, String name, Instrument instrument, String owner, String audioPath, Long length, MusicRoom musicRoom) {
         super.setDataClass(MusicSegment.class);
         super.setId(id);
         setName(name);
@@ -36,6 +36,7 @@ public class MusicSegment extends GlobalObject {
         setOwner(owner);
         setAudioPath(audioPath);
         setLength(length);
+        setMusicRoom(musicRoom);
     }
 
     public String getName() {
@@ -87,9 +88,17 @@ public class MusicSegment extends GlobalObject {
         this.length = length;
     }
 
+    public MusicRoom getMusicRoom() {
+        return this.musicRoom;
+    }
+
+    public void setMusicRoom(MusicRoom musicRoom) {
+        this.musicRoom = musicRoom;
+    }
+
     public boolean isValid() {
         if(getId() > 0 && name != null && !name.isEmpty() && instrument != null && owner != null && !owner.isEmpty()
-                && !audioPath.isEmpty() && length != null && length >= 0L)
+                && !audioPath.isEmpty() && length != null && length >= 0L && musicRoom != null && musicRoom.isValid())
             return true;
         else
             return false;
@@ -107,7 +116,8 @@ public class MusicSegment extends GlobalObject {
                 && instrument != null && instrument.equals(musicSegment.getInstrument())
                 && owner != null && owner.equals(musicSegment.getOwner())
                 && audioPath != null && audioPath.equals(musicSegment.getAudioPath())
-                && length != null && length.equals(musicSegment.getLength());
+                && length != null && length.equals(musicSegment.getLength())
+                && musicRoom != null && musicRoom.equals(musicSegment.getMusicRoom());
     }
 
     @Override
@@ -118,6 +128,7 @@ public class MusicSegment extends GlobalObject {
         result = 31 * result + (owner != null ? owner.hashCode() : 0);
         result = 31 * result + (audioPath != null ? audioPath.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
+        result = 31 * result + (musicRoom != null ? musicRoom.hashCode() : 0);
         return result;
     }
 }

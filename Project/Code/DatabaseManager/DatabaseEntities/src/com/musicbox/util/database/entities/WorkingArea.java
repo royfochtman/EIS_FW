@@ -97,7 +97,7 @@ public class WorkingArea extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(getId() > 0 && musicRoom != null && name != null && !name.isEmpty() && tempo > 0 && workingAreaType != null && beat > 0F && length != null && length >=0L) {
+        if(getId() > 0 && musicRoom != null && musicRoom.isValid() && name != null && !name.isEmpty() && tempo > 0 && workingAreaType != null && beat > 0F && length != null && length >=0L) {
             if((workingAreaType == WorkingAreaType.PRIVATE && owner != null && !owner.isEmpty()) || workingAreaType == WorkingAreaType.PUBLIC)
                 return true;
         }

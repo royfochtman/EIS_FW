@@ -11,36 +11,18 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public enum Instrument implements Serializable {
-    KEYBOARD {
-        public String toString(){
-            return "Keyboard";
-        }
-    },
-    GUITAR {
-        public String toString(){
-            return "Guitar";
-        }
-    },
-    ELECTRICGUITAR{
-        public String toString(){
-            return "Electric Guitar";
-        }
-    },
-    BASSGUITAR{
-        public String toString(){
-            return "Bass Guitar";
-        }
-    },
-    DRUMS {
-        public String toString(){
-            return "Drums";
-        }
-    },
-    PIANO{
-        public String toString(){
-            return "Piano";
-        }
-    };
+    KEYBOARD ("Keyboard"),
+    GUITAR ("Guitar"),
+    ELECTRICGUITAR ("Electric Guitar"),
+    BASSGUITAR ("Bass Guitar"),
+    DRUMS ("Drums"),
+    PIANO ("Piano");
+
+    private final String instrumentString;
+
+    private Instrument(final String instrument){
+        this.instrumentString = instrument;
+    }
 
     public static ArrayList<String> getInstruments() {
         ArrayList<String> list = new ArrayList<>();
@@ -52,5 +34,22 @@ public enum Instrument implements Serializable {
         list.add(PIANO.toString());
 
         return list;
+    }
+
+    public static Instrument fromString(String instrumentString){
+        if(instrumentString == null && instrumentString.isEmpty())
+            return null;
+
+        for(Instrument instrument : Instrument.values()){
+            if(instrumentString.equals(instrument.toString()))
+                return instrument;
+        }
+
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return instrumentString;
     }
 }

@@ -59,6 +59,9 @@ public abstract class DatabaseManager {
      */
     public static boolean setConnection(String conn){
         try {
+            if(conn == null || conn.isEmpty())
+                return false;
+
             Class.forName("com.mysql.jdbc.Driver");
             connect = DriverManager.getConnection(conn);
             connectionString = conn;
@@ -108,8 +111,22 @@ public abstract class DatabaseManager {
         return convertResultSetToMusicSegmentArrayList(resultSet);
     }
 
+    public static ArrayList<MusicSegment> getMusicSegmentByMusicRoomId(int musicRoomId) {
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_SEGMENT + " WHERE " + MUSIC_ROOM_ID + "=? LIMIT 1", new Object[]{ musicRoomId });
+        return convertResultSetToMusicSegmentArrayList(resultSet);
+    }
+
     public static ArrayList<Variation> getVariationById(int variationId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION + " WHERE " + ID + "=? LIMIT 1", new Object[]{ variationId });
+        return convertResultSetToVariationArrayList(resultSet);
+    }
+
+    public static ArrayList<Variation> getVariationsByMusicRoomId(int musicRoomId) {
+        ResultSet resultSet = executePreparedSelect("SELECT variation.id, variation.music_segment_id, variation.name,\n" +
+                "variation.owner,variation.start_time,variation.end_time FROM variation \n" +
+                "LEFT JOIN music_segment ON variation.music_segment_id = music_segment.id\n" +
+                "LEFT JOIN music_room ON music_segment.music_room_id = music_room.id\n" +
+                "WHERE music_room.id = ?", new Object[] {musicRoomId});
         return convertResultSetToVariationArrayList(resultSet);
     }
 
@@ -118,12 +135,12 @@ public abstract class DatabaseManager {
         return convertResultSetToVariationTrackArrayList(resultSet);
     }
 
-    public static ArrayList<VariationTrack> getVariationTrackByTrackId(int trackId){
+    public static ArrayList<VariationTrack> getVariationTracksByTrackId(int trackId){
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + TRACK_ID + "=?", new Object[]{trackId});
         return convertResultSetToVariationTrackArrayList(resultSet);
     }
 
-    public static ArrayList<VariationTrack> getVariationTrackByVariationId(int variationId){
+    public static ArrayList<VariationTrack> getVariationTracksByVariationId(int variationId){
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + VARIATION_ID + "=?", new Object[]{variationId});
         return convertResultSetToVariationTrackArrayList(resultSet);
     }
@@ -173,19 +190,25 @@ public abstract class DatabaseManager {
 
     public static boolean insertMusicSegment(MusicSegment musicSegment) {
         if(musicSegment.isValid())
-            return executePreparedUpdate("INSERT INTO " + MUSIC_SEGMENT + " VALUES(default, ?, ?, ?, ?, ?)",
-                    new Object[]{musicSegment.getName(), musicSegment.getInstrument().toString(), musicSegment.getOwner(),
+            return executePreparedUpdate("INSERT INTO " + MUSIC_SEGMENT + " VALUES(default, ?, ?, ?, ?, ?, ?)",
+                    new Object[]{musicSegment.getMusicRoom().getId(), musicSegment.getName(), musicSegment.getInstrument().toString(), musicSegment.getOwner(),
                             musicSegment.getAudioPath(), musicSegment.getLength()});
         return false;
     }
 
     public static boolean updateMusicRoom(MusicRoom musicRoom) {
+        if(musicRoom == null)
+            return false;
+
         if(musicRoom.isValid())
             return executePreparedUpdate("UPDATE " + MUSIC_ROOM + " SET " + NAME + " = ? " + "WHERE " + ID + " = ?", new Object[]{musicRoom.getName(), musicRoom.getId()});
         return false;
     }
 
     public static boolean updateWorkingArea(WorkingArea workingArea) {
+        if(workingArea == null)
+            return false;
+
         if(workingArea.isValid())
             return executePreparedUpdate("UPDATE " + WORKING_AREA + " SET " + MUSIC_ROOM_ID + "=?, " + NAME + "=?, "
                     + TEMPO + "=?, " + OWNER + "=?, " + TYPE + "=?, " + BEAT + "=?, " + LENGTH + "=? " + "WHERE " + ID + " = ?",
@@ -195,6 +218,9 @@ public abstract class DatabaseManager {
     }
 
     public static boolean updateTrack(Track track) {
+        if(track == null)
+            return false;
+
         if(track.isValid())
             return executePreparedUpdate("UPDATE " + TRACK + " SET " + WORKING_AREA_ID + "=?, " + INSTRUMENT + "=?, "
                     + VOLUME + "=?, " + NAME + "=?, " + LENGTH + "=? " + "WHERE " + ID + " = ?",
@@ -204,6 +230,9 @@ public abstract class DatabaseManager {
     }
 
     public static boolean updateVariation(Variation variation) {
+        if(variation == null)
+            return false;
+
         if(variation.isValid())
             return executePreparedUpdate("UPDATE " + VARIATION + " SET " + MUSIC_SEGMENT_ID + "=?, " + NAME + "=?, "
                     + START_TIME + "=?, " + END_TIME + "=?, " + OWNER+ "=? " + "WHERE " + ID + " = ?",
@@ -213,6 +242,9 @@ public abstract class DatabaseManager {
     }
 
     public static boolean updateVariationTrack(VariationTrack variationTrack) {
+        if(variationTrack == null)
+            return false;
+
         if(variationTrack.isValid())
             return executePreparedUpdate("UPDATE " + VARIATION_TRACK + " SET " + VARIATION_ID + "=?, " + TRACK_ID + "=?, "
                     + START_TIME + "=? " + "WHERE " + ID + " = ?",
@@ -222,10 +254,13 @@ public abstract class DatabaseManager {
     }
 
     public static boolean updateMusicSegment(MusicSegment musicSegment) {
+        if(musicSegment == null)
+            return false;
+
         if(musicSegment.isValid())
-            return executePreparedUpdate("UPDATE " + MUSIC_SEGMENT + " SET " + NAME + "=?, " + INSTRUMENT + "=?, "
+            return executePreparedUpdate("UPDATE " + MUSIC_SEGMENT + " SET " + MUSIC_ROOM_ID + "=?, " + NAME + "=?, " + INSTRUMENT + "=?, "
                     + OWNER + "=?, " + AUDIO_PATH + "=?, " + LENGTH + "=? " + "WHERE " + ID + " = ?",
-                    new Object[]{musicSegment.getName(), musicSegment.getInstrument().toString(), musicSegment.getOwner(),
+                    new Object[]{musicSegment.getMusicRoom().getId(), musicSegment.getName(), musicSegment.getInstrument().toString(), musicSegment.getOwner(),
                             musicSegment.getAudioPath(), musicSegment.getLength(), musicSegment.getId()});
         return false;
     }
@@ -323,10 +358,11 @@ public abstract class DatabaseManager {
 
     private static ArrayList<WorkingArea> convertResultSetToWorkingAreaArrayList(ResultSet resultSet) {
         try {
-            if(resultSet == null || resultSet.getFetchSize() == 0)
+            if(resultSet == null || !resultSet.next())
                 return null;
 
             ArrayList<WorkingArea> workingAreaArrayList = new ArrayList<>();
+            resultSet.beforeFirst();
 
             while (resultSet.next()) {
                 WorkingArea workingArea = new WorkingArea();
@@ -335,8 +371,8 @@ public abstract class DatabaseManager {
                 workingArea.setBeat(resultSet.getFloat(BEAT));
                 workingArea.setTempo(resultSet.getInt(TEMPO));
                 workingArea.setOwner(resultSet.getString(OWNER));
-                workingArea.setWorkingAreaType(Enum.valueOf(WorkingAreaType.class,resultSet.getString(TYPE)));
-                workingArea.setMusicRoom((getMusicRoomById(resultSet.findColumn(MUSIC_ROOM_ID)).get(0)));
+                workingArea.setWorkingAreaType(WorkingAreaType.fromString(resultSet.getString(TYPE)));
+                workingArea.setMusicRoom((getMusicRoomById(resultSet.getInt(MUSIC_ROOM_ID)).get(0)));
                 workingArea.setLength(resultSet.getLong(LENGTH));
                 workingAreaArrayList.add(workingArea);
             }
@@ -352,18 +388,19 @@ public abstract class DatabaseManager {
 
     private static ArrayList<Track> convertResultSetToTrackArrayList(ResultSet resultSet) {
         try {
-            if(resultSet == null || resultSet.getFetchSize() == 0)
+            if(resultSet == null || !resultSet.next())
                 return null;
 
            ArrayList<Track> trackArrayList = new ArrayList<>();
+            resultSet.beforeFirst();
 
             while(resultSet.next()) {
                 Track track = new Track();
                 track.setId(resultSet.getInt(ID));
                 track.setName(resultSet.getString(NAME));
                 track.setVolume(resultSet.getInt(VOLUME));
-                track.setInstrument(Enum.valueOf(Instrument.class, resultSet.getString(INSTRUMENT)));
-                track.setWorkingArea((getWorkingAreaById(resultSet.findColumn(WORKING_AREA_ID)).get(0)));
+                track.setInstrument(Instrument.fromString(resultSet.getString(INSTRUMENT)));
+                track.setWorkingArea((getWorkingAreaById(resultSet.getInt(WORKING_AREA_ID)).get(0)));
                 track.setLength(resultSet.getLong(LENGTH));
                 trackArrayList.add(track);
             }
@@ -379,19 +416,21 @@ public abstract class DatabaseManager {
 
     private static ArrayList<MusicSegment> convertResultSetToMusicSegmentArrayList(ResultSet resultSet) {
         try {
-            if(resultSet == null || resultSet.getFetchSize() == 0)
+            if(resultSet == null || !resultSet.next())
                 return null;
 
             ArrayList<MusicSegment> musicSegmentArrayList = new ArrayList<>();
+            resultSet.beforeFirst();
 
             while(resultSet.next()) {
                 MusicSegment musicSegment = new MusicSegment();
                 musicSegment.setId(resultSet.getInt(ID));
                 musicSegment.setName(resultSet.getString(NAME));
                 musicSegment.setAudioPath(resultSet.getString(AUDIO_PATH));
-                musicSegment.setInstrument(Enum.valueOf(Instrument.class,resultSet.getString(INSTRUMENT)));
+                musicSegment.setInstrument(Instrument.fromString(resultSet.getString(INSTRUMENT)));
                 musicSegment.setOwner(resultSet.getString(OWNER));
                 musicSegment.setLength(resultSet.getLong(LENGTH));
+                musicSegment.setMusicRoom(getMusicRoomById(resultSet.getInt(MUSIC_ROOM_ID)).get(0));
 
                 musicSegmentArrayList.add(musicSegment);
             }
@@ -407,10 +446,11 @@ public abstract class DatabaseManager {
 
     private static ArrayList<Variation> convertResultSetToVariationArrayList(ResultSet resultSet) {
         try {
-            if(resultSet == null || resultSet.getFetchSize() == 0)
+            if(resultSet == null || !resultSet.next())
                 return null;
 
             ArrayList<Variation> variationArrayList = new ArrayList<>();
+            resultSet.beforeFirst();
 
             while(resultSet.next()) {
                 Variation variation = new Variation();
@@ -435,10 +475,11 @@ public abstract class DatabaseManager {
 
     private static  ArrayList<VariationTrack> convertResultSetToVariationTrackArrayList(ResultSet resultSet) {
         try {
-            if(resultSet == null || resultSet.getFetchSize() == 0)
+            if(resultSet == null || !resultSet.next())
                 return null;
 
             ArrayList<VariationTrack> variationTrackArrayList = new ArrayList<>();
+            resultSet.beforeFirst();
 
             while(resultSet.next()) {
                 VariationTrack variationTrack = new VariationTrack();

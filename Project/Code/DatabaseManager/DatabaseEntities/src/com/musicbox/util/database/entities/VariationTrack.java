@@ -50,11 +50,15 @@ public class VariationTrack extends GlobalObject {
     }
 
     public void setStartTimeOnTrack(Long startTimeOnTrack) {
-        this.startTimeOnTrack = startTimeOnTrack;
+        if(startTimeOnTrack == null)
+            this.startTimeOnTrack = 0L;
+        else
+            this.startTimeOnTrack = startTimeOnTrack;
     }
 
     public boolean isValid() {
-        if(getId() > 0 && variation != null && track != null && startTimeOnTrack >= 0L && startTimeOnTrack < track.getLength())
+        if(getId() > 0 && variation != null && track != null && startTimeOnTrack >= 0L && startTimeOnTrack < track.getLength()
+                && variation.getMusicSegment().getInstrument().equals(track.getInstrument()))
             return true;
         else
             return false;
@@ -74,7 +78,8 @@ public class VariationTrack extends GlobalObject {
 
     @Override
     public int hashCode() {
-        int result = variation != null ? variation.hashCode() : 0;
+        int result = getId();
+        result = 31 * result + (variation != null ? variation.hashCode() : 0);
         result = 31 * result + (track != null ? track.hashCode() : 0);
         result = 31 * result + (startTimeOnTrack != null ? startTimeOnTrack.hashCode() : 0);
         return result;
