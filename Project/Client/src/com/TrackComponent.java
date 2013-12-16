@@ -31,7 +31,9 @@ public class TrackComponent extends HBox {
 
     private int bpm = 0;
     private Rectangle rect;
-    private final String BLUE_COLOR = "#000833";
+    private final String DARK_BLUE = "#000833";
+    private final String HELL_BLUE = "#002966";
+    private String actualColor = "";
 
     //instrument, name, and length muss übergeben werden.
     public TrackComponent(String name, String instrument, int songLength, int bpm) {
@@ -69,10 +71,14 @@ public class TrackComponent extends HBox {
         double numberOfBeats = (songLength/1000)/60 * bpm;
 
         for(int i = 0; i< numberOfBeats; i++) {
+            String color = null;
+            if(i % 4 == 0) {
+                color = DARK_BLUE;
+            } else color = HELL_BLUE;
             final Rectangle rect = RectangleBuilder.create()
                     .arcHeight(0).arcWidth(0)
                     .width(8).height(55)
-                    .fill(Color.web(BLUE_COLOR))
+                    .fill(Color.web(color))
                     .strokeWidth(1).stroke(Color.BLACK).strokeType(StrokeType.INSIDE)
                     .id(String.valueOf(i))
                     .build();
@@ -97,9 +103,9 @@ public class TrackComponent extends HBox {
                     /* the drag-and-drop gesture entered the target */
                     /* show to the user that it is an actual gesture target */
                     if (event.getDragboard().hasString()) {
+                        actualColor = rect.getFill().toString();
                         rect.setFill(Color.INDIANRED);
                     }
-
                     event.consume();
                 }
             });
@@ -107,12 +113,23 @@ public class TrackComponent extends HBox {
             rect.setOnDragExited(new EventHandler<DragEvent>() {
                 @Override
                 public void handle(DragEvent dragEvent) {
-                    rect.setFill(Color.web(BLUE_COLOR));
+                    rect.setFill(Color.web(actualColor));
                 dragEvent.consume();
                 }
             });
 
+            rect.setOnDragDropped(new EventHandler<DragEvent>() {
+                public void handle(DragEvent event) {
+                /* the drag-and-drop gesture ended */
+                    System.out.println("Rect id: " +rect.getId());
+                /* if the data was successfully moved, clear it */
+                    /*if (event.getTransferMode() == TransferMode.MOVE) {
+                        source.setText("");
+                    }*/
 
+                    event.consume();
+                }
+            });
 
             trackBeats.getChildren().add((Node) rect);
         }

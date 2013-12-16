@@ -1,28 +1,19 @@
 package com;
 
-import com.sun.javafx.geom.BaseBounds;
-import com.sun.javafx.geom.transform.BaseTransform;
-import com.sun.javafx.jmx.MXNodeAlgorithm;
-import com.sun.javafx.jmx.MXNodeAlgorithmContext;
-import com.sun.javafx.sg.PGNode;
+import com.util.InputDevice;
+import com.util.InputLoader;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -33,6 +24,8 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import javax.sound.sampled.Mixer;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -60,6 +53,7 @@ public class Controller {
     private boolean recording = false;
 
     private int bpm;
+    private int songLength;
 
     final Text dragText = new Text(500, 100, "drag me");
 
@@ -103,6 +97,8 @@ public class Controller {
 
         //flowPaneTracksArea.prefWidthProperty().bind((anchorPaneWindow.prefWidthProperty()));
 
+        /*Setup Drag and Drop on the Tracks Area for importing external audio files*/
+        setupDragAndDropTracksArea();
     }
 
     public VBox getComposeAreaVBox() {
@@ -136,10 +132,10 @@ public class Controller {
     public void handleStopComposeArea(ActionEvent actionEvent) {
         if(recording == true) {
             float length = inputLoader.stop();
-            timelineTransition.stop();
             addNewMusicSegment("New Music Segment", length);
             recording = false;
         } else System.out.println("Nothing to stop");
+        timelineTransition.stop();
 
     }
 
@@ -162,11 +158,11 @@ public class Controller {
      */
     public void loadInputs() {
         toggleGroup = new ToggleGroup();
-        List inputs = inputLoader.loadInputs();
+        ArrayList<InputDevice> inputs = inputLoader.loadInputs();
         for(int i = 0; i<inputs.size(); i++) {
-            final RadioMenuItem radioMenuItem = new RadioMenuItem(inputs.get(i).toString());
+            final RadioMenuItem radioMenuItem = new RadioMenuItem(inputs.get(i).getName());
             radioMenuItem.setToggleGroup(toggleGroup);
-            radioMenuItem.setUserData(i);
+            radioMenuItem.setUserData(inputs.get(i).getPortIndex());
             radioMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -204,8 +200,6 @@ public class Controller {
         double musicSegmentWidth = convertLengthToWidth(length);
         MusicSegmentComponent musicSegment = new MusicSegmentComponent(name, length, musicSegmentWidth);
         flowPaneTracksArea.getChildren().add((Node) musicSegment);
-
-
     }
 
     public double convertLengthToWidth(double length) {
@@ -241,5 +235,50 @@ public class Controller {
 
     public void showControlls(ActionEvent actionEvent) {
 
+    }
+
+    private void setupDragAndDropTracksArea() {
+        flowPaneTracksArea.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                if(db.hasFiles()) {
+                    event.acceptTransferModes(TransferMode.COPY);
+                    ;
+                } else {
+                    event.consume();
+                }
+            }
+        });
+
+        flowPaneTracksArea.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if(db.hasFiles()) {
+                    success = true;
+                    String filePath = null;
+                    String fileFormat = null;
+                    for (File file:db.getFiles()) {
+                        filePath = file.getAbsolutePath();
+                        //currentIndex += 1;
+                        //Song hinzufügen zur Liste
+                        String fileName = file.getName();
+
+                        fileFormat = filePath.substring(filePath.length()-3,filePath.length());
+                        System.out.println("File Format: " + fileFormat);
+
+                    }
+                    if(!fileFormat.equals("wav")) {
+                        System.out.println("File format not valid. Just .wav files");
+                    } else {
+                        //set new song to the view
+                    }
+                }
+                event.setDropCompleted(true);
+                event.consume();
+            }
+        });
     }
 }

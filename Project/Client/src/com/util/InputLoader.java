@@ -1,4 +1,4 @@
-package com;
+package com.util;
 
 import com.util.AudioSetup;
 
@@ -13,7 +13,8 @@ import java.util.List;
 public class InputLoader {
     private Mixer mixer;
     private Mixer.Info[] aInfos;
-    private List<String> inputsList;
+    //private List<String> inputsList;
+    private List<InputDevice> inputsList;
 
     // format of audio file
     AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
@@ -27,22 +28,36 @@ public class InputLoader {
         aInfos = null;
     }
 
-    public List loadInputs() {
-        inputsList = new ArrayList<String>();
+    public ArrayList<InputDevice> loadInputs() {
+        //inputsList = new ArrayList<String>();
+        inputsList = new ArrayList<InputDevice>();
         aInfos = AudioSystem.getMixerInfo();
 
-        for (Mixer.Info aInfo : aInfos) {
-            System.out.println(aInfo.getName() + ". Description: " + aInfo.getDescription());
+        /*for (Mixer.Info aInfo : aInfos) {
+
+            if(aInfo.getDescription().contains("Capture")) {
+                System.out.println(aInfo.getName() + ". Description: " + aInfo.getDescription());
+
+            }
             inputsList.add(aInfo.getName());
+
+        }*/
+
+        for(int i=0; i<aInfos.length; i++) {
+            //Only Devices from type "Audio Capture" are going to be added to the devices list
+            if(aInfos[i].getDescription().contains("Capture")) {
+                System.out.println(aInfos[i].getName() + ". Description: " + aInfos[i].getDescription());
+                InputDevice inputDevice = new InputDevice(i, aInfos[i].getName());
+                inputsList.add(inputDevice);
+            }
         }
-        return inputsList;
+
+        return (ArrayList<InputDevice>) inputsList;
     }
 
     public void setupInput(int i) {
         mixer = AudioSystem.getMixer(aInfos[i]);
         System.out.println("Configured input: " + aInfos[i].getName());
-
-
     }
 
     public void record(){
@@ -81,7 +96,7 @@ public class InputLoader {
                         out.close();
                     } catch (IOException e) {
                         System.err.println("I/O problems: " + e);
-                        System.exit(-1);
+                        //System.exit(-1);
                     }
                 }
             };
@@ -89,7 +104,7 @@ public class InputLoader {
             captureThread.start();
         } catch (LineUnavailableException e) {
             System.err.println("Line unavailable: " + e);
-            System.exit(-2);
+            //System.exit(-2);
         }
     }
 

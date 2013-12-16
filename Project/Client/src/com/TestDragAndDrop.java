@@ -58,10 +58,10 @@ public class TestDragAndDrop extends Application {
                 dragImageView.toFront();
                 dragImageView.setMouseTransparent(true);
                 dragImageView.setVisible(true);
-                dragImageView.relocate(
+                /*dragImageView.relocate(
                         (int) (event.getSceneX() - dragImageView.getBoundsInLocal().getWidth() / 2),
-                        (int) (event.getSceneY() - dragImageView.getBoundsInLocal().getHeight() / 2));
-
+                        (int) (event.getSceneY() - dragImageView.getBoundsInLocal().getHeight() / 2));*/
+                dragImageView.relocate(event.getSceneX(), event.getSceneY());
 
 
                 /* allow any transfer mode */
@@ -80,7 +80,7 @@ public class TestDragAndDrop extends Application {
         source.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                source.relocate(mouseEvent.getSceneX() - source.getX(), mouseEvent.getSceneY() - source.getY());
+                dragImageView.relocate(mouseEvent.getSceneX() - dragImageView.getX(), mouseEvent.getSceneY() - dragImageView.getY());
             }
         });
 
