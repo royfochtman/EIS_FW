@@ -1,6 +1,11 @@
-package com;
+package com.controller;
 
-import javafx.animation.Transition;
+import com.model.TrackModel;
+import com.musicbox.util.Instrument;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,10 +40,24 @@ public class TrackComponent extends HBox {
     private final String HELL_BLUE = "#002966";
     private String actualColor = "";
 
+    private StringProperty name = new SimpleStringProperty();
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public StringProperty getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
     //instrument, name, and length muss übergeben werden.
-    public TrackComponent(String name, String instrument, int songLength, int bpm) {
+    public TrackComponent(String name, Instrument instrument, Long songLength, int bpm) {
         FXMLLoader fxmlLoader = new FXMLLoader(
-        getClass().getResource("/com/track.fxml"));
+        getClass().getResource("/com/view/track.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -47,12 +66,25 @@ public class TrackComponent extends HBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
+        TrackModel trackModel = new TrackModel(1 , null, instrument, 1, name,  songLength);
+
+        this.nameProperty().bindBidirectional(trackModel.nameProperty());
+
+        labelName.textProperty().bindBidirectional(this.nameProperty());
+
         this.setId(name + "TrackComponent");
         if(name != null) {
             labelName.setText(name);
         }
 
         setBeats(songLength, bpm);
+        if(name != null) {
+            setName(name);
+        }
+
+        this.setName("Bla bla");
+        this.setName("Another Name");
     }
 
     public ImageView getInstrumentIcon() {
@@ -80,7 +112,7 @@ public class TrackComponent extends HBox {
                     .width(8).height(55)
                     .fill(Color.web(color))
                     .strokeWidth(1).stroke(Color.BLACK).strokeType(StrokeType.INSIDE)
-                    .id(String.valueOf(i))
+                    .id(getName().get() + String.valueOf(i))
                     .build();
 
             /*Target from Drag & Drop*/
@@ -149,14 +181,6 @@ public class TrackComponent extends HBox {
                     .build();
             trackBeats.getChildren().add((Node) rect);
         }
-    }
-
-    public String getName() {
-        return labelName.getText();
-    }
-
-    public void setName(String name) {
-        labelName.setText(name);
     }
 
     public boolean isActivated() {

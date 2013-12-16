@@ -5,13 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("client_ui.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/client_ui.fxml"));
         primaryStage.setTitle("Client UI");
         primaryStage.setScene(new Scene(root, 1300, 700));
         primaryStage.setMinWidth(1300);

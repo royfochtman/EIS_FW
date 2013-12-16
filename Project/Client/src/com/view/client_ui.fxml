@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="anchorPaneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.Controller">
+<AnchorPane id="anchorPaneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.controller.Controller">
   <children>
     <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="636.0" prefWidth="1200.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
       <items>
@@ -337,7 +337,7 @@
                           <graphic>
                             <ImageView fx:id="imageViewRecordTracksArea" disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                               <image>
-                                <Image url="@icons/PNG/16px/button_rec.png" />
+                                <Image url="@../icons/PNG/16px/button_rec.png" />
                               </image>
                             </ImageView>
                           </graphic>
@@ -349,7 +349,7 @@
                           <graphic>
                             <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                               <image>
-                                <Image url="@icons/PNG/16px/scissors.png" />
+                                <Image url="@../icons/PNG/16px/scissors.png" />
                               </image>
                             </ImageView>
                           </graphic>
@@ -358,7 +358,7 @@
                           <graphic>
                             <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                               <image>
-                                <Image url="@icons/PNG/16px/pencil.png" />
+                                <Image url="@../icons/PNG/16px/pencil.png" />
                               </image>
                             </ImageView>
                           </graphic>
@@ -375,7 +375,7 @@
                         </TextField>
                         <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                           <image>
-                            <Image url="@icons/PNG/16px/search.png" />
+                            <Image url="@../icons/PNG/16px/search.png" />
                           </image>
                           <HBox.margin>
                             <Insets left="4.0" right="4.0" top="14.0" />
@@ -484,7 +484,7 @@
                   <graphic>
                     <ImageView fx:id="imageViewRecordComposeArea" disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
-                        <Image url="@icons/PNG/16px/button_rec.png" />
+                        <Image url="@../icons/PNG/16px/button_rec.png" />
                       </image>
                     </ImageView>
                   </graphic>
@@ -496,7 +496,7 @@
                   <graphic>
                     <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
-                        <Image url="@icons/PNG/16px/play3.png" />
+                        <Image url="@../icons/PNG/16px/play3.png" />
                       </image>
                     </ImageView>
                   </graphic>
@@ -505,7 +505,7 @@
                   <graphic>
                     <ImageView fx:id="imageViewStop" disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
-                        <Image url="@icons/PNG/16px/stop2.png" />
+                        <Image url="@../icons/PNG/16px/stop2.png" />
                       </image>
                     </ImageView>
                   </graphic>
@@ -532,7 +532,7 @@
                 </Separator>
                 <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                   <image>
-                    <Image url="@icons/PNG/16px/volume-mute.png" />
+                    <Image url="@../icons/PNG/16px/volume-mute.png" />
                   </image>
                   <HBox.margin>
                     <Insets left="8.0" top="14.0" />
@@ -545,7 +545,7 @@
                 </Slider>
                 <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                   <image>
-                    <Image url="@icons/PNG/16px/volume-high.png" />
+                    <Image url="@../icons/PNG/16px/volume-high.png" />
                   </image>
                   <HBox.margin>
                     <Insets right="4.0" top="14.0" />
@@ -556,7 +556,7 @@
                   <graphic>
                     <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
-                        <Image url="@icons/PNG/16px/plus.png" />
+                        <Image url="@../icons/PNG/16px/plus.png" />
                       </image>
                     </ImageView>
                   </graphic>
@@ -576,7 +576,7 @@
                       <graphic>
                         <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                           <image>
-                            <Image url="@icons/PNG/16px/cog.png" />
+                            <Image url="@../icons/PNG/16px/cog.png" />
                           </image>
                         </ImageView>
                       </graphic>
@@ -585,7 +585,7 @@
                       <graphic>
                         <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                           <image>
-                            <Image url="@icons/PNG/16px/bubble2.png" />
+                            <Image url="@../icons/PNG/16px/bubble2.png" />
                           </image>
                         </ImageView>
                       </graphic>
@@ -600,6 +600,6 @@
     </AnchorPane>
   </children>
   <stylesheets>
-    <URL value="@css/layoutstyles.css" />
+    <URL value="@../css/layoutstyles.css" />
   </stylesheets>
 </AnchorPane>

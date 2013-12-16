@@ -17,7 +17,7 @@
           <children>
             <ImageView id="instrumentIcon" fx:id="imageViewInstrument" fitHeight="16.0" fitWidth="16.0" layoutX="7.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="true">
               <image>
-                <Image url="@icons/PNG/16px/apple.png" />
+                <Image url="@../icons/PNG/16px/apple.png" />
               </image>
             </ImageView>
             <Label fx:id="labelName" layoutX="7.0" layoutY="6.0" text="Guitar" textFill="#bfbfbf">

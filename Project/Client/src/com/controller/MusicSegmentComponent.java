@@ -1,11 +1,10 @@
-package com;
+package com.controller;
 
 import javafx.animation.FadeTransition;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -13,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -26,13 +26,19 @@ public class MusicSegmentComponent extends AnchorPane {
     @FXML Rectangle musicSegmentRectangle;
     @FXML Label musicSegmentName;
     @FXML HBox musicSegmentActions;
+    @FXML Button btnPlayMusicSegment;
+    @FXML Button btnStopMusicSegment;
+    @FXML Button btnDeleteMusicSegment;
+
+    private MediaPlayer mediaPlayer;
 
 
     public MusicSegmentComponent(String name, float length, double width) {
         FXMLLoader fxmlLoader = new FXMLLoader(
-                getClass().getResource("/com/musicSegment.fxml"));
+                getClass().getResource("/com/view/musicSegment.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
+
 
         try {
             fxmlLoader.load();
@@ -89,5 +95,28 @@ public class MusicSegmentComponent extends AnchorPane {
             }
         });
 
+
+        btnPlayMusicSegment.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Play");
+            }
+        });
+
+        btnStopMusicSegment.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Stop");
+            }
+        });
+
+        btnDeleteMusicSegment.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Delete");
+            }
+        });
     }
+
+
 }

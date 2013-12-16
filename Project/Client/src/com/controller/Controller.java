@@ -1,5 +1,6 @@
-package com;
+package com.controller;
 
+import com.musicbox.util.Instrument;
 import com.util.InputDevice;
 import com.util.InputLoader;
 import javafx.animation.Interpolator;
@@ -26,7 +27,6 @@ import javafx.util.Duration;
 import javax.sound.sampled.Mixer;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Controller {
 
@@ -116,7 +116,7 @@ public class Controller {
     }
 
     public void newTrack(ActionEvent actionEvent) {
-        TrackComponent track = new TrackComponent("G1", null, 60000, bpm);
+        TrackComponent track = new TrackComponent("G1", Instrument.GUITAR, 60000L, bpm);
         composeAreaVBox.getChildren().add((Node) track);
     }
 

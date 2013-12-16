@@ -21,11 +21,11 @@
         </Label>
         <HBox id="HBoxActions" fx:id="musicSegmentActions" prefHeight="100.0" prefWidth="200.0" visible="false">
           <children>
-            <Button minHeight="16.0" minWidth="36.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="Button">
+            <Button fx:id="btnPlayMusicSegment" minHeight="16.0" minWidth="36.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="Button">
               <graphic>
                 <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@icons/PNG/16px/play3.png" />
+                    <Image url="@../icons/PNG/16px/play3.png" />
                   </image>
                 </ImageView>
               </graphic>
@@ -33,20 +33,20 @@
                 <Insets left="2.0" fx:id="x1" />
               </HBox.margin>
             </Button>
-            <Button minHeight="16.0" minWidth="36.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="Button" HBox.margin="$x1">
+            <Button fx:id="btnStopMusicSegment" minHeight="16.0" minWidth="36.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="Button" HBox.margin="$x1">
               <graphic>
                 <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@icons/PNG/16px/stop2.png" />
+                    <Image url="@../icons/PNG/16px/stop2.png" />
                   </image>
                 </ImageView>
               </graphic>
             </Button>
-            <Button minHeight="16.0" minWidth="36.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="Button" HBox.margin="$x1">
+            <Button fx:id="btnDeletemusicSegment" minHeight="16.0" minWidth="36.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="16.0" text="Button" HBox.margin="$x1">
               <graphic>
                 <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                    <Image url="@icons/PNG/16px/remove2.png" />
+                    <Image url="@../icons/PNG/16px/remove2.png" />
                   </image>
                 </ImageView>
               </graphic>
