@@ -1,6 +1,7 @@
-/.idea
-/out/test
-/out/production
+*.class
+.idea/
+test/
+production/
 
 # Package Files #
 *.war
