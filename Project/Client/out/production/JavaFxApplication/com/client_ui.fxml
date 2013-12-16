@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.Controller">
+<AnchorPane id="anchorPaneWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.Controller">
   <children>
     <SplitPane dividerPositions="0.5" focusTraversable="true" orientation="VERTICAL" prefHeight="636.0" prefWidth="1200.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
       <items>
@@ -301,8 +301,8 @@
                         </HBox>
                       </children>
                     </VBox>
-                    <VBox fx:id="composeAreaVBox" prefHeight="205.0" prefWidth="1357.0" />
                     <AnchorPane fx:id="timelineAnchorPane" prefHeight="200.0" prefWidth="200.0" />
+                    <VBox fx:id="composeAreaVBox" prefHeight="205.0" prefWidth="1357.0" />
                   </children>
                 </StackPane>
               </content>
@@ -333,9 +333,9 @@
                             <Insets right="3.0" fx:id="x5" />
                           </HBox.margin>
                         </Separator>
-                        <Button fx:id="btnRecordTracksArea" cancelButton="false" defaultButton="false" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
+                        <Button fx:id="btnRecordTracksArea" cancelButton="false" defaultButton="false" mnemonicParsing="false" onAction="#handleRecordTracksArea" prefHeight="35.0" prefWidth="35.0" text="">
                           <graphic>
-                            <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
+                            <ImageView fx:id="imageViewRecordTracksArea" disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                               <image>
                                 <Image url="@icons/PNG/16px/button_rec.png" />
                               </image>
@@ -345,7 +345,7 @@
                             <Insets left="5.0" top="6.0" fx:id="x6" />
                           </HBox.margin>
                         </Button>
-                        <Button fx:id="btnCutTracksArea" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="" HBox.margin="$x6">
+                        <Button fx:id="btnCutTracksArea" mnemonicParsing="false" onAction="#handleCutTracksArea" prefHeight="35.0" prefWidth="35.0" text="" HBox.margin="$x6">
                           <graphic>
                             <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                               <image>
@@ -482,7 +482,7 @@
                 <Separator orientation="VERTICAL" prefHeight="200.0" HBox.margin="$x5" />
                 <Button fx:id="btnRecComposeArea" cancelButton="false" defaultButton="false" mnemonicParsing="false" onAction="#handleRecComposeArea" prefHeight="35.0" prefWidth="35.0" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
                   <graphic>
-                    <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
+                    <ImageView fx:id="imageViewRecordComposeArea" disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
                         <Image url="@icons/PNG/16px/button_rec.png" />
                       </image>
@@ -503,7 +503,7 @@
                 </Button>
                 <Button fx:id="btnStopComposeArea" mnemonicParsing="false" onAction="#handleStopComposeArea" prefHeight="35.0" prefWidth="35.0" text="" HBox.hgrow="ALWAYS" HBox.margin="$x6">
                   <graphic>
-                    <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
+                    <ImageView fx:id="imageViewStop" disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                       <image>
                         <Image url="@icons/PNG/16px/stop2.png" />
                       </image>
@@ -563,7 +563,7 @@
                 </Button>
                 <AnchorPane prefHeight="47.0" prefWidth="597.0">
                   <children>
-                    <Button fx:id="btnConfig" cancelButton="false" defaultButton="false" layoutX="538.0" layoutY="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
+                    <Button fx:id="btnConfig" cancelButton="false" defaultButton="false" layoutX="538.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleConfig" prefHeight="35.0" prefWidth="35.0" text="">
                       <contextMenu>
                         <ContextMenu>
                           <items>
@@ -581,7 +581,7 @@
                         </ImageView>
                       </graphic>
                     </Button>
-                    <Button fx:id="btnChat" cancelButton="false" defaultButton="false" layoutX="482.0" layoutY="6.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="">
+                    <Button fx:id="btnChat" cancelButton="false" defaultButton="false" layoutX="482.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleChat" prefHeight="35.0" prefWidth="35.0" text="">
                       <graphic>
                         <ImageView disable="false" fitHeight="21.0" fitWidth="21.0" focusTraversable="false" pickOnBounds="true" preserveRatio="false" visible="true">
                           <image>

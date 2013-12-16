@@ -33,14 +33,14 @@
           <children>
             <HBox fx:id="trackBeats" maxWidth="-Infinity" prefHeight="55.0" prefWidth="1124.0">
               <children>
-                <Rectangle arcHeight="0.0" arcWidth="0.0" fill="#000833" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
+                <!--<Rectangle arcHeight="0.0" arcWidth="0.0" fill="#000833" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
                 <Rectangle arcHeight="0.0" arcWidth="0.0" fill="#002966" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
                 <Rectangle arcHeight="0.0" arcWidth="0.0" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875">
                   <fill>
                     <Color blue="0.400" green="0.161" red="0.000" fx:id="x8" />
                   </fill>
                 </Rectangle>
-                <Rectangle arcHeight="0.0" arcWidth="0.0" fill="$x8" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
+                <Rectangle arcHeight="0.0" arcWidth="0.0" fill="$x8" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />-->
               </children>
             </HBox>
           </children>
