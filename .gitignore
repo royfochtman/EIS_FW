@@ -1,0 +1,7 @@
+/.idea
+/out/test
+/out/production
+
+# Package Files #
+*.war
+*.ear
