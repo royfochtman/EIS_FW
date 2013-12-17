@@ -4,6 +4,7 @@ import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.InsetsBuilder;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.ClipboardContent;
@@ -21,7 +22,7 @@ import java.io.IOException;
 /**
  * Created by rfochtmann on 13.12.13.
  */
-public class MusicSegmentComponent extends AnchorPane {
+public class MusicSegmentController extends AnchorPane {
 
     @FXML Rectangle musicSegmentRectangle;
     @FXML Label musicSegmentName;
@@ -33,7 +34,7 @@ public class MusicSegmentComponent extends AnchorPane {
     private MediaPlayer mediaPlayer;
 
 
-    public MusicSegmentComponent(String name, float length, double width) {
+    public MusicSegmentController(String name, float length, double width) {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 getClass().getResource("/com/view/musicSegment.fxml"));
         fxmlLoader.setRoot(this);
@@ -55,13 +56,14 @@ public class MusicSegmentComponent extends AnchorPane {
         this.setWidth(width);
         this.setMaxWidth(width);
         this.setMinWidth(width);
+        this.setPadding(InsetsBuilder.create().left(10).right(10).build());
 
         this.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 musicSegmentActions.setVisible(true);
                 FadeTransition fadeTransition
-                        = new FadeTransition(Duration.millis(300), musicSegmentActions);
+                        = new FadeTransition(Duration.millis(200), musicSegmentActions);
                 fadeTransition.setFromValue(0.0);
                 fadeTransition.setToValue(1.0);
                 fadeTransition.play();
@@ -72,7 +74,7 @@ public class MusicSegmentComponent extends AnchorPane {
 
             public void handle(MouseEvent mouseEvent){
                 FadeTransition fadeTransition
-                        = new FadeTransition(Duration.millis(300), musicSegmentActions);
+                        = new FadeTransition(Duration.millis(200), musicSegmentActions);
                 fadeTransition.setFromValue(1.0);
                 fadeTransition.setToValue(0.0);
                 fadeTransition.play();
