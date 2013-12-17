@@ -15,6 +15,9 @@ public class TrackModel extends Track {
 
     Track track;
 
+    /**
+     * Databinding
+     */
     private StringProperty name = new SimpleStringProperty();
 
     public final String getName() {

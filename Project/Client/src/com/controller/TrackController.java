@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * Created by Roy on 08.12.13.
  */
-public class TrackComponent extends HBox {
+public class TrackController extends HBox {
 
     @FXML private HBox trackHBox;
     @FXML private ImageView imageViewInstrument;
@@ -55,7 +55,7 @@ public class TrackComponent extends HBox {
     }
 
     //instrument, name, and length muss übergeben werden.
-    public TrackComponent(String name, Instrument instrument, Long songLength, int bpm) {
+    public TrackController(String name, Instrument instrument, Long songLength, int bpm) {
         FXMLLoader fxmlLoader = new FXMLLoader(
         getClass().getResource("/com/view/track.fxml"));
         fxmlLoader.setRoot(this);

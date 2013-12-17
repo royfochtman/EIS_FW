@@ -116,7 +116,7 @@ public class Controller {
     }
 
     public void newTrack(ActionEvent actionEvent) {
-        TrackComponent track = new TrackComponent("G1", Instrument.GUITAR, 60000L, bpm);
+        TrackController track = new TrackController("G1", Instrument.GUITAR, 60000L, bpm);
         composeAreaVBox.getChildren().add((Node) track);
     }
 
@@ -198,7 +198,7 @@ public class Controller {
 
     public void addNewMusicSegment(String name, float length) {
         double musicSegmentWidth = convertLengthToWidth(length);
-        MusicSegmentComponent musicSegment = new MusicSegmentComponent(name, length, musicSegmentWidth);
+        MusicSegmentController musicSegment = new MusicSegmentController(name, length, musicSegmentWidth);
         flowPaneTracksArea.getChildren().add((Node) musicSegment);
     }
 
