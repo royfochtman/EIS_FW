@@ -36,6 +36,7 @@ public class Controller {
     @FXML private Button btnNewTrack;
     @FXML private AnchorPane timelineAnchorPane;
     @FXML private Menu menuInputSetup;
+    @FXML private Menu menuOutputSetup;
     @FXML private FlowPane flowPaneTracksArea;
     @FXML private Button btnRecordTracksArea;
     @FXML private ImageView imageViewRecordTracksArea;
@@ -50,7 +51,9 @@ public class Controller {
     private ToggleGroup toggleGroup;
     private Mixer mixer;
     private boolean inputSelected = false;
+    private boolean outputSelected = false;
     private boolean recording = false;
+    private Duration timelineActualPosition;
 
     private int bpm;
     private int songLength;
@@ -65,17 +68,35 @@ public class Controller {
 
         bpm = 120;
         timeline = RectangleBuilder.create()
-                                            .x(117)
+                                            .x(0)
                                             .height(composeAreaVBox.getHeight())
                                             .width(1)
                                             .fill(Color.YELLOW)
                                             .arcHeight(0).arcWidth(0)
                                             .build();
         timeline.heightProperty().bind((ObservableValue<? extends Number>) composeAreaVBox.heightProperty());
+
         timelineAnchorPane.getChildren().add((Node) timeline);
+        //composeAreaVBox.getChildren().add( (Node) timeline);
+        timelineAnchorPane.setLayoutX(100);
+        timelineAnchorPane.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                timeline.setWidth(2);
+            }
+        });
+        timelineAnchorPane.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                timeline.setWidth(1);
+            }
+        });
+
+        timeline.toFront();
         createTimelineTransition();
         inputLoader = new InputLoader();
         loadInputs();
+        loadOutputs();
 
 
         dragText.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -122,6 +143,7 @@ public class Controller {
 
     public void handlePlayComposeArea(ActionEvent actionEvent) {
         timelineTransition.play();
+        //timelineTransition.playFrom(timelineActualPosition);
     }
 
     /**
@@ -136,6 +158,7 @@ public class Controller {
             recording = false;
         } else System.out.println("Nothing to stop");
         timelineTransition.stop();
+        //timelineActualPosition = timelineTransition.getCurrentTime();
 
     }
 
@@ -145,8 +168,8 @@ public class Controller {
     private void createTimelineTransition() {
         timelineTransition = TranslateTransitionBuilder.create()
                 .duration(new Duration(3000))
-                .node(timeline)
-                .fromX(timeline.getX())
+                .node(timelineAnchorPane)
+                .fromX(100)
                 .toX(1000)
                 .interpolator(Interpolator.LINEAR)
                 .build();
@@ -167,11 +190,37 @@ public class Controller {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     System.out.println(radioMenuItem.getUserData());
-                    inputLoader.setupInput((Integer) radioMenuItem.getUserData());
-                    inputSelected = true;
+                    if(inputLoader.setupInput((Integer) radioMenuItem.getUserData()) == true) {
+                        inputSelected = true;
+                    } else {
+                        inputSelected = false;
+                    }
                 }
             });
             menuInputSetup.getItems().add(radioMenuItem);
+        }
+    }
+
+    public void loadOutputs() {
+        toggleGroup = new ToggleGroup();
+        ArrayList<InputDevice> outputs = inputLoader.loadOutputs();
+        for(int i = 0; i<outputs.size(); i++) {
+            final RadioMenuItem radioMenuItem = new RadioMenuItem(outputs.get(i).getName());
+            radioMenuItem.setToggleGroup(toggleGroup);
+            radioMenuItem.setUserData(outputs.get(i).getPortIndex());
+            radioMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    System.out.println(radioMenuItem.getUserData());
+                    if(inputLoader.setupOutput((Integer) radioMenuItem.getUserData()) == true) {
+                        outputSelected = true;
+                    } else {
+                        outputSelected = false;
+                    }
+
+                }
+            });
+            menuOutputSetup.getItems().add(radioMenuItem);
         }
     }
 
@@ -244,7 +293,6 @@ public class Controller {
                 Dragboard db = event.getDragboard();
                 if(db.hasFiles()) {
                     event.acceptTransferModes(TransferMode.COPY);
-                    ;
                 } else {
                     event.consume();
                 }

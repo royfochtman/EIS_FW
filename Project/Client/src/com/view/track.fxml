@@ -31,6 +31,7 @@
         <Separator orientation="VERTICAL" prefHeight="200.0" />
         <StackPane prefHeight="55.0" prefWidth="1095.0">
           <children>
+            <AnchorPane fx:id="anchorPaneMusicSegmentsInTrack" prefHeight="200.0" prefWidth="200.0" />
             <HBox fx:id="trackBeats" maxWidth="-Infinity" prefHeight="55.0" prefWidth="1124.0">
               <children>
                 <!--<Rectangle arcHeight="0.0" arcWidth="0.0" fill="#000833" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />

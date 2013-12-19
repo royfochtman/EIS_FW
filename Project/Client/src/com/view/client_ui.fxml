@@ -1099,8 +1099,8 @@
                         </HBox>
                       </children>
                     </VBox>
-                    <AnchorPane fx:id="timelineAnchorPane" prefHeight="200.0" prefWidth="200.0" />
                     <VBox fx:id="composeAreaVBox" prefHeight="205.0" prefWidth="1357.0" />
+                    <AnchorPane fx:id="timelineAnchorPane" maxWidth="6.0" minWidth="2.0" prefHeight="440.0" prefWidth="6.0" />
                   </children>
                 </StackPane>
               </content>
@@ -1234,6 +1234,7 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <Menu mnemonicParsing="false" text="Setup Input device" fx:id="menuInputSetup" />
+            <Menu mnemonicParsing="false" text="Setup Output device" fx:id="menuOutputSetup" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" text="Export" />
             <SeparatorMenuItem mnemonicParsing="false" />

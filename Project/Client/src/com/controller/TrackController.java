@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -33,6 +34,7 @@ public class TrackController extends HBox {
     @FXML private Label labelName;
     @FXML private CheckBox trackActivated;
     @FXML private HBox trackBeats;
+    @FXML private AnchorPane anchorPaneMusicSegmentsInTrack;
 
     private int bpm = 0;
     private Rectangle rect;
