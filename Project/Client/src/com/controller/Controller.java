@@ -1,6 +1,11 @@
 package com.controller;
 
+import com.model.MusicRoomModel;
+import com.model.WorkingAreaModel;
 import com.musicbox.util.Instrument;
+import com.musicbox.util.WorkingAreaType;
+import com.musicbox.util.database.entities.MusicRoom;
+import com.musicbox.util.database.entities.WorkingArea;
 import com.util.InputDevice;
 import com.util.InputLoader;
 import javafx.animation.Interpolator;
@@ -8,6 +13,8 @@ import javafx.animation.Transition;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,18 +22,20 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import javax.sound.sampled.Mixer;
 import java.io.File;
 import java.util.ArrayList;
+
+import static com.musicbox.util.Instrument.*;
+import static javafx.collections.FXCollections.*;
 
 public class Controller {
 
@@ -43,6 +52,16 @@ public class Controller {
     @FXML private ImageView imageViewRecordComposeArea;
     @FXML private ImageView imageViewStop;
     @FXML private AnchorPane anchorPaneWindow;
+    @FXML private ChoiceBox choiceBoxInstrument;
+    @FXML private ChoiceBox choiceBoxInputDevice;
+    @FXML private TextField labelUserName;
+    @FXML private GridPane paneNewSession;
+    @FXML private GridPane paneLogin;
+    @FXML private TextField textFieldRoomName;
+    @FXML private TextField textFieldBPM;
+    @FXML private TextField textFieldLength;
+    @FXML private StackPane stackPaneLogin;
+    @FXML private TextField textFieldTempo;
 
 
     private Transition timelineTransition;
@@ -55,8 +74,9 @@ public class Controller {
     private boolean recording = false;
     private Duration timelineActualPosition;
 
+    private String userName;
     private int bpm;
-    private int songLength;
+    private Long songLength;
 
     final Text dragText = new Text(500, 100, "drag me");
 
@@ -65,8 +85,17 @@ public class Controller {
      */
     @FXML
     void initialize() {
+        paneNewSession.setVisible(false);
+        paneLogin.setVisible(true);
+        paneLogin.toFront();
 
-        bpm = 120;
+        /**/
+        inputLoader = new InputLoader();
+        loadInputs();
+        loadOutputs();
+
+        choiceBoxInstrument.setItems(observableArrayList("Guitar", "Bass", "Voice", "Keyboard"));
+        /**/
         timeline = RectangleBuilder.create()
                                             .x(0)
                                             .height(composeAreaVBox.getHeight())
@@ -94,9 +123,7 @@ public class Controller {
 
         timeline.toFront();
         createTimelineTransition();
-        inputLoader = new InputLoader();
-        loadInputs();
-        loadOutputs();
+
 
 
         dragText.setOnDragDetected(new EventHandler<MouseEvent>() {
@@ -137,7 +164,7 @@ public class Controller {
     }
 
     public void newTrack(ActionEvent actionEvent) {
-        TrackController track = new TrackController("G1", Instrument.GUITAR, 60000L, bpm);
+        TrackController track = new TrackController("G1", GUITAR, songLength, bpm);
         composeAreaVBox.getChildren().add((Node) track);
     }
 
@@ -173,31 +200,37 @@ public class Controller {
                 .toX(1000)
                 .interpolator(Interpolator.LINEAR)
                 .build();
-
     }
 
     /**
      * This method will load all input and output devices and show them as a item list.
      */
     public void loadInputs() {
+        ObservableList<String> inputsObservableList = observableArrayList();
         toggleGroup = new ToggleGroup();
         ArrayList<InputDevice> inputs = inputLoader.loadInputs();
         for(int i = 0; i<inputs.size(); i++) {
             final RadioMenuItem radioMenuItem = new RadioMenuItem(inputs.get(i).getName());
+
             radioMenuItem.setToggleGroup(toggleGroup);
             radioMenuItem.setUserData(inputs.get(i).getPortIndex());
             radioMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     System.out.println(radioMenuItem.getUserData());
-                    if(inputLoader.setupInput((Integer) radioMenuItem.getUserData()) == true) {
+                    if (inputLoader.setupInput((Integer) radioMenuItem.getUserData()) == true) {
                         inputSelected = true;
                     } else {
                         inputSelected = false;
                     }
                 }
             });
+
+
+
+            inputsObservableList.add(inputs.get(i).getName());
             menuInputSetup.getItems().add(radioMenuItem);
+            choiceBoxInputDevice.setItems(inputsObservableList);
         }
     }
 
@@ -328,5 +361,43 @@ public class Controller {
                 event.consume();
             }
         });
+    }
+
+    public void handleNewSession(ActionEvent actionEvent) {
+        if((labelUserName.getText() != null)
+                && (choiceBoxInputDevice.getSelectionModel().getSelectedItem() != null)
+                && (choiceBoxInstrument.getSelectionModel().getSelectedItem() != null)) {
+
+            paneNewSession.setVisible(true);
+            paneLogin.setVisible(false);
+            paneNewSession.toFront();
+            //go on
+        }else {
+            System.out.println("Incomplete formular");
+
+        }
+    }
+
+    public void handleLoadSessions(ActionEvent actionEvent) {
+
+    }
+
+    public void handleCreateSession(ActionEvent actionEvent) {
+        if((textFieldRoomName.getText() != null) && (textFieldBPM != null) && (textFieldLength.getText() != null)) {
+            stackPaneLogin.toBack();
+            stackPaneLogin.setVisible(false);
+
+            textFieldTempo.setText(textFieldBPM.getText());
+            bpm = Integer.valueOf(textFieldBPM.getText());
+            songLength = Long.valueOf(textFieldLength.getText());
+            MusicRoomModel musicRoomModel = new MusicRoomModel(textFieldRoomName.getText(), 1);
+
+            WorkingAreaModel workingAreaModel = new WorkingAreaModel(1, musicRoomModel.getMusicRoom(), textFieldRoomName.getText(), Integer.valueOf(textFieldTempo.getText()), userName, WorkingAreaType.PUBLIC, 1, Long.valueOf(textFieldLength.getText()));
+
+            //textFieldTempo.textProperty().bindBidirectional(workingAreaModel.tempoProperty());
+        }
+
+        //WorkingArea workingArea = new WorkingArea(1, musicRoom, textFieldRoomName.getText(), Integer.valueOf(textFieldTempo.getText()), );
+
     }
 }

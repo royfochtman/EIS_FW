@@ -29,6 +29,10 @@ public class MusicRoomModel {
         return name;
     }
 
+    public MusicRoom getMusicRoom() {
+        return this.musicRoom;
+    }
+
     public MusicRoomModel(String name, int id) {
         musicRoom = new MusicRoom(id, name);
 
