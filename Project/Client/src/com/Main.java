@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static Stage primaryStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("view/client_ui.fxml"));
@@ -17,6 +19,8 @@ public class Main extends Application {
         primaryStage.setMinHeight(600);
         primaryStage.centerOnScreen();
         primaryStage.show();
+
+        this.primaryStage = primaryStage;
 
     }
 

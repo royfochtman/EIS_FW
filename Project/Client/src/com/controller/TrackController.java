@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -22,6 +23,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
 import javafx.scene.shape.StrokeType;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -41,6 +43,7 @@ public class TrackController extends HBox {
     private final String DARK_BLUE = "#000833";
     private final String HELL_BLUE = "#002966";
     private String actualColor = "";
+    private Image instrumentImage;
 
     private StringProperty name = new SimpleStringProperty();
 
@@ -56,7 +59,14 @@ public class TrackController extends HBox {
         this.name.set(name);
     }
 
-    //instrument, name, and length muss übergeben werden.
+
+    /**
+     *
+     * @param name
+     * @param instrument
+     * @param songLength
+     * @param bpm
+     */
     public TrackController(String name, Instrument instrument, Long songLength, int bpm) {
         FXMLLoader fxmlLoader = new FXMLLoader(
         getClass().getResource("/com/view/track.fxml"));
@@ -72,7 +82,6 @@ public class TrackController extends HBox {
         TrackModel trackModel = new TrackModel(1 , null, instrument, 1, name,  songLength);
 
         this.nameProperty().bindBidirectional(trackModel.nameProperty());
-
         labelName.textProperty().bindBidirectional(this.nameProperty());
 
         this.setId(name + "TrackComponent");
@@ -85,16 +94,21 @@ public class TrackController extends HBox {
             setName(name);
         }
 
-        this.setName("Bla bla");
-        this.setName("Another Name");
+        setImage(instrument);
+        setInstrumentIcon(instrumentImage);
+
+        /*this.setName("Bla bla");
+        this.setName("Another Name");*/
+
+
     }
 
     public ImageView getInstrumentIcon() {
         return imageViewInstrument;
     }
 
-    public void setInstrumentIcon(ImageView newInstrumentIcon) {
-        imageViewInstrument = newInstrumentIcon;
+    public void setInstrumentIcon(Image image) {
+        imageViewInstrument.setImage(image);
     }
 
     public HBox getTrackBeats() {
@@ -198,5 +212,29 @@ public class TrackController extends HBox {
     }
 
     //get instrument
+
+    private void setImage(Instrument instrument) {
+
+        switch(instrument) {
+            case BASSGUITAR:
+                instrumentImage = new Image("com/icons/PNG/16px/guitar_48.png", 32, 32, false, false);
+                break;
+            case DRUMS:
+                instrumentImage = new Image("com/icons/PNG/16px/drums_48.png", 32, 32, false, false);
+                break;
+            case ELECTRICGUITAR:
+                instrumentImage = new Image("com/icons/PNG/16px/guitar_48.png", 32, 32, false, false);
+                break;
+            case GUITAR:
+                instrumentImage = new Image("com/icons/PNG/16px/guitar_48.png", 32, 32, false, false);
+                break;
+            case KEYBOARD:
+                instrumentImage = new Image("com/icons/PNG/16px/keyboard_48.png", 32, 32, false, false);
+                break;
+            case PIANO:
+                instrumentImage = new Image("com/icons/PNG/16px/keyboard_48.png", 32, 32, false, false);
+                break;
+        }
+    }
 
 }

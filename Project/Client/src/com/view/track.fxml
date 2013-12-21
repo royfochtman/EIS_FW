@@ -15,7 +15,7 @@
       <children>
         <AnchorPane fx:id="AnchorPaneInstrument" prefHeight="55.0" prefWidth="127.0">
           <children>
-            <ImageView id="instrumentIcon" fx:id="imageViewInstrument" fitHeight="16.0" fitWidth="16.0" layoutX="7.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="true">
+            <ImageView id="instrumentIcon" fx:id="imageViewInstrument" fitHeight="32.0" fitWidth="32.0" layoutX="81.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" visible="true">
               <image>
                 <Image url="@../icons/PNG/16px/apple.png" />
               </image>
@@ -25,25 +25,14 @@
                 <Font size="12.0" />
               </font>
             </Label>
-            <CheckBox fx:id="trackActivated" layoutX="31.0" layoutY="28.0" mnemonicParsing="false" text="" />
+            <CheckBox fx:id="trackActivated" layoutX="7.0" layoutY="28.0" mnemonicParsing="false" text="" />
           </children>
         </AnchorPane>
         <Separator orientation="VERTICAL" prefHeight="200.0" />
         <StackPane prefHeight="55.0" prefWidth="1095.0">
           <children>
             <AnchorPane fx:id="anchorPaneMusicSegmentsInTrack" prefHeight="200.0" prefWidth="200.0" />
-            <HBox fx:id="trackBeats" maxWidth="-Infinity" prefHeight="55.0" prefWidth="1124.0">
-              <children>
-                <!--<Rectangle arcHeight="0.0" arcWidth="0.0" fill="#000833" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
-                <Rectangle arcHeight="0.0" arcWidth="0.0" fill="#002966" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />
-                <Rectangle arcHeight="0.0" arcWidth="0.0" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875">
-                  <fill>
-                    <Color blue="0.400" green="0.161" red="0.000" fx:id="x8" />
-                  </fill>
-                </Rectangle>
-                <Rectangle arcHeight="0.0" arcWidth="0.0" fill="$x8" height="55.0" stroke="BLACK" strokeType="INSIDE" width="7.9998779296875" />-->
-              </children>
-            </HBox>
+            <HBox fx:id="trackBeats" maxWidth="-Infinity" prefHeight="55.0" prefWidth="1124.0" />
           </children>
         </StackPane>
       </children>

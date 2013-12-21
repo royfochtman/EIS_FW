@@ -32,6 +32,15 @@ public class TrackModel extends Track {
         return name;
     }
 
+    /**
+     *
+     * @param id
+     * @param workingArea
+     * @param instrument
+     * @param volume
+     * @param name
+     * @param length
+     */
     public TrackModel(int id, WorkingArea workingArea, Instrument instrument, int volume, String name, Long length) {
         track = new Track(id, workingArea, instrument, volume, name, length);
 

@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.Main;
 import com.model.MusicRoomModel;
 import com.model.MusicSegmentModel;
 import com.model.WorkingAreaModel;
@@ -20,7 +21,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -29,16 +32,22 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.sound.sampled.Mixer;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static com.musicbox.util.Instrument.*;
 import static javafx.collections.FXCollections.*;
 
+/**
+ * Main controller class for the interaction between views and models.
+ */
 public class Controller {
 
     @FXML public static AnchorPane anchorPaneClient;
@@ -100,7 +109,13 @@ public class Controller {
         loadInputs();
         loadOutputs();
 
-        choiceBoxInstrument.setItems(observableArrayList("Guitar", "Bass", "Voice", "Keyboard"));
+        ObservableList<Object> instrumentsList = observableArrayList();
+        ArrayList<String> list = Instrument.getInstruments();
+        for(int i=0; i < list.size(); i++) {
+            instrumentsList.add(list.get(i).toString());
+        }
+        choiceBoxInstrument.setItems(instrumentsList);
+
         /**/
         textFieldTempo.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             public void handle(KeyEvent t) {
@@ -191,9 +206,32 @@ public class Controller {
     }
 
     public void newTrack(ActionEvent actionEvent) {
-        TrackController track = new TrackController("G1", GUITAR, workingAreaModel.getLength(), workingAreaModel.getTempo());
-        System.out.println("Length: " + workingAreaModel.getLength() + ". Tempo: " + workingAreaModel.getTempo());
-        composeAreaVBox.getChildren().add((Node) track);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/trackPopup.fxml"));
+            AnchorPane pane = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("New Track");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(Main.primaryStage);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+
+            TrackPopupController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            dialogStage.showAndWait();
+
+            if(controller.isOkClicked()) {
+                TrackController track = new TrackController(controller.getTrackName(), controller.getInstrument(), workingAreaModel.getLength(), workingAreaModel.getTempo());
+                System.out.println("Length: " + workingAreaModel.getLength() + ". Tempo: " + workingAreaModel.getTempo());
+                composeAreaVBox.getChildren().add((Node) track);
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 
     public void handlePlayComposeArea(ActionEvent actionEvent) {
@@ -312,6 +350,12 @@ public class Controller {
         flowPaneTracksArea.getChildren().add((Node) musicSegment);
     }
 
+    /**
+     * Converts the length (ms) from the recorded audio data to pixel width,
+     * which can be used to draw a rectangle as representation of this audio data.
+     * @param length
+     * @return
+     */
     public double convertLengthToWidth(double length) {
         return ((length/1000)/60)*bpm*15;
     }
@@ -347,6 +391,10 @@ public class Controller {
 
     }
 
+    /**
+     * Setups the drag and drop methods of the tracks area, so audio data
+     * from type ".wav" can be imported and used.
+     */
     private void setupDragAndDropTracksArea() {
         flowPaneTracksArea.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -410,6 +458,11 @@ public class Controller {
 
     }
 
+    /**
+     * Creates a new music room and working area (as models), with them the view
+     * can interact.
+     * @param actionEvent
+     */
     public void handleCreateSession(ActionEvent actionEvent) {
         if((textFieldRoomName.getText() != null) && (textFieldBPM != null) && (textFieldLength.getText() != null)) {
             stackPaneLogin.toBack();
