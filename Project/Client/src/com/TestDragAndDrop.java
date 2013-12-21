@@ -54,15 +54,14 @@ public class TestDragAndDrop extends Application {
                     group.getChildren().add(dragImageView);
                 }
 
-                dragImageView.setOpacity(0.5);
+                dragImageView.setOpacity(0.9);
                 dragImageView.toFront();
                 dragImageView.setMouseTransparent(true);
                 dragImageView.setVisible(true);
-                /*dragImageView.relocate(
-                        (int) (event.getSceneX() - dragImageView.getBoundsInLocal().getWidth() / 2),
-                        (int) (event.getSceneY() - dragImageView.getBoundsInLocal().getHeight() / 2));*/
-                dragImageView.relocate(event.getSceneX(), event.getSceneY());
-
+                Point2D localPoint = root.getScene().getRoot().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
+                dragImageView.relocate(
+                        (int) (localPoint.getX() - dragImageView.getBoundsInLocal().getWidth() / 2),
+                        (int) (localPoint.getY() - dragImageView.getBoundsInLocal().getHeight() / 2));
 
                 /* allow any transfer mode */
                 Dragboard db = source.startDragAndDrop(TransferMode.ANY);
@@ -76,11 +75,14 @@ public class TestDragAndDrop extends Application {
             }
         });
 
-
-        source.setOnMouseDragged(new EventHandler<MouseEvent>() {
+        source.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
-                dragImageView.relocate(mouseEvent.getSceneX() - dragImageView.getX(), mouseEvent.getSceneY() - dragImageView.getY());
+            public void handle(DragEvent event) {
+                Point2D localPoint = root.getScene().getRoot().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
+                dragImageView.relocate(
+                        (int) (localPoint.getX() - dragImageView.getBoundsInLocal().getWidth() / 2),
+                        (int) (localPoint.getY() - dragImageView.getBoundsInLocal().getHeight() / 2));
+                event.consume();
             }
         });
 

@@ -25,6 +25,7 @@ public class InputLoader {
     private TargetDataLine lineIn;
     private final AudioFormat format = AudioSetup.getFormat();
     private boolean outputSelected = false;
+    public static String lastPath;
 
     File wavFile = new File("../Record.wav");
 
@@ -185,7 +186,8 @@ public class InputLoader {
         System.out.println("Song length: " + songLength);
         //try to save file
         try {
-            AudioSystem.write(ais, fileType, new File("../record" + recordNumber++ + ".wav"));
+            lastPath =  "../record" + recordNumber++ + ".wav";
+            AudioSystem.write(ais, fileType, new File(lastPath));
         } catch (IOException e) {
             e.printStackTrace();
         }

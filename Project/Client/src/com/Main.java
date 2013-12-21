@@ -17,6 +17,7 @@ public class Main extends Application {
         primaryStage.setMinHeight(600);
         primaryStage.centerOnScreen();
         primaryStage.show();
+
     }
 
 

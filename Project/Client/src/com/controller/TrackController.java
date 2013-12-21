@@ -117,7 +117,7 @@ public class TrackController extends HBox {
                     .id(getName().get() + String.valueOf(i))
                     .build();
 
-            /*Target from Drag & Drop*/
+            /*Source from Drag & Drop*/
             rect.setOnDragOver(new EventHandler<DragEvent>() {
                 public void handle(DragEvent event) {
                 /* data is dragged over the target */
@@ -172,12 +172,16 @@ public class TrackController extends HBox {
     public void updateBeats(double songLength, int bpm) {
         int oldNumberOfBeats = trackBeats.getChildren().size();
         double numberOfBeats = Math.abs(((songLength/1000)/60 * bpm) - oldNumberOfBeats);
+        String color = null;
 
         for(int i = 0; i< numberOfBeats; i++) {
+            if(i % 4 == 0) {
+                color = DARK_BLUE;
+            } else color = HELL_BLUE;
             Rectangle rect = RectangleBuilder.create()
                     .arcHeight(0).arcWidth(0)
                     .width(8).height(55)
-                    .fill(Color.web("#000833"))
+                    .fill(Color.web(color))
                     .strokeWidth(1).stroke(Color.BLACK).strokeType(StrokeType.INSIDE)
                     .id(String.valueOf(i+oldNumberOfBeats))
                     .build();

@@ -69,5 +69,10 @@ public class WorkingAreaModel {
 
     public WorkingAreaModel(int id, MusicRoom musicRoom, String name, int tempo, String owner, WorkingAreaType workingAreaType, float beat, Long length) {
         workingArea = new WorkingArea(id, musicRoom, name, tempo, owner, workingAreaType, beat, length);
+
+        this.setName(name);
+        this.setBeat(beat);
+        this.setLength(length);
+        this.setTempo(tempo);
     }
 }

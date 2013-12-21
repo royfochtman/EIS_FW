@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.model.MusicRoomModel;
+import com.model.MusicSegmentModel;
 import com.model.WorkingAreaModel;
 import com.musicbox.util.Instrument;
 import com.musicbox.util.WorkingAreaType;
@@ -12,6 +13,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.animation.TranslateTransitionBuilder;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +41,7 @@ import static javafx.collections.FXCollections.*;
 
 public class Controller {
 
+    @FXML public static AnchorPane anchorPaneClient;
     @FXML private Button btnCutTracksArea;
     @FXML private TextField textFieldSearch;
     @FXML private VBox composeAreaVBox;
@@ -80,6 +83,9 @@ public class Controller {
 
     final Text dragText = new Text(500, 100, "drag me");
 
+    private MusicRoomModel musicRoomModel;
+    private WorkingAreaModel workingAreaModel;
+
     /**
      * This method will be called when the FXML is loaded and is the initial configuration of the controller.
      */
@@ -96,8 +102,29 @@ public class Controller {
 
         choiceBoxInstrument.setItems(observableArrayList("Guitar", "Bass", "Voice", "Keyboard"));
         /**/
+        textFieldTempo.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent t) {
+                char ar[] = t.getCharacter().toCharArray();
+                char ch = ar[t.getCharacter().toCharArray().length - 1];
+                if (!(ch >= '0' && ch <= '9')) {
+                    System.out.println("The char you entered is not a number");
+                    t.consume();
+                }
+            }
+        });
+
+        textFieldTempo.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+                if(workingAreaModel != null) {
+                    workingAreaModel.setTempo(Integer.valueOf(s2));
+                    //updateTrackLength();
+                }
+            }
+        });
+        /**/
         timeline = RectangleBuilder.create()
-                                            .x(0)
+                                            .x(2)
                                             .height(composeAreaVBox.getHeight())
                                             .width(1)
                                             .fill(Color.YELLOW)
@@ -164,7 +191,8 @@ public class Controller {
     }
 
     public void newTrack(ActionEvent actionEvent) {
-        TrackController track = new TrackController("G1", GUITAR, songLength, bpm);
+        TrackController track = new TrackController("G1", GUITAR, workingAreaModel.getLength(), workingAreaModel.getTempo());
+        System.out.println("Length: " + workingAreaModel.getLength() + ". Tempo: " + workingAreaModel.getTempo());
         composeAreaVBox.getChildren().add((Node) track);
     }
 
@@ -266,21 +294,21 @@ public class Controller {
     }
 
 
-    /*public void updateTrackLength(ActionEvent actionEvent) {
+    public void updateTrackLength() {
 
         for (int i = 0; i<composeAreaVBox.getChildren().size(); i++) {
-                Node trackComponent = (TrackComponent) composeAreaVBox.getChildren().get(i);
-            if ( trackComponent instanceof TrackComponent) {
-                //((TrackComponent) trackComponent).updateBeats();
-
+                Node trackController = (TrackController) composeAreaVBox.getChildren().get(i);
+            if ( trackController instanceof TrackController) {
+                ((TrackController) trackController ).updateBeats(workingAreaModel.getLength(), workingAreaModel.getTempo());
             }
 
         }
-    }    */
+    }
 
     public void addNewMusicSegment(String name, float length) {
         double musicSegmentWidth = convertLengthToWidth(length);
-        MusicSegmentController musicSegment = new MusicSegmentController(name, length, musicSegmentWidth);
+        MusicSegmentModel musicSegmentModel = new MusicSegmentModel(1, name, Instrument.GUITAR, userName, InputLoader.lastPath, (long) length, musicRoomModel.getMusicRoom());
+        MusicSegmentController musicSegment = new MusicSegmentController(name, length, musicSegmentWidth, InputLoader.lastPath);
         flowPaneTracksArea.getChildren().add((Node) musicSegment);
     }
 
@@ -390,9 +418,9 @@ public class Controller {
             textFieldTempo.setText(textFieldBPM.getText());
             bpm = Integer.valueOf(textFieldBPM.getText());
             songLength = Long.valueOf(textFieldLength.getText());
-            MusicRoomModel musicRoomModel = new MusicRoomModel(textFieldRoomName.getText(), 1);
+            musicRoomModel = new MusicRoomModel(textFieldRoomName.getText(), 1);
 
-            WorkingAreaModel workingAreaModel = new WorkingAreaModel(1, musicRoomModel.getMusicRoom(), textFieldRoomName.getText(), Integer.valueOf(textFieldTempo.getText()), userName, WorkingAreaType.PUBLIC, 1, Long.valueOf(textFieldLength.getText()));
+            workingAreaModel = new WorkingAreaModel(1, musicRoomModel.getMusicRoom(), textFieldRoomName.getText(), Integer.valueOf(textFieldTempo.getText()), userName, WorkingAreaType.PUBLIC, 1, Long.valueOf(textFieldLength.getText()));
 
             //textFieldTempo.textProperty().bindBidirectional(workingAreaModel.tempoProperty());
         }
