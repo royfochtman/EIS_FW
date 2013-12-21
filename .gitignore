@@ -1,6 +1,5 @@
 *.class
 .idea/
-test/
 production/
 
 build/
@@ -10,14 +9,3 @@ build.xml
 # Package Files #
 *.war
 *.ear
-/Project/Code/DatabaseManager/nbproject/private/
-/Project/Code/DatabaseEntities/nbproject/private/
-/Project/Code/DatabaseEntities/build/
-/Project/Code/DatabaseEntities/dist/
-/Project/Code/WebsocketServer/nbproject/private/
-/Project/Code/DatabaseManager/build/
-/Project/Code/DatabaseManager/dist/
-/Project/Code/WebsocketMessage/nbproject/private/
-/Project/Code/WebsocketMessage/build/
-/Project/Code/WebsocketMessage/dist/
-/Project/Code/WebsocketServer/build/
