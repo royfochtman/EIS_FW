@@ -91,15 +91,6 @@ public class MusicSegmentController extends AnchorPane {
             public void handle(MouseEvent event) {
                 System.out.println("Drag entered music segment");
 
-                /*AnchorPane client = Controller.anchorPaneClient;
-                if(!client.getChildren().contains(dragRectangle)) {
-                    client.getChildren().add(dragRectangle);
-                }
-
-                dragRectangle.relocate(
-                        (int) (event.getSceneX() - dragRectangle.getBoundsInLocal().getWidth() / 2),
-                        (int) (event.getSceneY() - dragRectangle.getBoundsInLocal().getHeight() / 2));  */
-
         /* drag was detected, start a drag-and-drop gesture*/
         /* allow any transfer mode */
                 Dragboard db = musicSegmentName.startDragAndDrop(TransferMode.COPY);
@@ -113,23 +104,7 @@ public class MusicSegmentController extends AnchorPane {
             }
         });
 
-        /*this.setOnDragOver(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                Point2D localPoint = Controller.anchorPaneClient.getScene().getRoot().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
-                dragRectangle.relocate(
-                        (int) (localPoint.getX() - dragRectangle.getBoundsInLocal().getWidth() / 2),
-                        (int) (localPoint.getY() - dragRectangle.getBoundsInLocal().getHeight() / 2));
-                event.consume();
-            }
-        });
 
-        this.setOnDragDropped(new EventHandler<DragEvent>() {
-            @Override
-            public void handle(DragEvent event) {
-                Controller.anchorPaneClient.getChildren().remove(dragRectangle);
-            }
-        });*/
         Media media = new Media(new File(audioPath).toURI().toString());
         mediaPlayer = MediaPlayerBuilder.create().media(media).build();
 
