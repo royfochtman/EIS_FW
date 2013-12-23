@@ -147,6 +147,11 @@ public class DatabaseManagerTest {
     }
 
     @Test
+    public void testGetMusicRooms() throws Exception {
+        assertNotNull(DatabaseManager.getMusicRooms());
+    }
+
+    @Test
     public void testGetWorkingAreaById() throws Exception {
         assertNotNull(DatabaseManager.getWorkingAreaById(1));
         assertNull(DatabaseManager.getWorkingAreaById(100000));

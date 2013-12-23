@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by David on 19.12.13.
  */
-public class WebsocketChatMessage implements Serializable {
+public class WebsocketChatMessage {
     private String musicRoomName;
     private WebsocketMessageType messageType;
     private String chatMessage;

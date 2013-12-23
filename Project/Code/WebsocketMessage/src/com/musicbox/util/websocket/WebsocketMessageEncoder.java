@@ -10,11 +10,11 @@ import java.io.OutputStream;
 /**
  * Created by David on 17.12.13.
  */
-public class WebsocketMessageEncoder implements Encoder.BinaryStream<WebsocketChatMessage> {
+public class WebsocketMessageEncoder implements Encoder.BinaryStream<WebsocketMessage> {
         @Override
-        public void encode(WebsocketChatMessage websocketChatMessage, OutputStream outputStream) throws EncodeException, IOException {
+        public void encode(WebsocketMessage websocketMessage, OutputStream outputStream) throws EncodeException, IOException {
             ObjectOutputStream out = new ObjectOutputStream(outputStream);
-            out.writeObject(websocketChatMessage);
+            out.writeObject(websocketMessage);
             out.close();
             outputStream.close();
         }

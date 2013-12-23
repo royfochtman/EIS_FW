@@ -16,6 +16,11 @@ public class MusicRoomSession {
         setMembers(members);
     }
 
+    public MusicRoomSession(String musicRoomSessionName){
+        setMusicRoomSessionName(musicRoomSessionName);
+        setMembers(null);
+    }
+
     public MusicRoomSession(){};
 
     public String getMusicRoomSessionName() {
@@ -41,27 +46,43 @@ public class MusicRoomSession {
     }
 
     public void setMembers(HashMap<String, Session> members) {
-        this.members = members;
+        if(members == null)
+            this.members = new HashMap<>();
+        else
+            this.members = members;
     }
 
-    public Session putMember(Session member) {
+    public boolean putMember(Session member) {
         if(member == null)
-            return null;
+            return false;
 
         if(members.containsKey(member.getId()))
-            return null;
+            return false;
 
-        return members.put(member.getId(), member);
+        members.put(member.getId(), member);
+
+        Session s = members.get(member.getId());
+        return s != null && s.equals(member);
     }
 
-    public Session removeMember(String memberId) {
+    public boolean removeMember(String memberId) {
         if(memberId == null || memberId.isEmpty())
-            return null;
+            return false;
 
-        if(members.containsKey(memberId))
-            return members.remove(memberId);
+        members.remove(memberId);
+        return !members.containsKey(memberId);
+    }
 
-        return null;
+    public boolean updateMember(Session member) {
+        if(member == null)
+            return false;
+
+        if(!members.containsKey(member.getId()))
+            return false;
+
+        members.put(member.getId(), member);
+        Session s = members.get(member.getId());
+        return s != null && s.equals(member);
     }
 
     @Override

@@ -14,7 +14,8 @@ DROP TABLE IF EXISTS `musicbox`.`music_room` ;
 CREATE TABLE IF NOT EXISTS `musicbox`.`music_room` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
 

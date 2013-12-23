@@ -1,10 +1,6 @@
 *.class
 .idea/
-production/
-
-build/
-nbproject/
-build.xml
+out/
 
 # Package Files #
 *.war

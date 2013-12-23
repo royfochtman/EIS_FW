@@ -86,6 +86,11 @@ public abstract class DatabaseManager {
         return convertResultSetToMusicRoomArrayList(resultSet);
     }
 
+    public static ArrayList<MusicRoom> getMusicRooms() {
+        ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM, null);
+        return convertResultSetToMusicRoomArrayList(resultSet);
+    }
+
     public static ArrayList<WorkingArea> getWorkingAreaById(int workingAreaId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + WORKING_AREA + " WHERE " + ID + "=? LIMIT 1", new Object[]{ workingAreaId });
         return convertResultSetToWorkingAreaArrayList(resultSet);
@@ -308,9 +313,11 @@ public abstract class DatabaseManager {
 
         try {
             preparedStatement = connect.prepareStatement(preparedSelectString);
-            preparedStatement.clearParameters();
-            for(int i=0; i<values.length; i++){
-                preparedStatement.setObject(i+1, values[i]);//, getSQLTypeIntFromJavaObject(values[i]));
+            if(values !=null) {
+                preparedStatement.clearParameters();
+                for(int i=0; i<values.length; i++){
+                    preparedStatement.setObject(i+1, values[i]);//, getSQLTypeIntFromJavaObject(values[i]));
+                }
             }
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
