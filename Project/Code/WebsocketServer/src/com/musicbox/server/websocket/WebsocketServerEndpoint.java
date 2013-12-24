@@ -1,5 +1,6 @@
 package com.musicbox.server.websocket;
 
+import com.musicbox.util.MusicRoomDataContainer;
 import com.musicbox.util.database.DatabaseManager;
 import com.musicbox.util.database.entities.MusicRoom;
 import com.musicbox.util.globalobject.GlobalObject;
@@ -41,13 +42,13 @@ public class WebsocketServerEndpoint{
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig endpointConfig) {
-        //System.out.println("Server: Client connect: " + session.getId());
+        //logger???
     }
 
     @OnClose
     public void onClose(Session session, CloseReason closeReason) {
         musicRoomSessionContainer.removeMemberFromSession(session.getId());
-        String test = "";
+        //logger???
     }
 
     @OnMessage
@@ -57,17 +58,20 @@ public class WebsocketServerEndpoint{
         try{
             switch ( websocketMessage.getMessageType()){
                 case NEW_MUSIC_ROOM:
-                    musicRoomSessionContainer.putMusicRoomSession(websocketMessage.getMusicRoomName(), session);
-                    musicRoomSession = musicRoomSessionContainer.getMusicRoomSession(websocketMessage.getMusicRoomName());
-                    MusicRoom musicRoom = new MusicRoom(1, musicRoomSession.getMusicRoomSessionName());
-                    ArrayList<GlobalObject> data = new ArrayList<>();
-                    data.add(musicRoom);
-                    if(DatabaseManager.insertMusicRoom(musicRoom))
+                    MusicRoom musicRoom = new MusicRoom(1, websocketMessage.getMusicRoomName());
+                    if(DatabaseManager.insertMusicRoom(musicRoom)) {
+                        musicRoomSessionContainer.putMusicRoomSession(musicRoom.getName(), session);
+                        ArrayList<GlobalObject> data = new ArrayList<>();
+                        data.add(musicRoom);
                         session.getBasicRemote().sendObject(new WebsocketMessage(musicRoom.getName(), WebsocketMessageType.NEW_MUSIC_ROOM, data));
+                    }
                     break;
                 case JOIN_MUSIC_ROOM:
                     if(musicRoomSessionContainer.putNewMemberInSession(websocketMessage.getMusicRoomName(), session)) {
-                        session.getBasicRemote().sendObject(new WebsocketMessage(websocketMessage.getMusicRoomName(), WebsocketMessageType.JOIN_MUSIC_ROOM, null));
+                        MusicRoomDataContainer dataContainer = DatabaseManager.getCompleteMusicRoomDataByMusicRoomName(websocketMessage.getMusicRoomName());
+                        ArrayList<GlobalObject> list = new ArrayList<>();
+                        list.add(dataContainer);
+                        session.getBasicRemote().sendObject(new WebsocketMessage(dataContainer.getMusicRoom().getName(), WebsocketMessageType.JOIN_MUSIC_ROOM, list));
                     }
                     break;
             }
@@ -86,11 +90,11 @@ public class WebsocketServerEndpoint{
                 if(members != null){
                     for(Session s : members.values()){
                         if(s.isOpen())
-                            s.getBasicRemote().sendObject(websocketChatMessage);
+                            s.getBasicRemote().sendText(websocketChatMessageString);
                     }
                 }
             }
-        }catch(IOException | EncodeException ex) {
+        }catch(IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -98,7 +102,7 @@ public class WebsocketServerEndpoint{
     @OnError
     public void onError(Session session, Throwable t) {
         t.printStackTrace();
-
+        //logger??
     }
 
 }

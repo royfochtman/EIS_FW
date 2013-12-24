@@ -57,7 +57,7 @@ public class DatabaseManagerTest {
     @Test
     public void testInsertWorkingArea() throws Exception {
         date = new Date();
-        WorkingArea workingArea1 = new WorkingArea(1, DatabaseManager.getMusicRoomById(1).get(0), "WorkingArea " + dateFormat.format(date), 10, "Owner",
+        WorkingArea workingArea1 = new WorkingArea(1, DatabaseManager.getMusicRoomById(1), "WorkingArea " + dateFormat.format(date), 10, "Owner",
                 WorkingAreaType.PRIVATE, 2F, 10L);
         WorkingArea workingArea2 = new WorkingArea(1, new MusicRoom(100000, "MusicRoom"), "WorkingArea " + dateFormat.format(date), 10, "Owner",
                 WorkingAreaType.PRIVATE, 2F, 10L);
@@ -69,7 +69,7 @@ public class DatabaseManagerTest {
     @Test
     public void testInsertTrack() throws Exception {
         date = new Date();
-        WorkingArea workingArea1 = DatabaseManager.getWorkingAreaById(1).get(0);
+        WorkingArea workingArea1 = DatabaseManager.getWorkingAreaById(1);
         WorkingArea workingArea2 = new WorkingArea(2, new MusicRoom(1, "MusicRoom"), "WorkingArea " + dateFormat.format(date), 10, "Owner",
                 WorkingAreaType.PRIVATE, 2F, 10L);
         Track track1 = new Track(1, workingArea1, Instrument.BASSGUITAR, 10, "Track" + dateFormat.format(date) , 10L);
@@ -85,7 +85,7 @@ public class DatabaseManagerTest {
     @Test
     public void testInsertMusicSegment() throws Exception {
         date = new Date();
-        MusicRoom musicRoom = DatabaseManager.getMusicRoomById(1).get(0);
+        MusicRoom musicRoom = DatabaseManager.getMusicRoomById(1);
         MusicSegment musicSegment1 = new MusicSegment(1, "MusicSegment" + dateFormat.format(date), Instrument.BASSGUITAR, "Owner", "C:\\", 10L, musicRoom);
         MusicSegment musicSegment2 = new MusicSegment(1, "MusicSegment" + dateFormat.format(date), Instrument.BASSGUITAR, "Owner", "C:\\", 10L, musicRoom);
         MusicSegment musicSegment3 = new MusicSegment(1, "MusicSegment" + dateFormat.format(date), Instrument.BASSGUITAR, "Owner", "C:\\", 10L, musicRoom);
@@ -99,9 +99,9 @@ public class DatabaseManagerTest {
     @Test
     public void testInsertVariation() throws Exception {
         date = new Date();
-        MusicSegment musicSegment1 = DatabaseManager.getMusicSegmentById(1).get(0);
-        MusicSegment musicSegment2 = DatabaseManager.getMusicSegmentById(2).get(0);
-        MusicSegment musicSegment3 = DatabaseManager.getMusicSegmentById(3).get(0);
+        MusicSegment musicSegment1 = DatabaseManager.getMusicSegmentById(1);
+        MusicSegment musicSegment2 = DatabaseManager.getMusicSegmentById(2);
+        MusicSegment musicSegment3 = DatabaseManager.getMusicSegmentById(3);
         MusicSegment musicSegment4 = new MusicSegment(100000, "MusicSegment1", Instrument.BASSGUITAR, "Owner1", "C:\\", 10L, new MusicRoom(1, "TestRoom"));
 
         Variation variation1 = new Variation(1, musicSegment1, "Variation" + dateFormat.format(date), 0L, 10L, "Owner1");
@@ -118,16 +118,16 @@ public class DatabaseManagerTest {
     @Test
     public void testInsertVariationTrack() throws Exception {
         date = new Date();
-        Variation variation1 = DatabaseManager.getVariationById(1).get(0);
-        Track track1 = DatabaseManager.getTrackById(1).get(0);
+        Variation variation1 = DatabaseManager.getVariationById(1);
+        Track track1 = DatabaseManager.getTrackById(1);
         VariationTrack variationTrack1 = new VariationTrack(1, variation1, track1, 5L);
         assertTrue(DatabaseManager.insertVariationTrack(variationTrack1));
-        variationTrack1.setTrack(DatabaseManager.getTrackById(2).get(0));
+        variationTrack1.setTrack(DatabaseManager.getTrackById(2));
         assertTrue(DatabaseManager.insertVariationTrack(variationTrack1));
-        variationTrack1.setVariation(DatabaseManager.getVariationById(2).get(0));
+        variationTrack1.setVariation(DatabaseManager.getVariationById(2));
         assertTrue(DatabaseManager.insertVariationTrack(variationTrack1));
-        variationTrack1.setVariation(DatabaseManager.getVariationById(2).get(0));
-        variationTrack1.setTrack(DatabaseManager.getTrackById(2).get(0));
+        variationTrack1.setVariation(DatabaseManager.getVariationById(2));
+        variationTrack1.setTrack(DatabaseManager.getTrackById(2));
         assertTrue(DatabaseManager.insertVariationTrack(variationTrack1));
     }
 
@@ -139,7 +139,7 @@ public class DatabaseManagerTest {
 
     @Test
     public void testGetMusicRoomByName() throws Exception {
-        MusicRoom musicRoom = DatabaseManager.getMusicRoomById(1).get(0);
+        MusicRoom musicRoom = DatabaseManager.getMusicRoomById(1);
         assertNotNull(DatabaseManager.getMusicRoomByName(musicRoom.getName()));
         assertNull(DatabaseManager.getMusicRoomByName("ejfnejn"));
         assertNull(DatabaseManager.getMusicRoomByName(""));
@@ -182,9 +182,9 @@ public class DatabaseManagerTest {
     }
 
     @Test
-    public void testGetMusicSegmentByMusicRoomId() throws Exception {
-        assertNotNull(DatabaseManager.getMusicSegmentByMusicRoomId(1));
-        assertNull(DatabaseManager.getMusicSegmentByMusicRoomId(100000));;
+    public void testGetMusicSegmentsByMusicRoomId() throws Exception {
+        assertNotNull(DatabaseManager.getMusicSegmentsByMusicRoomId(1));
+        assertNull(DatabaseManager.getMusicSegmentsByMusicRoomId(100000));;
     }
 
     @Test
@@ -232,7 +232,7 @@ public class DatabaseManagerTest {
 
     @Test
     public void testUpdateWorkingArea() throws Exception {
-        WorkingArea workingArea1 = DatabaseManager.getWorkingAreaById(1).get(0);
+        WorkingArea workingArea1 = DatabaseManager.getWorkingAreaById(1);
         workingArea1.setName("jrgrwgpr");
         assertTrue(DatabaseManager.updateWorkingArea(workingArea1));
         workingArea1.setOwner(null);
@@ -242,7 +242,7 @@ public class DatabaseManagerTest {
 
     @Test
     public void testUpdateTrack() throws Exception {
-        Track track1 = DatabaseManager.getTrackById(1).get(0);
+        Track track1 = DatabaseManager.getTrackById(1);
         track1.setName("Trackfake");
         assertTrue(DatabaseManager.updateTrack(track1));
         track1.setName("");
@@ -252,7 +252,7 @@ public class DatabaseManagerTest {
 
     @Test
     public void testUpdateVariation() throws Exception {
-        Variation variation1 = DatabaseManager.getVariationById(1).get(0);
+        Variation variation1 = DatabaseManager.getVariationById(1);
         variation1.setName("dfefe");
         assertTrue(DatabaseManager.updateVariation(variation1));
         variation1.setName("");
@@ -262,7 +262,7 @@ public class DatabaseManagerTest {
 
     @Test
     public void testUpdateVariationTrack() throws Exception {
-        VariationTrack variationTrack1 = DatabaseManager.getVariationTrackById(1).get(0);
+        VariationTrack variationTrack1 = DatabaseManager.getVariationTrackById(1);
         variationTrack1.setStartTimeOnTrack(2L);
         assertTrue(DatabaseManager.updateVariationTrack(variationTrack1));
         variationTrack1.setStartTimeOnTrack(-1L);
@@ -272,7 +272,7 @@ public class DatabaseManagerTest {
 
     @Test
     public void testUpdateMusicSegment() throws Exception {
-        MusicSegment musicSegment1 = DatabaseManager.getMusicSegmentById(1).get(0);
+        MusicSegment musicSegment1 = DatabaseManager.getMusicSegmentById(1);
         musicSegment1.setName("feqef");
         assertTrue(DatabaseManager.updateMusicSegment(musicSegment1));
         musicSegment1.setName("");

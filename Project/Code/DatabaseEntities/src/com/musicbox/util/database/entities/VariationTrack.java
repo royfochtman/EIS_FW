@@ -57,8 +57,9 @@ public class VariationTrack extends GlobalObject {
     }
 
     public boolean isValid() {
-        if(getId() > 0 && variation != null && track != null && startTimeOnTrack >= 0L && startTimeOnTrack < track.getLength()
-                && variation.getMusicSegment().getInstrument().equals(track.getInstrument()))
+        if(getId() > 0 && variation != null && variation.isValid() && track != null && track.isValid() && startTimeOnTrack >= 0L && startTimeOnTrack < track.getLength()
+                && variation.getMusicSegment().getInstrument().equals(track.getInstrument())
+                && variation.getMusicSegment().getMusicRoom().getId() == track.getWorkingArea().getMusicRoom().getId())
             return true;
         else
             return false;
