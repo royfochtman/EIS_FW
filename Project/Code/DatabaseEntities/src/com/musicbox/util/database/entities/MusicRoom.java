@@ -1,5 +1,6 @@
 package com.musicbox.util.database.entities;
 
+import com.musicbox.util.EntityClass;
 import com.musicbox.util.globalobject.GlobalObject;
 
 /**
@@ -13,12 +14,12 @@ public class MusicRoom extends GlobalObject{
     private String name;
 
     public MusicRoom() {
-        super.setDataClass(MusicRoom.class);
+        super.setEntityClass(EntityClass.MUSIC_ROOM_CLASS);
         name = "";
     }
 
     public MusicRoom(int id, String name) {
-        super.setDataClass(MusicRoom.class);
+        super.setEntityClass(EntityClass.MUSIC_ROOM_CLASS);
         super.setId(id);
         setName(name);
     }

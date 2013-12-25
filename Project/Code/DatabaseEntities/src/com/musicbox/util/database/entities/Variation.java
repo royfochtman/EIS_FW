@@ -1,5 +1,6 @@
 package com.musicbox.util.database.entities;
 
+import com.musicbox.util.EntityClass;
 import com.musicbox.util.globalobject.GlobalObject;
 
 /**
@@ -17,7 +18,7 @@ public class Variation extends GlobalObject {
     private String owner;
 
     public Variation() {
-        super.setDataClass(Variation.class);
+        super.setEntityClass(EntityClass.VARIATION_CLASS);
         musicSegment = null;
         name = "";
         startTime = 0L;
@@ -26,7 +27,7 @@ public class Variation extends GlobalObject {
     }
 
     public Variation(int id, MusicSegment musicSegment, String name, Long startTime, Long endTime, String owner) {
-        super.setDataClass(Variation.class);
+        super.setEntityClass(EntityClass.VARIATION_CLASS);
         super.setId(id);
         setMusicSegment(musicSegment);
         setName(name);

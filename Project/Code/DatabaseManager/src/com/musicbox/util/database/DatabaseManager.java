@@ -7,6 +7,7 @@ import com.musicbox.util.MusicRoomDataContainer;
 import com.musicbox.util.WorkingAreaType;
 import com.musicbox.util.Instrument;
 import com.musicbox.util.database.entities.*;
+import com.musicbox.util.globalobject.GlobalObject;
 
 import javax.lang.model.element.VariableElement;
 
@@ -200,30 +201,63 @@ public abstract class DatabaseManager {
     }
 
     public static MusicRoomDataContainer getCompleteMusicRoomDataByMusicRoomId(int musicRoomId) {
-        MusicRoomDataContainer dataContainer = new MusicRoomDataContainer();
-        dataContainer.setMusicRoom(getMusicRoomById(musicRoomId));
-        dataContainer.setWorkingAreas(getWorkingAreasByMusicRoomId(musicRoomId));
-        dataContainer.setMusicSegments(getMusicSegmentsByMusicRoomId(musicRoomId));
-        dataContainer.setVariations(getVariationsByMusicRoomId(musicRoomId));
-        dataContainer.setTracks(getTracksByMusicRoomId(musicRoomId));
-        dataContainer.setVariationTracks(getVariationTracksByMusicRoomId(musicRoomId));
-        return dataContainer;
+        MusicRoom musicRoom = getMusicRoomById(musicRoomId);
+        return getAllDataFromMusicRoom(musicRoom);
     }
 
     public static MusicRoomDataContainer getCompleteMusicRoomDataByMusicRoomName(String musicRoomName) {
-        MusicRoomDataContainer dataContainer = new MusicRoomDataContainer();
         MusicRoom musicRoom = getMusicRoomByName(musicRoomName);
-        if(musicRoom != null) {
-            dataContainer.setMusicRoom(musicRoom);
-            dataContainer.setWorkingAreas(getWorkingAreasByMusicRoomId(musicRoom.getId()));
-            dataContainer.setMusicSegments(getMusicSegmentsByMusicRoomId(musicRoom.getId()));
-            dataContainer.setVariations(getVariationsByMusicRoomId(musicRoom.getId()));
-            dataContainer.setTracks(getTracksByMusicRoomId(musicRoom.getId()));
-            dataContainer.setVariationTracks(getVariationTracksByMusicRoomId(musicRoom.getId()));
-            return dataContainer;
-        }
-        return null;
+        return getAllDataFromMusicRoom(musicRoom);
     }
+
+    public static boolean insertGlobalObject(GlobalObject obj) {
+        switch (obj.getEntityClass()) {
+            case MUSIC_ROOM_CLASS:
+                MusicRoom musicRoom = (MusicRoom)obj;
+                return insertMusicRoom(musicRoom);
+            case WORKING_AREA_CLASS:
+                WorkingArea workingArea = (WorkingArea)obj;
+                return insertWorkingArea(workingArea);
+            case TRACK_CLASS:
+                Track track = (Track)obj;
+                return insertTrack(track);
+            case MUSIC_SEGMENT_CLASS:
+                MusicSegment musicSegment = (MusicSegment)obj;
+                return insertMusicSegment(musicSegment);
+            case VARIATION_CLASS:
+                Variation variation = (Variation)obj;
+                return insertVariation(variation);
+            case VARIATION_TRACK_CLASS:
+                VariationTrack variationTrack = (VariationTrack)obj;
+                return insertVariationTrack(variationTrack);
+        }
+        return false;
+    }
+
+    public static boolean updateGlobalObject(GlobalObject obj) {
+        switch (obj.getEntityClass()) {
+            case MUSIC_ROOM_CLASS:
+                MusicRoom musicRoom = (MusicRoom)obj;
+                return updateMusicRoom(musicRoom);
+            case WORKING_AREA_CLASS:
+                WorkingArea workingArea = (WorkingArea)obj;
+                return updateWorkingArea(workingArea);
+            case TRACK_CLASS:
+                Track track = (Track)obj;
+                return updateTrack(track);
+            case MUSIC_SEGMENT_CLASS:
+                MusicSegment musicSegment = (MusicSegment)obj;
+                return updateMusicSegment(musicSegment);
+            case VARIATION_CLASS:
+                Variation variation = (Variation)obj;
+                return updateVariation(variation);
+            case VARIATION_TRACK_CLASS:
+                VariationTrack variationTrack = (VariationTrack)obj;
+                return updateVariationTrack(variationTrack);
+        }
+        return false;
+    }
+
     /**
      * Inserts a new MusicRoom-Object to the database
      * @param musicRoom the id-attribute is not needed, because it's auto increment.
@@ -400,19 +434,6 @@ public abstract class DatabaseManager {
         }
     }
 
-    private static int getSQLTypeIntFromJavaObject(Object value) {
-        if(value instanceof Integer)
-            return Types.INTEGER;
-        if(value instanceof String)
-            return Types.VARCHAR;
-        if(value instanceof Long)
-            return Types.BIGINT;
-        if(value instanceof Float)
-            return Types.FLOAT;
-
-        return -1;
-    }
-
     private static ArrayList<MusicRoom> convertResultSetToMusicRoomArrayList(ResultSet resultSet){
         try {
             if(resultSet == null || !resultSet.next())
@@ -578,6 +599,20 @@ public abstract class DatabaseManager {
             return null;
         }
 
+    }
+
+    private static MusicRoomDataContainer getAllDataFromMusicRoom(MusicRoom musicRoom) {
+        MusicRoomDataContainer dataContainer = new MusicRoomDataContainer();
+        if(musicRoom != null) {
+            dataContainer.setMusicRoom(musicRoom);
+            dataContainer.setWorkingAreas(getWorkingAreasByMusicRoomId(musicRoom.getId()));
+            dataContainer.setMusicSegments(getMusicSegmentsByMusicRoomId(musicRoom.getId()));
+            dataContainer.setVariations(getVariationsByMusicRoomId(musicRoom.getId()));
+            dataContainer.setTracks(getTracksByMusicRoomId(musicRoom.getId()));
+            dataContainer.setVariationTracks(getVariationTracksByMusicRoomId(musicRoom.getId()));
+            return dataContainer;
+        }
+        return null;
     }
 
     private static void closePreparedStatement(){

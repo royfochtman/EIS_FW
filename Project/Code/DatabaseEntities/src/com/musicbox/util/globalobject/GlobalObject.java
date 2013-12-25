@@ -1,5 +1,7 @@
 package com.musicbox.util.globalobject;
 
+import com.musicbox.util.EntityClass;
+
 import java.io.Serializable;
 
 /**
@@ -11,15 +13,16 @@ import java.io.Serializable;
  */
 public abstract class GlobalObject implements Serializable {
     private int id;
-    private Class dataClass;
 
-    public Class getDataClass() {
-        return dataClass;
+    private EntityClass entityClass;
+
+    public EntityClass getEntityClass() {
+        return entityClass;
     }
 
-    public void setDataClass(Class objectClass)
+    protected final void setEntityClass(EntityClass entityClass)
     {
-        dataClass = objectClass;
+        this.entityClass = entityClass;
     }
 
     public int getId() {

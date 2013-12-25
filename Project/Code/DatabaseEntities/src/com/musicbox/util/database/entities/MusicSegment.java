@@ -1,5 +1,6 @@
 package com.musicbox.util.database.entities;
 
+import com.musicbox.util.EntityClass;
 import com.musicbox.util.Instrument;
 import com.musicbox.util.globalobject.GlobalObject;
 
@@ -19,7 +20,7 @@ public class MusicSegment extends GlobalObject {
     private MusicRoom musicRoom;
 
     public MusicSegment() {
-        super.setDataClass(MusicSegment.class);
+        super.setEntityClass(EntityClass.MUSIC_SEGMENT_CLASS);
         name = "";
         instrument = null;
         owner = "";
@@ -28,7 +29,7 @@ public class MusicSegment extends GlobalObject {
     }
 
     public MusicSegment(int id, String name, Instrument instrument, String owner, String audioPath, Long length, MusicRoom musicRoom) {
-        super.setDataClass(MusicSegment.class);
+        super.setEntityClass(EntityClass.MUSIC_SEGMENT_CLASS);
         super.setId(id);
         setName(name);
         setInstrument(instrument);

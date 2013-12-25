@@ -8,7 +8,10 @@ import java.util.ArrayList;
 public enum WebsocketMessageType {
     CHAT ("Chat"),
     NEW_MUSIC_ROOM("New MusicRoom"),
-    JOIN_MUSIC_ROOM("Join MusicRoom");
+    JOIN_MUSIC_ROOM("Join MusicRoom"),
+    CREATED_ELEMENT("Created Element"),
+    UPDATED_ELEMENT("Updated Element"),
+    ERROR("Error");
 
     private final String messageTypeString;
 
@@ -29,7 +32,7 @@ public enum WebsocketMessageType {
         return messageTypeString;
     }
 
-    public WebsocketMessageType fromString(String messageTypeString) {
+    public static WebsocketMessageType fromString(String messageTypeString) {
         if(messageTypeString == null || messageTypeString.isEmpty())
             return null;
 

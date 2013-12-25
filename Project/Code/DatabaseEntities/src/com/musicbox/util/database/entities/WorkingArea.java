@@ -1,5 +1,6 @@
 package com.musicbox.util.database.entities;
 
+import com.musicbox.util.EntityClass;
 import com.musicbox.util.WorkingAreaType;
 import com.musicbox.util.globalobject.GlobalObject;
 
@@ -20,11 +21,18 @@ public class WorkingArea extends GlobalObject {
     private Long length;
 
     public WorkingArea() {
-        super.setDataClass(WorkingArea.class);
+        super.setEntityClass(EntityClass.WORKING_AREA_CLASS);
+        musicRoom = null;
+        name = "";
+        tempo = 0;
+        owner = "";
+        workingAreaType = null;
+        beat = 0F;
+        length = 0L;
     }
 
     public WorkingArea(int id, MusicRoom musicRoom, String name, int tempo, String owner, WorkingAreaType workingAreaType, float beat, Long length) {
-        super.setDataClass(WorkingArea.class);
+        super.setEntityClass(EntityClass.WORKING_AREA_CLASS);
         super.setId(id);
         setMusicRoom(musicRoom);
         setName(name);

@@ -1,5 +1,6 @@
 package com.musicbox.util.database.entities;
 
+import com.musicbox.util.EntityClass;
 import com.musicbox.util.globalobject.GlobalObject;
 
 /**
@@ -15,14 +16,14 @@ public class VariationTrack extends GlobalObject {
     private Long startTimeOnTrack;
 
     public VariationTrack() {
-        super.setDataClass(VariationTrack.class);
+        super.setEntityClass(EntityClass.VARIATION_TRACK_CLASS);
         variation = null;
         track = null;
         startTimeOnTrack = 0L;
     }
 
     public VariationTrack(int id, Variation variation, Track track, Long startTimeOnTrack) {
-        super.setDataClass(VariationTrack.class);
+        super.setEntityClass(EntityClass.VARIATION_TRACK_CLASS);
         super.setId(id);
         setVariation(variation);
         setTrack(track);
