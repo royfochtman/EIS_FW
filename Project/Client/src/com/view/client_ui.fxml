@@ -17,119 +17,6 @@
   <children>
     <StackPane id="StackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <StackPane fx:id="stackPaneLogin" prefHeight="150.0" prefWidth="200.0">
-          <children>
-            <AnchorPane prefHeight="720.0" prefWidth="1201.9998779296875">
-              <children>
-                <Rectangle arcHeight="0.0" arcWidth="0.0" height="720.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1457.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-255.0" AnchorPane.topAnchor="0.0">
-                  <fill>
-                    <Color blue="0.375" green="0.375" red="0.375" fx:id="x8" />
-                  </fill>
-                </Rectangle>
-              </children>
-            </AnchorPane>
-            <GridPane>
-              <children>
-                <StackPane id="StackPane" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                  <children>
-                    <GridPane fx:id="paneLogin" visible="false">
-                      <children>
-                        <Label text="User name:" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                          <font>
-                            <Font name="System Bold" size="16.0" fx:id="x3" />
-                          </font>
-                          <textFill>
-                            <Color blue="0.750" green="0.750" red="0.750" fx:id="x9" />
-                          </textFill>
-                        </Label>
-                        <Label font="$x3" text="Instrument:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <Label font="$x3" text="Input device:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                        <ChoiceBox fx:id="choiceBoxInstrument" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList" />
-                          </items>
-                        </ChoiceBox>
-                        <ChoiceBox fx:id="choiceBoxInputDevice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                          <items>
-                            <FXCollections fx:factory="observableArrayList" />
-                          </items>
-                        </ChoiceBox>
-                        <TextField fx:id="labelUserName" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                          <children>
-                            <Button mnemonicParsing="false" onAction="#handleNewSession" text="New Session" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-                            <Button mnemonicParsing="false" onAction="#handleLoadSessions" text="Load Sessions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-                          </children>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                      </children>
-                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="98.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="303.0" />
-                      </columnConstraints>
-                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      </rowConstraints>
-                    </GridPane>
-                    <GridPane fx:id="paneNewSession">
-                      <children>
-                        <Label font="$x3" text="Room name:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                        <Label font="$x3" text="Tempo:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                        <Label font="$x3" text="Length:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                        <TextField fx:id="textFieldRoomName" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="RoomName" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-                          <children>
-                            <Button mnemonicParsing="false" onAction="#handleCreateSession" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-                          </children>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                        <TextField fx:id="textFieldBPM" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="120" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <TextField fx:id="textFieldLength" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="30000" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                      </children>
-                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="98.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="303.0" />
-                      </columnConstraints>
-                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      </rowConstraints>
-                    </GridPane>
-                  </children>
-                </StackPane>
-              </children>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-            </GridPane>
-          </children>
-        </StackPane>
         <AnchorPane id="AnchorPane" fx:id="anchorPaneClient" prefWidth="1200.0">
           <children>
             <SplitPane dividerPositions="0.49922958397534667" focusTraversable="true" orientation="VERTICAL" prefHeight="651.0" prefWidth="1202.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="69.0">
@@ -144,7 +31,11 @@
                               <children>
                                 <HBox prefHeight="55.0" prefWidth="200.0">
                                   <children>
-                                    <Rectangle arcHeight="0.0" arcWidth="0.0" fill="$x8" height="55.0" stroke="$x8" strokeType="INSIDE" strokeWidth="2.0" width="115.0" />
+                                    <Rectangle arcHeight="0.0" arcWidth="0.0" height="55.0" stroke="$x8" strokeType="INSIDE" strokeWidth="2.0" width="115.0">
+                                      <fill>
+                                        <Color blue="0.375" green="0.375" red="0.375" fx:id="x8" />
+                                      </fill>
+                                    </Rectangle>
                                     <Rectangle arcHeight="0.0" arcWidth="0.0" height="55.0" stroke="$x8" strokeType="INSIDE" strokeWidth="1.0" width="8.0">
                                       <fill>
                                         <Color blue="0.500" green="0.500" red="0.500" fx:id="x7" />
@@ -1237,7 +1128,10 @@
                           <children>
                             <HBox layoutY="5.0" prefHeight="47.0" prefWidth="1196.0" styleClass="hbox" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                               <children>
-                                <Label font="$x3" prefHeight="47.0" prefWidth="120.0" text="Tracks Area" textAlignment="LEFT" underline="false" wrapText="false">
+                                <Label prefHeight="47.0" prefWidth="120.0" text="Tracks Area" textAlignment="LEFT" underline="false" wrapText="false">
+                                  <font>
+                                    <Font name="System Bold" size="16.0" fx:id="x3" />
+                                  </font>
                                   <textFill>
                                     <Color blue="0.875" green="0.875" red="0.875" fx:id="x2" />
                                   </textFill>
@@ -1518,6 +1412,128 @@
             </AnchorPane>
           </children>
         </AnchorPane>
+        <StackPane fx:id="stackPaneLogin" prefHeight="150.0" prefWidth="200.0">
+          <children>
+            <AnchorPane prefHeight="720.0" prefWidth="1201.9998779296875">
+              <children>
+                <Rectangle arcHeight="0.0" arcWidth="0.0" fill="$x8" height="720.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="1457.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-255.0" AnchorPane.topAnchor="0.0" />
+              </children>
+            </AnchorPane>
+            <GridPane>
+              <children>
+                <StackPane id="StackPane" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <children>
+                    <GridPane fx:id="paneLogin" visible="false">
+                      <children>
+                        <Label font="$x3" text="User name:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                          <textFill>
+                            <Color blue="0.750" green="0.750" red="0.750" fx:id="x9" />
+                          </textFill>
+                        </Label>
+                        <Label font="$x3" text="Instrument:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label font="$x3" text="Input device:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <ChoiceBox fx:id="choiceBoxInstrument" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList" />
+                          </items>
+                        </ChoiceBox>
+                        <ChoiceBox fx:id="choiceBoxInputDevice" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList" />
+                          </items>
+                        </ChoiceBox>
+                        <TextField fx:id="labelUserName" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                          <children>
+                            <Button mnemonicParsing="false" onAction="#handleNewSession" text="New Session" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                            <Button mnemonicParsing="false" onAction="#handleLoadSessions" text="Load Sessions" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                          </children>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="98.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="303.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                    <GridPane fx:id="paneNewSession" visible="true">
+                      <children>
+                        <Label font="$x3" text="Room name:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <Label font="$x3" text="Tempo:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <Label font="$x3" text="Length:" textFill="$x9" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <TextField fx:id="textFieldRoomName" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="RoomName" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <GridPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                          <children>
+                            <Button mnemonicParsing="false" onAction="#handleCreateSession" text="Create" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                          </children>
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                        <TextField fx:id="textFieldLength" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="30000" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <children>
+                            <Slider fx:id="sliderBPM" HBox.hgrow="NEVER">
+                              <HBox.margin>
+                                <Insets left="80.0" top="17.0" />
+                              </HBox.margin>
+                            </Slider>
+                            <Label fx:id="labelBPM" text="Label" textFill="$x9">
+                              <font>
+                                <Font size="14.0" />
+                              </font>
+                              <HBox.margin>
+                                <Insets left="10.0" top="17.0" />
+                              </HBox.margin>
+                            </Label>
+                          </children>
+                        </HBox>
+                      </children>
+                      <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="98.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="303.0" />
+                      </columnConstraints>
+                      <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      </rowConstraints>
+                    </GridPane>
+                  </children>
+                </StackPane>
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+          </children>
+        </StackPane>
       </children>
     </StackPane>
   </children>

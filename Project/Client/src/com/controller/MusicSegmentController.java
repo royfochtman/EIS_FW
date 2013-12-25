@@ -44,6 +44,9 @@ public class MusicSegmentController extends AnchorPane {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
+        this.setId(Controller.userName + Controller.musicSegmentIndex);
+        this.setPadding(InsetsBuilder.create().left(10).top(10).build());
+
         this.audioPath = audioPath;
 
         try {
@@ -62,7 +65,7 @@ public class MusicSegmentController extends AnchorPane {
         this.setWidth(width);
         this.setMaxWidth(width);
         this.setMinWidth(width);
-        this.setPadding(InsetsBuilder.create().left(10).right(10).build());
+        //this.setPadding(InsetsBuilder.create().left(10).right(10).build());
 
         this.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
@@ -108,7 +111,6 @@ public class MusicSegmentController extends AnchorPane {
         Media media = new Media(new File(audioPath).toURI().toString());
         mediaPlayer = MediaPlayerBuilder.create().media(media).build();
 
-
         btnPlayMusicSegment.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -129,8 +131,17 @@ public class MusicSegmentController extends AnchorPane {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("Delete");
+                if(Controller.getTracksArea().getChildren().remove(getController())) {
+                    System.out.println("Music segment deleted");
+                } else {
+                    System.out.println("music segment could not be deleted");
+                }
             }
         });
+    }
+
+    public AnchorPane getController() {
+        return this;
     }
 
 

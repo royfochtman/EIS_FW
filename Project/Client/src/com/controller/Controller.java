@@ -69,7 +69,7 @@ public class Controller {
     @FXML
     private Menu menuOutputSetup;
     @FXML
-    private FlowPane flowPaneTracksArea;
+    private static FlowPane flowPaneTracksArea;
     @FXML
     private Button btnRecordTracksArea;
     @FXML
@@ -93,8 +93,6 @@ public class Controller {
     @FXML
     private TextField textFieldRoomName;
     @FXML
-    private TextField textFieldBPM;
-    @FXML
     private TextField textFieldLength;
     @FXML
     private StackPane stackPaneLogin;
@@ -108,6 +106,10 @@ public class Controller {
     private StackPane stackPaneComposition;
     @FXML
     private AnchorPane anchorPaneComposition;
+    @FXML
+    private Slider sliderBPM;
+    @FXML
+    private Label labelBPM;
 
     private Transition timelineTransition;
     private Rectangle timeline;
@@ -119,9 +121,10 @@ public class Controller {
     private boolean recording = false;
     private Duration timelineActualPosition;
 
-    private String userName;
+    public static String userName;
     private int bpm;
     private Long songLength;
+    public static int musicSegmentIndex = 0;
 
     private MusicRoomModel musicRoomModel;
     private WorkingAreaModel workingAreaModel;
@@ -131,6 +134,7 @@ public class Controller {
      */
     @FXML
     void initialize() {
+        setupSliderBPM();
 
         stackPaneLogin.toFront();
         paneNewSession.setVisible(false);
@@ -156,6 +160,28 @@ public class Controller {
         return composeAreaVBox;
     }
 
+    public static FlowPane getTracksArea() {
+        return flowPaneTracksArea;
+    }
+
+    public void setupSliderBPM() {
+        sliderBPM.setMin(10);
+        sliderBPM.setMax(200);
+        sliderBPM.setValue(100);
+        sliderBPM.setShowTickLabels(true);
+        sliderBPM.setShowTickMarks(true);
+        sliderBPM.setMajorTickUnit(10);
+        sliderBPM.setMinorTickCount(10);
+        sliderBPM.setBlockIncrement(10.0f);
+        labelBPM.setText(String.format("%.0f", sliderBPM.getValue()));
+
+        sliderBPM.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+                labelBPM.setText(String.format("%.0f", number2));
+            }
+        });
+    }
     /**
      * Records a new music segment.
      * @param actionEvent
@@ -169,7 +195,8 @@ public class Controller {
             btnRecComposeArea.setTooltip(chooseInput);
             chooseInput.show((Node) btnRecComposeArea, btnRecComposeArea.getLayoutX(), btnRecComposeArea.getLayoutY());*/
 
-            System.out.println("Choose an input");
+            //System.out.println("Choose an input");
+            createWarningPopup("Input not selected", "Choose an input to start recording");
         }
     }
 
@@ -205,6 +232,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Start playing the main composition.
+     * @param actionEvent
+     */
     public void handlePlayComposeArea(ActionEvent actionEvent) {
         timelineTransition.play();
         //timelineTransition.playFrom(timelineActualPosition);
@@ -385,7 +416,7 @@ public class Controller {
             radioMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    System.out.println(radioMenuItem.getUserData());
+                    //System.out.println(radioMenuItem.getUserData());
                     if (inputLoader.setupInput((Integer) radioMenuItem.getUserData()) == true) {
                         inputSelected = true;
                     } else {
@@ -413,7 +444,7 @@ public class Controller {
             radioMenuItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    System.out.println(radioMenuItem.getUserData());
+                    //System.out.println(radioMenuItem.getUserData());
                     if (inputLoader.setupOutput((Integer) radioMenuItem.getUserData()) == true) {
                         outputSelected = true;
                     } else {
@@ -438,7 +469,7 @@ public class Controller {
     }
 
     /**
-     *
+     * Setup the Events and Properties from the Tempo field.
      */
     private void setupTempoListeners() {
         textFieldTempo.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
@@ -447,6 +478,7 @@ public class Controller {
                 char ch = ar[t.getCharacter().toCharArray().length - 1];
                 if (!(ch >= '0' && ch <= '9')) {
                     System.out.println("The char you entered is not a number");
+                    createWarningPopup("Just numbers are accepted", "The char you entered is not a number");
                     t.consume();
                 }
             }
@@ -472,7 +504,9 @@ public class Controller {
         Platform.exit();
     }
 
-
+    /**
+     * Updates the number of beats when the songs beats or length was changed.
+     */
     public void updateTrackLength() {
 
         for (int i = 0; i < composeAreaVBox.getChildren().size(); i++) {
@@ -484,9 +518,14 @@ public class Controller {
         }
     }
 
+    /**
+     * Adds a new music segment to the main tracks area.
+     * @param name
+     * @param length
+     */
     public void addNewMusicSegment(String name, float length) {
         double musicSegmentWidth = convertLengthToWidth(length);
-        MusicSegmentModel musicSegmentModel = new MusicSegmentModel(1, name, Instrument.GUITAR, userName,
+        MusicSegmentModel musicSegmentModel = new MusicSegmentModel(musicSegmentIndex++, name, Instrument.GUITAR, userName,
                 InputLoader.lastPath, (long) length, musicRoomModel.getMusicRoom());
         MusicSegmentController musicSegment = new MusicSegmentController(name, length, musicSegmentWidth,
                 InputLoader.lastPath);
@@ -504,7 +543,10 @@ public class Controller {
         return ((length / 1000) / 60) * bpm * 15;
     }
 
-
+    /**
+     * Starts recording from the selected input. The recorded track will be shown in the main tracks area.
+     * @param actionEvent
+     */
     public void handleRecordTracksArea(ActionEvent actionEvent) {
         if (recording == true) {
             float length = inputLoader.stop();
@@ -517,7 +559,9 @@ public class Controller {
             inputLoader.record();
             imageViewRecordTracksArea.setImage(imageViewStop.getImage());
         } else {
-            System.out.println("Choose an input");
+            //System.out.println("Choose an input");
+            createWarningPopup("Input not selected", "Choose an input to start recording");
+
         }
     }
 
@@ -568,11 +612,11 @@ public class Controller {
                         String fileName = file.getName();
 
                         fileFormat = filePath.substring(filePath.length() - 3, filePath.length());
-                        System.out.println("File Format: " + fileFormat);
+                        //System.out.println("File Format: " + fileFormat);
 
                     }
                     if (!fileFormat.equals("wav")) {
-                        System.out.println("File format not valid. Just .wav files");
+                        createWarningPopup("Invalid File format", "File format not valid. Just .wav files");
                     } else {
                         //set new song to the view
                     }
@@ -596,7 +640,7 @@ public class Controller {
             paneNewSession.toFront();
             //go on
         } else {
-            System.out.println("Incomplete formular");
+            createWarningPopup("Incomplete formular", "Fill all fields to continue");
         }
     }
 
@@ -616,12 +660,11 @@ public class Controller {
      * @param actionEvent
      */
     public void handleCreateSession(ActionEvent actionEvent) {
-        if ((textFieldRoomName.getText() != null) && (textFieldBPM != null) && (textFieldLength.getText() != null)) {
+        if ((!textFieldRoomName.getText().isEmpty()) && (!textFieldLength.getText().isEmpty())) {
             stackPaneLogin.toBack();
             stackPaneLogin.setVisible(false);
-
-            textFieldTempo.setText(textFieldBPM.getText());
-            bpm = Integer.valueOf(textFieldBPM.getText());
+            textFieldTempo.setText(labelBPM.getText());
+            bpm = Integer.valueOf(labelBPM.getText());
             songLength = Long.valueOf(textFieldLength.getText());
             musicRoomModel = new MusicRoomModel(textFieldRoomName.getText(), 1);
 
@@ -630,9 +673,40 @@ public class Controller {
                     Long.valueOf(textFieldLength.getText()));
             Main.primaryStage.setTitle(textFieldRoomName.getText());
             //textFieldTempo.textProperty().bindBidirectional(workingAreaModel.tempoProperty());
+        } else {
+            createWarningPopup("Fill the formular", "Fill the formular to continue");
         }
 
         //WorkingArea workingArea = new WorkingArea(1, musicRoom, textFieldRoomName.getText(), Integer.valueOf(textFieldTempo.getText()), );
 
+    }
+
+    /**
+     * Creates and shows a new warning popup window, which can be used to inform the user about the actual program
+     * state.
+     * @param popupTitle
+     * @param warningText
+     */
+    public void createWarningPopup(String popupTitle, String warningText) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/warningPopup.fxml"));
+            AnchorPane pane = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle(popupTitle);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(Main.primaryStage);
+            dialogStage.setResizable(false);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+
+            WarningPopupController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setText(warningText);
+
+            dialogStage.showAndWait();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
