@@ -119,7 +119,7 @@ public class Controller {
     private boolean inputSelected = false;
     private boolean outputSelected = false;
     private boolean recording = false;
-    private Duration timelineActualPosition;
+    private Duration timelineActualPosition = new Duration(0.0);
 
     public static String userName;
     private int bpm;
@@ -237,8 +237,8 @@ public class Controller {
      * @param actionEvent
      */
     public void handlePlayComposeArea(ActionEvent actionEvent) {
-        timelineTransition.play();
-        //timelineTransition.playFrom(timelineActualPosition);
+        //timelineTransition.play();
+        timelineTransition.playFrom(timelineActualPosition);
     }
 
     /**
@@ -253,8 +253,9 @@ public class Controller {
             addNewMusicSegment("New Music Segment", length);
             recording = false;
         } else System.out.println("Nothing to stop");
+
+        timelineActualPosition = timelineTransition.getCurrentTime();
         timelineTransition.stop();
-        //timelineActualPosition = timelineTransition.getCurrentTime();
 
     }
 
