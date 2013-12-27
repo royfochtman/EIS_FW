@@ -258,6 +258,24 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    public static boolean deleteGlobalObject(GlobalObject obj) {
+        switch (obj.getEntityClass()) {
+            case TRACK_CLASS:
+                Track track = (Track)obj;
+                return deleteTrackById(track.getId());
+            case MUSIC_SEGMENT_CLASS:
+                MusicSegment musicSegment = (MusicSegment)obj;
+                return deleteMusicSegmentById(musicSegment.getId());
+            case VARIATION_CLASS:
+                Variation variation = (Variation)obj;
+                return deleteVariationById(variation.getId());
+            case VARIATION_TRACK_CLASS:
+                VariationTrack variationTrack = (VariationTrack)obj;
+                return deleteVariationTrackById(variationTrack.getId());
+        }
+        return false;
+    }
+
     /**
      * Inserts a new MusicRoom-Object to the database
      * @param musicRoom the id-attribute is not needed, because it's auto increment.

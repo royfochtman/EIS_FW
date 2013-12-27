@@ -85,10 +85,16 @@ public class WebsocketServerEndpoint{
                     }
                     break;
                 case UPDATED_ELEMENT:
-
                     if(data != null && !data.isEmpty()){
                         GlobalObject globalObject = data.get(0);
                         if(DatabaseManager.updateGlobalObject(globalObject))
+                            sendWebsocketMessageToOtherSessionMembers(websocketMessage, session);
+                    }
+                    break;
+                case DELETED_ELEMENT:
+                    if(data != null && !data.isEmpty()){
+                        GlobalObject globalObject = data.get(0);
+                        if(DatabaseManager.deleteGlobalObject(globalObject))
                             sendWebsocketMessageToOtherSessionMembers(websocketMessage, session);
                     }
                     break;

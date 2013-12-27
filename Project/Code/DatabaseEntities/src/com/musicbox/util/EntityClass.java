@@ -12,7 +12,7 @@ public enum EntityClass {
     VARIATION_CLASS(Variation.class),
     MUSIC_SEGMENT_CLASS(MusicSegment.class),
     VARIATION_TRACK_CLASS(VariationTrack.class),
-    MUSI_ROOM_DATA_CONTAINER_CLASS(MusicRoomDataContainer.class);
+    MUSIC_ROOM_DATA_CONTAINER_CLASS(MusicRoomDataContainer.class);
 
     private final Class c;
 

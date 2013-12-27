@@ -11,6 +11,7 @@ public enum WebsocketMessageType {
     JOIN_MUSIC_ROOM("Join MusicRoom"),
     CREATED_ELEMENT("Created Element"),
     UPDATED_ELEMENT("Updated Element"),
+    DELETED_ELEMENT("Deleted Element"),
     ERROR("Error");
 
     private final String messageTypeString;
