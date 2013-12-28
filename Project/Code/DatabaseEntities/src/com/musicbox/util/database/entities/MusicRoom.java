@@ -4,13 +4,15 @@ import com.musicbox.util.EntityClass;
 import com.musicbox.util.globalobject.GlobalObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 07.12.13
- * Time: 15:04
- * To change this template use File | Settings | File Templates.
+ * An instance of this Class represents one tupel of MusicBox MySQL
+ * database table <i>music_room</i>. See database ERM-diagram for details
+ *
+ * @author David Wachs
  */
 public class MusicRoom extends GlobalObject{
+    /**
+     * the name of the music room
+     */
     private String name;
 
     public MusicRoom() {

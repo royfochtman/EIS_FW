@@ -5,7 +5,10 @@ import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
 /**
- * Created by David on 25.12.13.
+ * Decoder is used by the websocket-endpoint-server to decode incoming String-messages to
+ * an instance of WebsocketTextMessage-Class
+ *
+ * @David Wachs
  */
 public class WebsocketTextMessageDecoder implements Decoder.Text<WebsocketTextMessage> {
 

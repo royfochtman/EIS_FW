@@ -12,16 +12,19 @@ import com.musicbox.util.globalobject.GlobalObject;
 import javax.lang.model.element.VariableElement;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David Wachs
- * Date: 07.12.13
- * Time: 16:09
- *
  * This class/module represents the DatabaseMangaer, witch is used to connect to
  * MusicBox-MySQL-Database and insert, read, update or delete data.
+ *
+ * @author David Wachs
  */
 public abstract class DatabaseManager {
+    /**
+     * stores the connection to MySQL-Database
+     */
     private static Connection connect = null;
+    /**
+     * connection-String to MySQL-Database
+     */
     private static String connectionString = null;
     private static PreparedStatement preparedStatement = null;
 
@@ -56,9 +59,9 @@ public abstract class DatabaseManager {
     //</editor-fold>
 
     /**
-     * Create connection based on Connections-String in conn-param.
+     * Create connection based on connections-string in <i>conn</i> param.
      * @param conn represents the Connection-String to the MySQL-Database
-     *             Format: "jdbc:mysql://[host]/[database]?user=[username]&password=[password]"
+     *             Format: <i>jdbc:mysql://[host]/[database]?user=[username]&password=[password]</i>
      * @return true, if connection succeed
      */
     public static boolean setConnection(String conn){
@@ -80,6 +83,11 @@ public abstract class DatabaseManager {
         return connectionString;
     }
 
+    /**
+     * Gets one tupel from <i>music_room</i> table by the given <i>musicRoomId</i>-param
+     * @param musicRoomId the id of the music room to be returned
+     * @return MusicRoom-Object, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static MusicRoom getMusicRoomById(int musicRoomId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM + " WHERE " + MUSIC_ROOM_ID + " = ? LIMIT 1", new Object[]{ musicRoomId });
         ArrayList<MusicRoom> musicRoomArrayList = convertResultSetToMusicRoomArrayList(resultSet);
@@ -89,6 +97,11 @@ public abstract class DatabaseManager {
             return null;
     }
 
+    /**
+     * Gets one tupel from <i>music_room</i> table by the given <i>musicRoomName</i>-param
+     * @param musicRoomName the name of the music room to be returned
+     * @return MusicRoom-Object, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static MusicRoom getMusicRoomByName(String musicRoomName) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM + " WHERE " + NAME + "=? LIMIT 1", new Object[]{ musicRoomName });
         ArrayList<MusicRoom> musicRoomArrayList = convertResultSetToMusicRoomArrayList(resultSet);
@@ -98,11 +111,20 @@ public abstract class DatabaseManager {
             return null;
     }
 
+    /**
+     * Gets all music rooms in the table <i>music_room</i>
+     * @return an ArrayList of MusicRoom-Object. Return <i>null</i>, if no tupels found
+     */
     public static ArrayList<MusicRoom> getMusicRooms() {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_ROOM, null);
         return convertResultSetToMusicRoomArrayList(resultSet);
     }
 
+    /**
+     * Gets one tupel from <i>working_area</i> table by the given <i>workingAreaId</i>-param
+     * @param workingAreaId the id of the working area to be returned
+     * @return WorkingArea-Object, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static WorkingArea getWorkingAreaById(int workingAreaId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + WORKING_AREA + " WHERE " + WORKING_AREA_ID + "=? LIMIT 1", new Object[]{ workingAreaId });
         ArrayList<WorkingArea> workingAreaArrayList = convertResultSetToWorkingAreaArrayList(resultSet);
@@ -112,11 +134,21 @@ public abstract class DatabaseManager {
             return null;
     }
 
+    /**
+     * Gets all working areas from <i>working_area</i> table by the given <i>musicRoomId</i>-param
+     * @param musicRoomId the id of the music room from which the working areas are to be returned
+     * @return ArrayList of WorkingArea-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<WorkingArea> getWorkingAreasByMusicRoomId(int musicRoomId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + WORKING_AREA + " WHERE " + MUSIC_ROOM_ID + "=?", new Object[]{ musicRoomId });
         return convertResultSetToWorkingAreaArrayList(resultSet);
     }
 
+    /**
+     * Gets one tupel from <i>track</i> table by the given <i>trackId</i>-param
+     * @param trackId the id of the track to be returned
+     * @return Track-Object, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static Track getTrackById(int trackId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + TRACK + " WHERE " + TRACK_ID + "=? LIMIT 1", new Object[]{ trackId });
         ArrayList<Track> trackArrayList = convertResultSetToTrackArrayList(resultSet);
@@ -126,11 +158,21 @@ public abstract class DatabaseManager {
             return null;
     }
 
+    /**
+     * Gets all tracks from <i>track</i> table by the given <i>workingAreaId</i>-param
+     * @param workingAreaId the id of the working area from which the tracks are to be returned
+     * @return ArrayList of Track-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<Track> getTracksByWorkingAreaId(int workingAreaId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + TRACK + " WHERE " + WORKING_AREA_ID + "=?", new Object[]{ workingAreaId });
         return convertResultSetToTrackArrayList(resultSet);
     }
 
+    /**
+     * Gets all tracks from <i>track</i> table by the given <i>musicRoomId</i>-param
+     * @param musicRoomId the id of the music room from which the tracks are to be returned
+     * @return ArrayList of Track-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<Track> getTracksByMusicRoomId(int musicRoomId) {
         ResultSet resultSet = executePreparedSelect("SELECT " + TRACK + "." + TRACK_ID + ", " + TRACK + "." + WORKING_AREA_ID + ", " + TRACK + "."+ INSTRUMENT + ", " + TRACK + "." + VOLUME
                 + ", " + TRACK + "." + NAME + ", " + TRACK + "." + LENGTH + " FROM " + TRACK
@@ -140,6 +182,11 @@ public abstract class DatabaseManager {
         return convertResultSetToTrackArrayList(resultSet);
     }
 
+    /**
+     * Gets one tupel from <i>music_segement</i> table by the given <i>musicSegmentId</i>-param
+     * @param musicSegmentId the id of the music segment to be returned
+     * @return MusicSegment-Object, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static MusicSegment getMusicSegmentById(int musicSegmentId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_SEGMENT + " WHERE " + MUSIC_SEGMENT_ID + "=? LIMIT 1", new Object[]{ musicSegmentId });
         ArrayList<MusicSegment> musicSegmentArrayList = convertResultSetToMusicSegmentArrayList(resultSet);
@@ -149,11 +196,21 @@ public abstract class DatabaseManager {
             return null;
     }
 
+    /**
+     * Gets all music segments from <i>music_segment</i> table by the given <i>musicRoomId</i>-param
+     * @param musicRoomId the id of the music room from which the music segments are to be returned
+     * @return ArrayList of MusicSegment-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<MusicSegment> getMusicSegmentsByMusicRoomId(int musicRoomId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + MUSIC_SEGMENT + " WHERE " + MUSIC_ROOM_ID + "=?", new Object[]{ musicRoomId });
         return convertResultSetToMusicSegmentArrayList(resultSet);
     }
 
+    /**
+     * Gets one tupel from <i>variation</i> table by the given <i>variationId</i>-param
+     * @param variationId the id of the variation to be returned
+     * @return Variation-Object, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static Variation getVariationById(int variationId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION + " WHERE " + VARIATION_ID + "=? LIMIT 1", new Object[]{ variationId });
         ArrayList<Variation> variationArrayList = convertResultSetToVariationArrayList(resultSet);
@@ -163,6 +220,11 @@ public abstract class DatabaseManager {
             return null;
     }
 
+    /**
+     * Gets all variations from <i>variation</i> table by the given <i>musicRoomId</i>-param
+     * @param musicRoomId the id of the music room from which the variations are to be returned
+     * @return ArrayList of Variation-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<Variation> getVariationsByMusicRoomId(int musicRoomId) {
         ResultSet resultSet = executePreparedSelect("SELECT " + VARIATION + "." + VARIATION_ID + ", " + VARIATION + "." + MUSIC_SEGMENT_ID + ", "
                 + VARIATION + "." + NAME + ", " + VARIATION + "." + OWNER + ", " + VARIATION + "." + START_TIME + ", " + VARIATION + "." + END_TIME
@@ -173,6 +235,11 @@ public abstract class DatabaseManager {
         return convertResultSetToVariationArrayList(resultSet);
     }
 
+    /**
+     * Gets one tupel from <i>variationTrack</i> table by the given <i>variationTrackId</i>-param
+     * @param variationTrackId the id of the variationTrack to be returned
+     * @return VariationTrack-Object, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static VariationTrack getVariationTrackById(int variationTrackId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + VARIATION_TRACK_ID + "=? LIMIT 1", new Object[]{ variationTrackId });
         ArrayList<VariationTrack> variationTrackArrayList = convertResultSetToVariationTrackArrayList(resultSet);
@@ -182,16 +249,31 @@ public abstract class DatabaseManager {
             return null;
     }
 
+    /**
+     * Gets all variationTracks from <i>variationTrack</i> table by the given <i>trackId</i>-param
+     * @param trackId the id of the track from which the variationTracks are to be returned
+     * @return ArrayList of VariationTrack-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<VariationTrack> getVariationTracksByTrackId(int trackId){
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + TRACK_ID + "=?", new Object[]{trackId});
         return convertResultSetToVariationTrackArrayList(resultSet);
     }
 
+    /**
+     * Gets all variationTracks from <i>variationTrack</i> table by the given <i>variationId</i>-param
+     * @param variationId the id of the variation from which the variationTracks are to be returned
+     * @return ArrayList of VariationTrack-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<VariationTrack> getVariationTracksByVariationId(int variationId){
         ResultSet resultSet = executePreparedSelect("SELECT * FROM " + VARIATION_TRACK + " WHERE " + VARIATION_ID + "=?", new Object[]{variationId});
         return convertResultSetToVariationTrackArrayList(resultSet);
     }
 
+    /**
+     * Gets all variationTracks from <i>variationTrack</i> table by the given <i>musicRoomId</i>-param
+     * @param musicRoomId the id of the music room which the variationTracks are to be returned
+     * @return ArrayList of VariationTrack-Objects, if tupel could be found. Otherwise return <i>null</i>
+     */
     public static ArrayList<VariationTrack> getVariationTracksByMusicRoomId(int musicRoomId) {
         ResultSet resultSet = executePreparedSelect("SELECT * FROM "+ VARIATION_TRACK
                 + " INNER JOIN " + TRACK + " USING (" + TRACK_ID + ")"
@@ -200,16 +282,31 @@ public abstract class DatabaseManager {
         return convertResultSetToVariationTrackArrayList(resultSet);
     }
 
+    /**
+     * Gets the complete data of a music room by the specific id
+     * @param musicRoomId the id of the music room from which the data to be returned
+     * @return MusicRoomDataContainer-Object with the entire data
+     */
     public static MusicRoomDataContainer getCompleteMusicRoomDataByMusicRoomId(int musicRoomId) {
         MusicRoom musicRoom = getMusicRoomById(musicRoomId);
         return getAllDataFromMusicRoom(musicRoom);
     }
 
+    /**
+     * Gets the complete data of a music room by the specific name
+     * @param musicRoomName the name of the music room from which the data to be returned
+     * @return MusicRoomDataContainer-Object with the entire data
+     */
     public static MusicRoomDataContainer getCompleteMusicRoomDataByMusicRoomName(String musicRoomName) {
         MusicRoom musicRoom = getMusicRoomByName(musicRoomName);
         return getAllDataFromMusicRoom(musicRoom);
     }
 
+    /**
+     * Insert any database-entity-object into the mysql-database
+     * @param obj the object which has to be inserted
+     * @return <i>true</i>, if success. Otherwise <i>false</i>
+     */
     public static boolean insertGlobalObject(GlobalObject obj) {
         switch (obj.getEntityClass()) {
             case MUSIC_ROOM_CLASS:
@@ -234,6 +331,11 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Update data of any database-entity-object in the mysql-database
+     * @param obj the object which has to be updated
+     * @return <i>true</i>, if success. Otherwise <i>false</i>
+     */
     public static boolean updateGlobalObject(GlobalObject obj) {
         switch (obj.getEntityClass()) {
             case MUSIC_ROOM_CLASS:
@@ -258,6 +360,11 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Delete any database-entity-object in mysql-database
+     * @param obj the object which has to be deleted
+     * @return <i>true</i>, if success. Otherwise <i>false</i>
+     */
     public static boolean deleteGlobalObject(GlobalObject obj) {
         switch (obj.getEntityClass()) {
             case TRACK_CLASS:
@@ -277,7 +384,7 @@ public abstract class DatabaseManager {
     }
 
     /**
-     * Inserts a new MusicRoom-Object to the database
+     * Inserts a new MusicRoom-Object into the database
      * @param musicRoom the id-attribute is not needed, because it's auto increment.
      *                  So the id attribute of the musicRoom-Object can have any value.
      * @return true, if data saved successfully
@@ -288,6 +395,12 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Inserts a new WorkingArea-Object into the database
+     * @param workingArea the id-attribute is not needed, because it's auto increment.
+     *                  So the id attribute of the WorkingArea-Object can have any value.
+     * @return true, if data saved successfully
+     */
     public static boolean insertWorkingArea(WorkingArea workingArea) {
         if(workingArea.isValid())
             return executePreparedUpdate("INSERT INTO " + WORKING_AREA + " VALUES(default, ?, ?, ?, ?, ?, ?, ?)",
@@ -296,6 +409,12 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Inserts a new Track-Object into the database
+     * @param track the id-attribute is not needed, because it's auto increment.
+     *                  So the id attribute of the Track-Object can have any value.
+     * @return true, if data saved successfully
+     */
     public static boolean insertTrack(Track track) {
         if(track.isValid())
             return executePreparedUpdate("INSERT INTO " + TRACK + " VALUES(default, ?, ?, ?, ?, ?)",
@@ -304,6 +423,12 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Inserts a new Variation-Object into the database
+     * @param variation the id-attribute is not needed, because it's auto increment.
+     *                  So the id attribute of the Variation-Object can have any value.
+     * @return true, if data saved successfully
+     */
     public static boolean insertVariation(Variation variation) {
         if(variation.isValid())
             return executePreparedUpdate("INSERT INTO " + VARIATION + " VALUES(default, ?, ?, ?, ?, ?)",
@@ -312,6 +437,12 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Inserts a new VariationTrack-Object into the database
+     * @param variationTrack the id-attribute is not needed, because it's auto increment.
+     *                  So the id attribute of the VariationTrack-Object can have any value.
+     * @return true, if data saved successfully
+     */
     public static boolean insertVariationTrack(VariationTrack variationTrack) {
         if(variationTrack.isValid())
             return executePreparedUpdate("INSERT INTO " + VARIATION_TRACK + " VALUES(default, ?, ?, ?)",
@@ -319,6 +450,12 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Inserts a new MusicSegment-Object into the database
+     * @param musicSegment the id-attribute is not needed, because it's auto increment.
+     *                  So the id attribute of the MusicSegment-Object can have any value.
+     * @return true, if data saved successfully
+     */
     public static boolean insertMusicSegment(MusicSegment musicSegment) {
         if(musicSegment.isValid())
             return executePreparedUpdate("INSERT INTO " + MUSIC_SEGMENT + " VALUES(default, ?, ?, ?, ?, ?, ?)",
@@ -327,6 +464,12 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Inserts a new MusicRoom-Object into the database
+     * @param musicRoom the id-attribute is not needed, because it's auto increment.
+     *                  So the id attribute of the MusicRoom-Object can have any value.
+     * @return true, if data saved successfully
+     */
     public static boolean updateMusicRoom(MusicRoom musicRoom) {
         if(musicRoom == null)
             return false;
@@ -336,6 +479,11 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Updates a WorkingArea-Tupel in the database
+     * @param workingArea WorkingArea-Object which has to be updated
+     * @return true, if data saved successfully
+     */
     public static boolean updateWorkingArea(WorkingArea workingArea) {
         if(workingArea == null)
             return false;
@@ -348,6 +496,11 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Updates a Track-Tupel in the database
+     * @param track Track-Object which has to be updated
+     * @return true, if data saved successfully
+     */
     public static boolean updateTrack(Track track) {
         if(track == null)
             return false;
@@ -360,6 +513,11 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Updates a Variation-Tupel in the database
+     * @param variation Variation-Object which has to be updated
+     * @return true, if data saved successfully
+     */
     public static boolean updateVariation(Variation variation) {
         if(variation == null)
             return false;
@@ -372,6 +530,11 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Updates a VariationTrack-Tupel in the database
+     * @param variationTrack VariationTrack-Object which has to be updated
+     * @return true, if data saved successfully
+     */
     public static boolean updateVariationTrack(VariationTrack variationTrack) {
         if(variationTrack == null)
             return false;
@@ -384,6 +547,11 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Updates a MusicSegment-Tupel in the database
+     * @param musicSegment MusicSegment-Object which has to be updated
+     * @return true, if data saved successfully
+     */
     public static boolean updateMusicSegment(MusicSegment musicSegment) {
         if(musicSegment == null)
             return false;
@@ -396,22 +564,48 @@ public abstract class DatabaseManager {
         return false;
     }
 
+    /**
+     * Deletes a Track-Tupel in the database
+     * @param trackId the id of the track to be deleted
+     * @return true, if data saved successfully
+     */
     public static boolean deleteTrackById(int trackId) {
         return executePreparedUpdate("DELETE FROM " + TRACK + " WHERE " + TRACK_ID + "=?", new Object[]{trackId});
     }
 
+    /**
+     * Deletes a Variation-Tupel in the database
+     * @param variationId the id of the variation to be deleted
+     * @return true, if data saved successfully
+     */
     public static boolean deleteVariationById(int variationId) {
         return executePreparedUpdate("DELETE FROM " + VARIATION + " WHERE " + VARIATION_ID + "=?", new Object[]{variationId});
     }
 
+    /**
+     * Deletes a VariationTrack-Tupel in the database
+     * @param variationTrackId the id of the variationTrack to be deleted
+     * @return true, if data saved successfully
+     */
     public static boolean deleteVariationTrackById(int variationTrackId) {
         return executePreparedUpdate("DELETE FROM " + VARIATION_TRACK + " WHERE " + VARIATION_TRACK_ID + "=?", new Object[]{variationTrackId});
     }
 
+    /**
+     * Deletes a MusicSegment-Tupel in the database
+     * @param musicSegmentId the id of the music Segment to be deleted
+     * @return true, if data saved successfully
+     */
     public static boolean deleteMusicSegmentById(int musicSegmentId) {
         return executePreparedUpdate("DELETE FROM " + MUSIC_SEGMENT + " WHERE " + MUSIC_SEGMENT_ID + "=?", new Object[]{musicSegmentId});
     }
 
+    /**
+     * Executes a given SQL-Update Statement
+     * @param preparedUpdateString Update-Statement that has to be executed. Can be INSER, UPDATE or DELETE
+     * @param values values to be insert
+     * @return true, if succeed
+     */
     private static boolean executePreparedUpdate(String preparedUpdateString, Object[] values) {
         if(preparedUpdateString == null || preparedUpdateString.isEmpty())
             return false;
@@ -433,6 +627,12 @@ public abstract class DatabaseManager {
         }
     }
 
+    /**
+     * Executes a given SQL-SELECT Statement
+     * @param preparedSelectString SELECT-statement that has to be executed.
+     * @param values values of the SELECT-statement
+     * @return true, if succeed
+     */
     private static ResultSet executePreparedSelect(String preparedSelectString, Object[] values) {
         if(preparedSelectString == null || preparedSelectString.isEmpty())
             return null;

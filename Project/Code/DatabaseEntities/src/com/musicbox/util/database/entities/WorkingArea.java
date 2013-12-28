@@ -5,11 +5,10 @@ import com.musicbox.util.WorkingAreaType;
 import com.musicbox.util.globalobject.GlobalObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 07.12.13
- * Time: 15:08
- * To change this template use File | Settings | File Templates.
+ * An instance of this Class represents one tupel of MusicBox MySQL
+ * database table <i>working_area</i>. See database ERM-diagram for details
+ *
+ * @author David Wachs
  */
 public class WorkingArea extends GlobalObject {
     private MusicRoom musicRoom;

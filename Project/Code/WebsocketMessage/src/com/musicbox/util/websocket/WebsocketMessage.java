@@ -6,13 +6,33 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by David Wachs on 17.12.13.
+ * Messages with GlobalObject-Data to send informations about e.g. new Tracks or new MusicSegments from
+ * client to server.
+ * <br> The websocket-endpoint-server handle this messages and forwards it to other logged in clients.
+ *
+ * @author David Wachs
  */
 public class WebsocketMessage implements Serializable {
+    /**
+     * The music-room-name of the user which sending the message. So that the server knows to which users
+     * this message has to be forwarded.
+     */
     private String musicRoomName;
+    /**
+     * The message-type is used by the server and the clients, so that they can decide what they have to do with a message
+     */
     private WebsocketMessageType messageType;
+    /**
+     * the message-data
+     */
     private ArrayList<GlobalObject> data;
 
+    /**
+     * Constructor
+     * @param musicRoomName name of users music-room
+     * @param messageType type of the message, e.g. WebsocketMessageType.JOIN_MUSIC_ROOM to join music room with the given name in parameter musicRoomName
+     * @param data data to send of type GlobalObject. Could be MusicRoom-, MusicSegment-, Track-, Variation-, VariationTrack- or MusicRoomDataContainer-instances
+     */
     public WebsocketMessage(final String musicRoomName, WebsocketMessageType messageType, ArrayList<GlobalObject> data) {
         this.musicRoomName = musicRoomName;
         this.messageType = messageType;

@@ -5,7 +5,9 @@ import javax.websocket.Session;
 import java.util.HashMap;
 
 /**
- * Created by David on 17.12.13.
+ * Created by David Wachs on 17.12.13.
+ * A MusicRoomSession-Object is used to assign the logged in Users to a single
+ * MusicRoom, so that the Endpoint-Server knows to which Session it has to send a WebsocketMessage.
  */
 public class MusicRoomSession {
     private String musicRoomSessionName;

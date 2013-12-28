@@ -8,12 +8,15 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 /**
- * Created by David Wachs on 24.12.13.
+ * This Class is used to store all Data of one music-room in one object and
+ * send it to startup clients or clients which are joining to this music-room.
  *
- * This Class is to store all Data of one MusicRoom in one Object and
- * send it to startup clients or clients which are joining to this MusicRoom.
+ * @author David Wachs
  */
 public class MusicRoomDataContainer extends GlobalObject {
+    /**
+     * music-room which the data belongs to
+     */
     private MusicRoom musicRoom;
     private ArrayList<WorkingArea> workingAreas;
     private ArrayList<Track> tracks;
@@ -160,6 +163,10 @@ public class MusicRoomDataContainer extends GlobalObject {
             this.variationTracks.addAll(variationTracks);
     }
 
+    /**
+     * Gets the id of the music-room
+     * @return the id of the music-room
+     */
     @Override
     public int getId() {
         if(musicRoom == null)
@@ -168,6 +175,10 @@ public class MusicRoomDataContainer extends GlobalObject {
         return musicRoom.getId();
     }
 
+    /**
+     * Set id of music-room-object
+     * @param id of music-room
+     */
     @Override
     public void setId(int id) {
         if(musicRoom != null)

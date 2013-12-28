@@ -8,7 +8,10 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 
 /**
- * Created by David on 17.12.13.
+ * Decoder is used by the websocket-endpoint-server to decode incoming BinaryStream-messages to
+ * an instance of WebsocketMessage-class
+ *
+ * @author David Wachs
  */
 public class WebsocketMessageDecoder implements Decoder.BinaryStream<WebsocketMessage> {
     @Override

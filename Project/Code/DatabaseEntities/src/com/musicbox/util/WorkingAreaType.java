@@ -3,14 +3,19 @@ package com.musicbox.util;
 import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 07.12.13
- * Time: 15:00
- * To change this template use File | Settings | File Templates.
+ * @author David Wachs
+ * A working-area can be public or private.
  */
 public enum WorkingAreaType implements Serializable{
+    /**
+     * A working-area is private, if only the owner of the area can make changes on
+     * working-area data.
+     */
     PRIVATE ("private"),
+    /**
+     * A working-area is public, if all members of a music-room-session
+     * can change working-area-data. For example add or remove tracks.
+     */
     PUBLIC ("public");
 
     private final String workingAreaTypeString;

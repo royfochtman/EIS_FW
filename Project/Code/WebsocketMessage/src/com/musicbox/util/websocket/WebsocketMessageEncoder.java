@@ -8,7 +8,11 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 /**
- * Created by David on 17.12.13.
+ * Encoder is used by the websocket-server-endpoint to encode an instance of
+ * WebsocketMessage-Class to BinaryStream, so that the message can be sended over websocket-protocol
+ * to websocket-clients
+ *
+ * @author David Wachs
  */
 public class WebsocketMessageEncoder implements Encoder.BinaryStream<WebsocketMessage> {
         @Override

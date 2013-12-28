@@ -5,15 +5,19 @@ import com.musicbox.util.EntityClass;
 import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 07.12.13
- * Time: 15:02
- * To change this template use File | Settings | File Templates.
+ * A global-object can be sent as data over the websocket-protocol from server to client
+ * or from client to server. It can be a instance of one of the database-entity-classes.
+ *
+ * @author David Wachs
  */
 public abstract class GlobalObject implements Serializable {
+    /**
+     * id of the database-entity-object
+     */
     private int id;
-
+    /**
+     * Is needed to find out later which database-entity-type is stored in the GlobalObject-variable
+     */
     private EntityClass entityClass;
 
     public EntityClass getEntityClass() {
@@ -35,7 +39,7 @@ public abstract class GlobalObject implements Serializable {
 
 
     /**
-     * Checks if the attributes of the Object have correct values
+     * Checks if the attributes of the specific object have correct values
      * @return true, if all attributes have correct values
      */
     public abstract boolean isValid();

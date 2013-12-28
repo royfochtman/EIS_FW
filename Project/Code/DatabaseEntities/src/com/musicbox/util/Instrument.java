@@ -3,12 +3,8 @@ package com.musicbox.util;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 07.12.13
- * Time: 14:45
- * To change this template use File | Settings | File Templates.
+/**.
+ * @author David Wachs
  */
 public enum Instrument implements Serializable {
     KEYBOARD ("Keyboard"),

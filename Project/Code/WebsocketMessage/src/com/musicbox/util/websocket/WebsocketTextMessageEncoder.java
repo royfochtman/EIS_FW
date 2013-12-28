@@ -5,7 +5,11 @@ import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
 
 /**
- * Created by David on 25.12.13.
+ * Encoder is used by the websocket-server-endpoint to encode an instance of
+ * WebsocketTextMessage-Class to String, so that the message can be sended over websocket-protocol
+ * to websocket-clients
+ *
+ * @author David Wachs
  */
 public class WebsocketTextMessageEncoder implements Encoder.Text<WebsocketTextMessage> {
 

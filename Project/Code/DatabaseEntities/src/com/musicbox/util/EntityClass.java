@@ -3,7 +3,7 @@ package com.musicbox.util;
 import com.musicbox.util.database.entities.*;
 
 /**
- * Created by David on 25.12.13.
+ * @author David Wachs
  */
 public enum EntityClass {
     MUSIC_ROOM_CLASS(MusicRoom.class),

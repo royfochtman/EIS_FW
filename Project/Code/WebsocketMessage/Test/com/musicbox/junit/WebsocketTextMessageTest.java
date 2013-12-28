@@ -1,10 +1,11 @@
 package com.musicbox.junit;
 
 /**
- * Created by David on 23.12.13.
+ * @author David Wachs
  */
 import com.musicbox.util.websocket.WebsocketMessageType;
 import com.musicbox.util.websocket.WebsocketTextMessage;
+import com.musicbox.util.websocket.WebsocketTextMessageType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class WebsocketTextMessageTest {
 
     @Test
     public void testFromString() throws Exception {
-        WebsocketTextMessage websocketTextMessage = new WebsocketTextMessage("Test", WebsocketMessageType.CHAT, "dfvwefe");
+        WebsocketTextMessage websocketTextMessage = new WebsocketTextMessage("Test", WebsocketTextMessageType.CHAT, "dfvwefe");
         String string = websocketTextMessage.toString();
         WebsocketTextMessage message = WebsocketTextMessage.fromString(string);
         assertTrue(message.equals(websocketTextMessage));

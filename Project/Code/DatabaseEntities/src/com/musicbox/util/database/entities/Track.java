@@ -5,11 +5,10 @@ import com.musicbox.util.Instrument;
 import com.musicbox.util.globalobject.GlobalObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 07.12.13
- * Time: 15:16
- * To change this template use File | Settings | File Templates.
+ * An instance of this Class represents one tupel of MusicBox MySQL
+ * database table <i>track</i>. See database ERM-diagram for details
+ *
+ * @author David Wachs
  */
 public class Track extends GlobalObject {
     private WorkingArea workingArea;

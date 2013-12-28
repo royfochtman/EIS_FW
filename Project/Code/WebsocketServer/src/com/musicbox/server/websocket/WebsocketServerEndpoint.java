@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by David on 16.12.13.
+ * Created by David Wachs on 16.12.13.
+ * Websocket-Server-Endpoint. Handles Websocket-Messages from Clients.
  */
 @ServerEndpoint(value="/websocketEndpoint", encoders = {WebsocketMessageEncoder.class, WebsocketTextMessageEncoder.class},
         decoders = {WebsocketMessageDecoder.class, WebsocketTextMessageDecoder.class}, configurator = WebsocketServerEndpointConfigurator.class)
@@ -66,7 +67,7 @@ public class WebsocketServerEndpoint{
                         session.getBasicRemote().sendObject(new WebsocketMessage(musicRoom.getName(), WebsocketMessageType.NEW_MUSIC_ROOM, data));
                     }
                     else
-                        session.getBasicRemote().sendObject(new WebsocketTextMessage(musicRoom.getName(), WebsocketMessageType.ERROR, ERROR_CREATE_ROOM));
+                        session.getBasicRemote().sendObject(new WebsocketTextMessage(musicRoom.getName(), WebsocketTextMessageType.ERROR, ERROR_CREATE_ROOM));
                     break;
                 case JOIN_MUSIC_ROOM:
                     if(musicRoomSessionContainer.putNewMemberInSession(websocketMessage.getMusicRoomName(), session)) {
@@ -108,7 +109,7 @@ public class WebsocketServerEndpoint{
     @OnMessage
     public void onMessage(WebsocketTextMessage websocketTextMessage, Session session) {
         try{
-            switch (websocketTextMessage.getMessageType()) {
+            switch (websocketTextMessage.getTextMessageType()) {
                 case CHAT:
                     HashMap<String, Session> members = musicRoomSessionContainer.getMusicRoomSessionMembers(websocketTextMessage.getMusicRoomName());
                     if(members != null){
@@ -131,7 +132,7 @@ public class WebsocketServerEndpoint{
     }
 
     /**
-     * Sends a WebsocketMessage-Object to all session members except the transmitter session
+     * Sends WebsocketMessage-Object to all session members except the transmitter session
      * @param websocketMessage
      * @param session transmitter session
      * @throws IOException

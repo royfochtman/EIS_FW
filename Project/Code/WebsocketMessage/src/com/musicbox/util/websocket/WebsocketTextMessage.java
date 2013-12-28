@@ -1,29 +1,38 @@
 package com.musicbox.util.websocket;
 
+import java.io.Serializable;
+
 /**
- * Created by David Wachs on 19.12.13.
+ * Messages with Text-Data to send chat-messages or error-messages.
+ * <br>The websocket-endpoint-server handle chat messages and forwards it to other logged in clients.
+ * <br>The websocket-endpoint-server sends error messages to clients if an erro occurred.
  *
- * Container for MusicBox-Chat-Messages or Error-Messages from Server
+ * @author David Wachs
  */
-public class WebsocketTextMessage {
+public class WebsocketTextMessage implements Serializable {
+    /**
+     * The music-room-name of the user which sending the message. So that the server knows to which users
+     * this message has to be forwarded.
+     */
     private String musicRoomName;
-    private WebsocketMessageType messageType;
+    /**
+     * The message-type is used by the server and the clients, so that they can decide what they have to do with a message
+     * Can be type of CHAT or ERROR
+     */
+    private WebsocketTextMessageType textMessageType;
+    /**
+     * the chat- or error-message
+     */
     private String textMessage;
 
     public WebsocketTextMessage() {
         musicRoomName = "";
-        messageType = WebsocketMessageType.CHAT;
+        textMessageType = WebsocketTextMessageType.CHAT;
         textMessage = "";
     }
 
-    /**
-     * Constructor
-     * @param musicRoomName
-     * @param type has to be CHAT for Chat-Message or ERROR for Error-Message
-     * @param textMessage
-     */
-    public WebsocketTextMessage(String musicRoomName, WebsocketMessageType type, String textMessage) {
-        messageType = type;
+    public WebsocketTextMessage(String musicRoomName, WebsocketTextMessageType type, String textMessage) {
+        textMessageType = type;
         setMusicRoomName(musicRoomName);
         setTextMessage(textMessage);
     }
@@ -40,12 +49,12 @@ public class WebsocketTextMessage {
 
     }
 
-    public WebsocketMessageType getMessageType() {
-        return messageType;
+    public WebsocketTextMessageType getTextMessageType() {
+        return textMessageType;
     }
 
-    public void setMessageType(WebsocketMessageType messageType) {
-        this.messageType = messageType;
+    public void setTextMessageType(WebsocketTextMessageType textMessageType) {
+        this.textMessageType = textMessageType;
     }
 
     public String getTextMessage() {
@@ -73,16 +82,21 @@ public class WebsocketTextMessage {
     @Override
     public int hashCode() {
         int result = musicRoomName != null ? musicRoomName.hashCode() : 0;
-        result = 31 * result + (messageType != null ? messageType.hashCode() : 0);
+        result = 31 * result + (textMessageType != null ? textMessageType.hashCode() : 0);
         result = 31 * result + (textMessage != null ? textMessage.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString(){
-        return musicRoomName + "," + messageType.toString() + "," + textMessage;
+        return musicRoomName + "," + textMessageType.toString() + "," + textMessage;
     }
 
+    /**
+     * Converts a String to a WebsocketTextMessage-Object.
+     * @param textMessageString String which has to be converted. The String has to be the following format: musicRoomName,textMessageType,textMessage
+     * @return WebsocketTextMessage-Object of the given string. Returns null if the String has a wrong format.
+     */
     public static WebsocketTextMessage fromString(String textMessageString){
         if(textMessageString == null || textMessageString.isEmpty())
             return null;
@@ -90,7 +104,7 @@ public class WebsocketTextMessage {
         String[] data = textMessageString.split(",");
         WebsocketTextMessage message = null;
         if(data.length == 3)
-              message = new WebsocketTextMessage(data[0], WebsocketMessageType.fromString(data[1]), data[2]);
+              message = new WebsocketTextMessage(data[0], WebsocketTextMessageType.fromString(data[1]), data[2]);
         return message;
     }
 }

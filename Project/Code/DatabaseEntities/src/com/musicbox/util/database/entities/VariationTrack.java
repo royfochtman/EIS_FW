@@ -4,11 +4,10 @@ import com.musicbox.util.EntityClass;
 import com.musicbox.util.globalobject.GlobalObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 07.12.13
- * Time: 15:33
- * To change this template use File | Settings | File Templates.
+ * An instance of this Class represents one tupel of MusicBox MySQL
+ * database table <i>variation_track</i>. See database ERM-diagram for details
+ *
+ * @author David Wachs
  */
 public class VariationTrack extends GlobalObject {
     private Variation variation;
