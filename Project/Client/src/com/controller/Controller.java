@@ -141,6 +141,9 @@ public class Controller {
         paneLogin.setVisible(true);
         paneLogin.toFront();
 
+        textFieldLength.setText(String.valueOf(120000));
+        textFieldLength.setDisable(true);
+
         loadInputs();
         loadOutputs();
 
@@ -256,7 +259,6 @@ public class Controller {
 
         timelineActualPosition = timelineTransition.getCurrentTime();
         timelineTransition.stop();
-
     }
 
     /**
@@ -295,14 +297,27 @@ public class Controller {
             }
         });
 
-        timelineAnchorPane.setOnDragEntered(new EventHandler<DragEvent>() {
+        timelineAnchorPane.setOnDragDetected(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("on drag detected");
+                Dragboard db = timelineAnchorPane.startDragAndDrop(TransferMode.ANY);
+
+                /* put a string on dragboard */
+                ClipboardContent content = new ClipboardContent();
+                content.putString("DND Timeline Anchor Pane");
+                db.setContent(content);
+
+                mouseEvent.consume();
+            }
+        });
+
+        /*timelineAnchorPane.setOnDragEntered(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
                 System.out.println("Drag entered Timeline");
 
                 Dragboard db = timelineAnchorPane.startDragAndDrop(TransferMode.ANY);
-
-                /* Put a string on a dragboard */
                 ClipboardContent content = new ClipboardContent();
                 //content.put(null, timelineAnchorPane);
                 content.putString("timeline");
@@ -310,12 +325,13 @@ public class Controller {
 
                 dragEvent.consume();
             }
-        });
+        });  */
 
         timelineAnchorPane.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
-
+                System.out.println("on drag over");
+                dragEvent.consume();
             }
         });
     }
@@ -330,6 +346,8 @@ public class Controller {
             public void handle(DragEvent dragEvent) {
                 /* data is dragged over the target */
                 System.out.println("onDragOver Stackpane Composition");
+                System.out.println("X: " + dragEvent.getX() + ". Y: " + dragEvent.getY());
+                timelineAnchorPane.relocate(dragEvent.getX(), timelineAnchorPane.getLayoutY());
 
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */
@@ -352,6 +370,7 @@ public class Controller {
                 if (dragEvent.getGestureSource() != stackPaneComposition &&
                         dragEvent.getDragboard().hasString()) {
                     //do something
+                    timelineAnchorPane.relocate(dragEvent.getX(), timelineAnchorPane.getLayoutY());
                 }
 
                 dragEvent.consume();
@@ -362,6 +381,7 @@ public class Controller {
         stackPaneComposition.setOnDragExited(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent dragEvent) {
+                dragEvent.consume();
 
             }
         });

@@ -3,6 +3,8 @@ package com.model;
 import com.musicbox.util.Instrument;
 import com.musicbox.util.database.entities.Track;
 import com.musicbox.util.database.entities.WorkingArea;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -19,6 +21,7 @@ public class TrackModel extends Track {
      * Databinding
      */
     private StringProperty name = new SimpleStringProperty();
+    private ObjectProperty<Instrument> instrument = new SimpleObjectProperty<Instrument>();
 
     public final String getName() {
         return name.get();
@@ -30,6 +33,19 @@ public class TrackModel extends Track {
 
     public StringProperty nameProperty() {
         return name;
+    }
+
+    public ObjectProperty instrumentProperty() {
+        return instrument;
+    }
+    /*
+    @Override
+    public ObjectProperty getInstrument() {
+        return this.instrument;
+    }        */
+
+    public void setInstrument(Instrument instrument) {
+        this.instrument.set(instrument);
     }
 
     /**
@@ -49,6 +65,14 @@ public class TrackModel extends Track {
             public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
                 System.out.println("Track Name changed. Old Name:  " + s + ". New name: " + s2);
                 track.setName(s2);
+            }
+        });
+
+        this.instrumentProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object o, Object o2) {
+                System.out.println("Tracks Instrument Changed. Old Instrument: " + o.toString() + ". New Instrument: " + o2.toString());
+                track.setInstrument((Instrument) o2);
             }
         });
     }

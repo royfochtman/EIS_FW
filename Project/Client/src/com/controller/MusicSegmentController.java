@@ -26,17 +26,22 @@ import java.io.IOException;
  */
 public class MusicSegmentController extends AnchorPane {
 
-    @FXML Rectangle musicSegmentRectangle;
-    @FXML Label musicSegmentName;
-    @FXML HBox musicSegmentActions;
-    @FXML Button btnPlayMusicSegment;
-    @FXML Button btnStopMusicSegment;
-    @FXML Button btnDeleteMusicSegment;
+    @FXML
+    Rectangle musicSegmentRectangle;
+    @FXML
+    Label musicSegmentName;
+    @FXML
+    HBox musicSegmentActions;
+    @FXML
+    Button btnPlayMusicSegment;
+    @FXML
+    Button btnStopMusicSegment;
+    @FXML
+    Button btnDeleteMusicSegment;
 
     private MediaPlayer mediaPlayer;
     private Rectangle dragRectangle;
     private String audioPath;
-
 
     public MusicSegmentController(String name, float length, double width, String audioPath) {
         FXMLLoader fxmlLoader = new FXMLLoader(
@@ -54,17 +59,18 @@ public class MusicSegmentController extends AnchorPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        this.setId(name + "MusicSegmentComponent");
-        if(name != null) {
+        //this.setId(name + "MusicSegmentComponent");
+        if (name != null) {
             musicSegmentName.setText("(" + length + " ms)");
         }
-        musicSegmentRectangle.setWidth(width);
+        musicSegmentRectangle.widthProperty().bind(this.widthProperty());
+        //musicSegmentRectangle.setWidth(width);
         musicSegmentName.setMinWidth(width);
         musicSegmentName.setMaxWidth(width);
-        dragRectangle = new Rectangle(musicSegmentRectangle.getWidth(), musicSegmentRectangle.getHeight(), musicSegmentRectangle.getFill());
         this.setWidth(width);
         this.setMaxWidth(width);
         this.setMinWidth(width);
+        dragRectangle = new Rectangle(musicSegmentRectangle.getWidth(), musicSegmentRectangle.getHeight(), musicSegmentRectangle.getFill());
         //this.setPadding(InsetsBuilder.create().left(10).right(10).build());
 
         this.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -79,9 +85,9 @@ public class MusicSegmentController extends AnchorPane {
             }
         });
 
-        this.setOnMouseExited(new EventHandler<MouseEvent>(){
+        this.setOnMouseExited(new EventHandler<MouseEvent>() {
 
-            public void handle(MouseEvent mouseEvent){
+            public void handle(MouseEvent mouseEvent) {
                 FadeTransition fadeTransition
                         = new FadeTransition(Duration.millis(200), musicSegmentActions);
                 fadeTransition.setFromValue(1.0);
@@ -94,11 +100,11 @@ public class MusicSegmentController extends AnchorPane {
             public void handle(MouseEvent event) {
                 System.out.println("Drag entered music segment");
 
-        /* drag was detected, start a drag-and-drop gesture*/
-        /* allow any transfer mode */
+                /* drag was detected, start a drag-and-drop gesture*/
+                /* allow any transfer mode */
                 Dragboard db = musicSegmentName.startDragAndDrop(TransferMode.COPY);
 
-        /* Put a string on a dragboard */
+                /* Put a string on a dragboard */
                 ClipboardContent content = new ClipboardContent();
                 content.putString(musicSegmentName.getText());
                 db.setContent(content);
@@ -106,7 +112,6 @@ public class MusicSegmentController extends AnchorPane {
                 event.consume();
             }
         });
-
 
         Media media = new Media(new File(audioPath).toURI().toString());
         mediaPlayer = MediaPlayerBuilder.create().media(media).build();
@@ -131,7 +136,7 @@ public class MusicSegmentController extends AnchorPane {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("Delete");
-                if(Controller.getTracksArea().getChildren().remove(getController())) {
+                if (Controller.getTracksArea().getChildren().remove(getController())) {
                     System.out.println("Music segment deleted");
                 } else {
                     System.out.println("music segment could not be deleted");
@@ -143,6 +148,4 @@ public class MusicSegmentController extends AnchorPane {
     public AnchorPane getController() {
         return this;
     }
-
-
 }

@@ -2,6 +2,8 @@ package com.controller;
 
 import com.model.TrackModel;
 import com.musicbox.util.Instrument;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -46,6 +48,7 @@ public class TrackController extends HBox {
     private Image instrumentImage;
 
     private StringProperty name = new SimpleStringProperty();
+    private ObjectProperty<Instrument> instrument = new SimpleObjectProperty<Instrument>();
 
     public StringProperty nameProperty() {
         return name;
@@ -57,6 +60,18 @@ public class TrackController extends HBox {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+    public ObjectProperty instrumentProperty() {
+        return instrument;
+    }
+
+    public ObjectProperty getInstrument() {
+        return this.instrument;
+    }
+
+    public void setInstrument(Instrument instrument) {
+        this.instrument.set(instrument);
     }
 
 
@@ -81,8 +96,12 @@ public class TrackController extends HBox {
 
         TrackModel trackModel = new TrackModel(1 , null, instrument, 1, name,  songLength);
 
+        //Bind Name Property
         this.nameProperty().bindBidirectional(trackModel.nameProperty());
         labelName.textProperty().bindBidirectional(this.nameProperty());
+
+        //Bind Instrument Property
+        //this.instrumentProperty().bindBidirectional(trackModel.);
 
         this.setId(name + "TrackComponent");
         if(name != null) {
