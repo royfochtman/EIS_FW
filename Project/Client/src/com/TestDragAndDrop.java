@@ -58,10 +58,8 @@ public class TestDragAndDrop extends Application {
                 dragImageView.toFront();
                 dragImageView.setMouseTransparent(true);
                 dragImageView.setVisible(true);
-                Point2D localPoint = root.getScene().getRoot().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
-                dragImageView.relocate(
-                        (int) (localPoint.getX() - dragImageView.getBoundsInLocal().getWidth() / 2),
-                        (int) (localPoint.getY() - dragImageView.getBoundsInLocal().getHeight() / 2));
+                //Point2D localPoint = root.getScene().getRoot().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
+                dragImageView.relocate(event.getX(), event.getY());
 
                 /* allow any transfer mode */
                 Dragboard db = source.startDragAndDrop(TransferMode.ANY);
@@ -78,11 +76,18 @@ public class TestDragAndDrop extends Application {
         source.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
-                Point2D localPoint = root.getScene().getRoot().sceneToLocal(new Point2D(event.getSceneX(), event.getSceneY()));
-                dragImageView.relocate(
-                        (int) (localPoint.getX() - dragImageView.getBoundsInLocal().getWidth() / 2),
-                        (int) (localPoint.getY() - dragImageView.getBoundsInLocal().getHeight() / 2));
+                System.out.println("Drag Over Source");
+                dragImageView.relocate(event.getX(), event.getY());
                 event.consume();
+            }
+        });
+
+        source.setOnDragEntered(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent dragEvent) {
+                dragImageView.relocate(dragEvent.getX(), dragEvent.getY());
+                dragEvent.consume();
+
             }
         });
 
@@ -90,6 +95,7 @@ public class TestDragAndDrop extends Application {
             public void handle(DragEvent event) {
                 /* data is dragged over the target */
                 System.out.println("onDragOver");
+                dragImageView.relocate(event.getX(), event.getY());
 
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */

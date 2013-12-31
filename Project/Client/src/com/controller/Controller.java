@@ -125,6 +125,7 @@ public class Controller {
     private int bpm;
     private Long songLength;
     public static int musicSegmentIndex = 0;
+    private int trackPixelWidth = 0;
 
     private MusicRoomModel musicRoomModel;
     private WorkingAreaModel workingAreaModel;
@@ -153,7 +154,7 @@ public class Controller {
         createTimeline();
         setupDragAndDropTimeline();
         setupDragAndDropTimelineTarget();
-        createTimelineTransition();
+        //createTimelineTransition();
 
         /*Setup Drag and Drop on the Tracks Area for importing external audio files*/
         setupDragAndDropTracksArea();
@@ -413,10 +414,10 @@ public class Controller {
      */
     private void createTimelineTransition() {
         timelineTransition = TranslateTransitionBuilder.create()
-                .duration(new Duration(3000))
+                .duration(new Duration(songLength))
                 .node(timelineAnchorPane)
                 .fromX(0)
-                .toX(1000)
+                .toX(trackPixelWidth)
                 .interpolator(Interpolator.LINEAR)
                 .build();
     }
@@ -537,6 +538,10 @@ public class Controller {
                         workingAreaModel.getTempo());
             }
         }
+    }
+
+    private void updateTrackPixelWidth() {
+        trackPixelWidth = (int) (15 * ((songLength/60000) * bpm));
     }
 
     /**
@@ -693,7 +698,9 @@ public class Controller {
                     Integer.valueOf(textFieldTempo.getText()), userName, WorkingAreaType.PUBLIC, 1,
                     Long.valueOf(textFieldLength.getText()));
             Main.primaryStage.setTitle(textFieldRoomName.getText());
+            updateTrackPixelWidth();
             //textFieldTempo.textProperty().bindBidirectional(workingAreaModel.tempoProperty());
+            createTimelineTransition();
         } else {
             createWarningPopup("Fill the formular", "Fill the formular to continue");
         }
