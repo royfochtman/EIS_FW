@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * A global-object can be sent as data over the websocket-protocol from server to client
- * or from client to server. It can be a instance of one of the database-entity-classes.
+ * or from client to server. It can be an instance of one of the database-entity-classes.
  *
  * @author David Wachs
  */

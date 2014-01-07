@@ -32,13 +32,17 @@ public class StreamingThread implements Runnable {
                 out.write(bytes);
                 out.flush();
                 out.close();
-                response.setStatus(HttpServletResponse.SC_FOUND);
+                response.setStatus(HttpServletResponse.SC_OK);
             }
             else
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
         } catch (IOException ex) {
             ex.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

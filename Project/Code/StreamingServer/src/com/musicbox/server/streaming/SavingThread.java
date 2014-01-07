@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;*/
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -33,21 +34,23 @@ public class SavingThread implements Runnable {
 
     @Override
     public void run() {
-        if(!ServletFileUpload.isMultipartContent(request))
-            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
         try {
-            DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
-            fileItemFactory.setRepository(new File("\\AudioFiles"));
-            this.uploader = new ServletFileUpload(fileItemFactory);
-            List<FileItem> fileItemList = uploader.parseRequest(request);
-            if(fileItemList.size() == 1){
-                FileItem fileItem = fileItemList.get(0);
-                File file = new File("\\AudioFiles\\" + audioFileName);
-                fileItem.write(file);
-                response.setStatus(HttpServletResponse.SC_CREATED);
+            if(!ServletFileUpload.isMultipartContent(request))
+                response.sendError(HttpServletResponse.SC_NO_CONTENT);
+            else {
+                DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
+                fileItemFactory.setRepository(new File("\\AudioFiles"));
+                this.uploader = new ServletFileUpload(fileItemFactory);
+                List<FileItem> fileItemList = uploader.parseRequest(request);
+                if(fileItemList.size() == 1){
+                    FileItem fileItem = fileItemList.get(0);
+                    File file = new File("\\AudioFiles\\" + audioFileName);
+                    fileItem.write(file);
+                    response.setStatus(HttpServletResponse.SC_CREATED);
+                }
+                else
+                    response.sendError(HttpServletResponse.SC_NO_CONTENT);
             }
-            else
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 
 
             //This approach don't work
@@ -81,7 +84,11 @@ public class SavingThread implements Runnable {
                 response.setStatus(HttpServletResponse.SC_CONFLICT);*/
         } catch (Exception ex) {
             ex.printStackTrace();
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }
 

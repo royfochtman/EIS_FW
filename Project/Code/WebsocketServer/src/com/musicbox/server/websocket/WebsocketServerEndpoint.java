@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 /**
  * Created by David Wachs on 16.12.13.
- * Websocket-Server-Endpoint. Handles Websocket-Messages from Clients.
+ * Websocket-Server-Endpoint. Handles incoming Websocket-Messages from Clients.
  */
 @ServerEndpoint(value="/websocketEndpoint", encoders = {WebsocketMessageEncoder.class, WebsocketTextMessageEncoder.class},
         decoders = {WebsocketMessageDecoder.class, WebsocketTextMessageDecoder.class}, configurator = WebsocketServerEndpointConfigurator.class)

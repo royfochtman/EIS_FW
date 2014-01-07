@@ -6,9 +6,9 @@ import java.util.HashMap;
 /**
  * Created by David Wachs on 17.12.13.
  * Stores every MusicRoomSession with its logged in Users.
- * WebsocketEndpoint-Server needs to know which client (Session-Instance) is assigned to
- * which MusicRoomSession, so it can decide, which Clients get a specific WebsocketMessage.
- * Otherwise WebsocketServer would send all Messages to every logged in user.
+ * WebsocketServerEndpoint needs to know which client (Session-Instance) is assigned to
+ * which MusicRoomSession, so it can decide, which clients get a specific WebsocketMessage.
+ * Otherwise WebsocketServerEndoint would send all messages to every logged in user.
  */
 public class MusicRoomSessionContainer {
     private HashMap<String, MusicRoomSession> sessions;
