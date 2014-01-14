@@ -25,7 +25,7 @@ public class StreamingThread implements Runnable {
     @Override
     public void run() {
         try {
-            Path path = Paths.get("\\AudioFiles\\" + audioFileName);
+            Path path = Paths.get(StreamingServlet.audioFilePath + audioFileName);
             if(path.toFile().exists()){
                 byte[] bytes = Files.readAllBytes(path);
                 OutputStream out = response.getOutputStream();

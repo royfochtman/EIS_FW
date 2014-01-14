@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title></title>
+    <title>Websocket-App</title>
   </head>
   <body>
-
+  This is the MusicBox-Websocket-App. You need the MusicBox-Client to connect.
   </body>
 </html>

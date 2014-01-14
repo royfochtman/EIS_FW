@@ -4,15 +4,26 @@
            xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
            version="3.0" metadata-complete="true">
+
+    <welcome-file-list>
+        <welcome-file>streaming</welcome-file>
+    </welcome-file-list>
     
     <servlet>
         <servlet-name>Streaming</servlet-name>
         <servlet-class>com.musicbox.server.streaming.StreamingServlet</servlet-class>
+        <init-param>
+            <param-name>audioFilePath</param-name>
+            <param-value>\audioFiles</param-value>
+        </init-param>
+
+        <load-on-startup>1</load-on-startup>
     </servlet>
-    
+
     <servlet-mapping>
         <servlet-name>Streaming</servlet-name>
         <url-pattern>/streaming</url-pattern>
     </servlet-mapping>
 
+    <display-name>MusicBox Streaming Application</display-name>
 </web-app>

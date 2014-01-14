@@ -39,12 +39,12 @@ public class SavingThread implements Runnable {
                 response.sendError(HttpServletResponse.SC_NO_CONTENT);
             else {
                 DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
-                fileItemFactory.setRepository(new File("\\AudioFiles"));
+                fileItemFactory.setRepository(new File(StreamingServlet.audioFilePath));
                 this.uploader = new ServletFileUpload(fileItemFactory);
                 List<FileItem> fileItemList = uploader.parseRequest(request);
                 if(fileItemList.size() == 1){
                     FileItem fileItem = fileItemList.get(0);
-                    File file = new File("\\AudioFiles\\" + audioFileName);
+                    File file = new File(StreamingServlet.audioFilePath + audioFileName);
                     fileItem.write(file);
                     response.setStatus(HttpServletResponse.SC_CREATED);
                 }
