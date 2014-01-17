@@ -15,6 +15,13 @@
     <VBox prefHeight="41.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <Label fx:id="musicSegmentName" text="Label" textFill="#404040">
+          <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleMoveSegmentTo" text="Move to..." fx:id="menuItemMoveSegmentTo" />
+              </items>
+            </ContextMenu>
+          </contextMenu>
           <VBox.margin>
             <Insets left="2.0" top="2.0" />
           </VBox.margin>

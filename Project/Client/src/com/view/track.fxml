@@ -25,7 +25,11 @@
                 <Font size="12.0" />
               </font>
             </Label>
-            <CheckBox fx:id="trackActivated" layoutX="7.0" layoutY="28.0" mnemonicParsing="false" text="" />
+            <ImageView id="instrumentIcon" fitHeight="21.0" fitWidth="21.0" layoutX="9.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="true">
+              <image>
+                <Image url="@../icons/PNG/16px/volume-medium.png" />
+              </image>
+            </ImageView>
           </children>
         </AnchorPane>
         <Separator orientation="VERTICAL" prefHeight="200.0" />

@@ -59,7 +59,7 @@ public class Controller {
     @FXML
     private TextField textFieldSearch;
     @FXML
-    private VBox composeAreaVBox;
+    private static VBox composeAreaVBox;
     @FXML
     private Button btnNewTrack;
     @FXML
@@ -110,6 +110,8 @@ public class Controller {
     private Slider sliderBPM;
     @FXML
     private Label labelBPM;
+    @FXML
+    private ComboBox comboBoxSortedBy;
 
     private Transition timelineTransition;
     private Rectangle timeline;
@@ -160,7 +162,7 @@ public class Controller {
         setupDragAndDropTracksArea();
     }
 
-    public VBox getComposeAreaVBox() {
+    public static VBox getComposeAreaVBox() {
         return composeAreaVBox;
     }
 

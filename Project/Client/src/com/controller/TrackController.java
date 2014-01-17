@@ -48,7 +48,7 @@ public class TrackController extends HBox {
     private Image instrumentImage;
 
     private StringProperty name = new SimpleStringProperty();
-    private ObjectProperty<Instrument> instrument = new SimpleObjectProperty<Instrument>();
+
 
     public StringProperty nameProperty() {
         return name;
@@ -61,6 +61,8 @@ public class TrackController extends HBox {
     public void setName(String name) {
         this.name.set(name);
     }
+
+    private ObjectProperty<Instrument> instrument = new SimpleObjectProperty<Instrument>();
 
     public ObjectProperty instrumentProperty() {
         return instrument;

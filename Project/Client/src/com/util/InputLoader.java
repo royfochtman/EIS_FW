@@ -138,6 +138,7 @@ public class InputLoader {
                             while(running) {
                                 int count = lineIn.read(buffer, 0, buffer.length);
                                 if (count > 0) {
+                                    //Hier evtl multithreading!!!! könnte das problem der Latenz lösen
                                     out.write(buffer, 0, count);
                                     lineOut.write(buffer, 0, count);
                                 }

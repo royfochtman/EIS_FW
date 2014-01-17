@@ -1,14 +1,19 @@
 package com.controller;
 
+import com.Main;
 import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.InsetsBuilder;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -16,8 +21,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayerBuilder;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -38,6 +46,8 @@ public class MusicSegmentController extends AnchorPane {
     Button btnStopMusicSegment;
     @FXML
     Button btnDeleteMusicSegment;
+    /*@FXML
+    MenuItem menuItemMoveSegmentTo;        */
 
     private MediaPlayer mediaPlayer;
     private Rectangle dragRectangle;
@@ -147,5 +157,32 @@ public class MusicSegmentController extends AnchorPane {
 
     public AnchorPane getController() {
         return this;
+    }
+
+    public void handleMoveSegmentTo(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/moveSegmentPopup.fxml"));
+            AnchorPane pane = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Move selected segment to track");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(Main.primaryStage);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+
+            MoveSegmentPopupController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+
+            dialogStage.showAndWait();
+
+            if(controller.isOkClicked()) {
+                //update view in track
+                int beat = controller.getBeat();
+                String track = controller.getTrack();
+                System.out.println("Segment will be moved.");
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
