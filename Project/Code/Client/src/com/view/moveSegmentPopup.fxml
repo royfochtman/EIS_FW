@@ -35,9 +35,6 @@
         <ChoiceBox id="choiceBoxInstrument" fx:id="choiceBoxTrack" prefWidth="197.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Item 1" />
-                    <String fx:value="Item 2" />
-                    <String fx:value="Item 3" />
                 </FXCollections>
             </items>
         </ChoiceBox>

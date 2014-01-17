@@ -1,12 +1,20 @@
 package com.controller;
 
+import com.Main;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -24,15 +32,28 @@ public class MoveSegmentPopupController {
     private boolean okClicked = false;
 
     public int getBeat() {
-        return Integer.getInteger(textFieldBeat.getText());
+        return Integer.valueOf(textFieldBeat.getText());
     }
 
     public String getTrack() {
-        return new String();
+        return choiceBoxTrack.getSelectionModel().getSelectedItem().toString();
     }
 
     @FXML
     private void initialize() {
+        textFieldBeat.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent t) {
+                char ar[] = t.getCharacter().toCharArray();
+                char ch = ar[t.getCharacter().toCharArray().length - 1];
+                if (!(ch >= '0' && ch <= '9')) {
+                    System.out.println("The char you entered is not a number");
+                    createWarningPopup("Just numbers are accepted", "The char you entered is not a number");
+                    t.consume();
+                }
+            }
+        });
+
         ObservableList<Node> tracksList = Controller.getComposeAreaVBox().getChildren();
         ObservableList<Object> observableTracksList = observableArrayList();
         if(!tracksList.isEmpty()) {
@@ -42,7 +63,7 @@ public class MoveSegmentPopupController {
                 System.out.println(name);
                 observableTracksList.add(name);
             }
-            choiceBoxTrack.setItems(tracksList);
+            choiceBoxTrack.setItems(observableTracksList);
         }
     }
 
@@ -90,4 +111,26 @@ public class MoveSegmentPopupController {
         return ((textFieldBeat.getText() != null) && (choiceBoxTrack.getSelectionModel().getSelectedItem() != null));
     }
 
+    public void createWarningPopup(String popupTitle, String warningText) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/view/warningPopup.fxml"));
+            AnchorPane pane = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle(popupTitle);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(Main.primaryStage);
+            dialogStage.setResizable(false);
+            Scene scene = new Scene(pane);
+            dialogStage.setScene(scene);
+
+            WarningPopupController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setText(warningText);
+
+            dialogStage.showAndWait();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }
