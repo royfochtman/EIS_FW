@@ -149,7 +149,7 @@ public class TrackController extends HBox {
                     .width(8).height(55)
                     .fill(Color.web(color))
                     .strokeWidth(1).stroke(Color.BLACK).strokeType(StrokeType.INSIDE)
-                    .id(getName().get() + String.valueOf(i))
+                    .id(getName().get() + String.valueOf(i+1))
                     .build();
 
             /*Source from Drag & Drop*/

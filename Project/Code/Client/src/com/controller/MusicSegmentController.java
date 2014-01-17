@@ -2,12 +2,15 @@ package com.controller;
 
 import com.Main;
 import javafx.animation.FadeTransition;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.InsetsBuilder;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +24,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayerBuilder;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.RectangleBuilder;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -52,8 +56,11 @@ public class MusicSegmentController extends AnchorPane {
     private MediaPlayer mediaPlayer;
     private Rectangle dragRectangle;
     private String audioPath;
+    private static String name;
+    private float length;
+    private double width;
 
-    public MusicSegmentController(String name, float length, double width, String audioPath) {
+    public MusicSegmentController(final String name, float length, double width, String audioPath) {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 getClass().getResource("/com/view/musicSegment.fxml"));
         fxmlLoader.setRoot(this);
@@ -63,6 +70,9 @@ public class MusicSegmentController extends AnchorPane {
         this.setPadding(InsetsBuilder.create().left(10).top(10).build());
 
         this.audioPath = audioPath;
+        this.name = name;
+        this.length = length;
+        this.width = width;
 
         try {
             fxmlLoader.load();
@@ -129,7 +139,6 @@ public class MusicSegmentController extends AnchorPane {
         btnPlayMusicSegment.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Play");
                 mediaPlayer.play();
             }
         });
@@ -137,7 +146,6 @@ public class MusicSegmentController extends AnchorPane {
         btnStopMusicSegment.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Stop");
                 mediaPlayer.pause();
             }
         });
@@ -145,7 +153,8 @@ public class MusicSegmentController extends AnchorPane {
         btnDeleteMusicSegment.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                System.out.println("Delete");
+                //Group group = (Group) getController().getParent();
+                //group.getChildren().remove(getController());
                 if (Controller.getTracksArea().getChildren().remove(getController())) {
                     System.out.println("Music segment deleted");
                 } else {
@@ -176,10 +185,19 @@ public class MusicSegmentController extends AnchorPane {
             dialogStage.showAndWait();
 
             if(controller.isOkClicked()) {
-                //update view in track
                 int beat = controller.getBeat();
-                String track = controller.getTrack();
-                System.out.println("Segment will be moved.");
+                String trackName = controller.getTrack();
+                ObservableList<Node> tracksList = Controller.getComposeAreaVBox().getChildren();
+                for(int i = 0; i < tracksList.size(); i++) {
+                    TrackController track = (TrackController) tracksList.get(i);
+                    if(track.nameProperty().getValue().equals(trackName)) {
+                        Rectangle rectangle = (Rectangle) track.getTrackBeats().getChildren().get(beat-1);
+                        MusicSegmentController newSegment = new MusicSegmentController(this.name, this.length, this.width, this.audioPath);
+                        newSegment.setLayoutX(rectangle.getLayoutX());
+                        newSegment.setLayoutY(i * 55 + 6);
+                        Controller.anchorPaneComposition.getChildren().add(newSegment);
+                    }
+                }
             }
         } catch (IOException ex) {
             ex.printStackTrace();
