@@ -4,11 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 /**
- * Created with IntelliJ IDEA.
- * User: David
- * Date: 29.11.13
- * Time: 16:22
- * To change this template use File | Settings | File Templates.
+ * @author David Wachs
  */
 public abstract class ByteHelper {
 
