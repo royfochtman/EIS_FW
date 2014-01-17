@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="musicbox-database-entities">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/musicbox-database-entities.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
