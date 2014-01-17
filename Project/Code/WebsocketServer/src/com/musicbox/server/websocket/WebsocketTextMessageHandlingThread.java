@@ -28,12 +28,12 @@ public class WebsocketTextMessageHandlingThread implements Runnable {
                     if(members != null){
                         for(Session s : members.values()){
                             if(s.isOpen())
-                                s.getBasicRemote().sendObject(websocketTextMessage);
+                                s.getBasicRemote().sendText(websocketTextMessage.toString());
                         }
                     }
                     break;
             }
-        }catch(IOException | EncodeException ex) {
+        }catch(IOException ex) {
             ex.printStackTrace();
         }
     }

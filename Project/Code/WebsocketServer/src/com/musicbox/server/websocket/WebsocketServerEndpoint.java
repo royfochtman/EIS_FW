@@ -44,7 +44,8 @@ public class WebsocketServerEndpoint{
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig endpointConfig) {
-        //logger???
+        String test = "";
+
     }
 
     @OnClose
@@ -59,7 +60,8 @@ public class WebsocketServerEndpoint{
     }
 
     @OnMessage
-    public void onMessage(WebsocketTextMessage websocketTextMessage, Session session) {
+    public void onMessage(String websocketTextMessageString, Session session) {
+        WebsocketTextMessage websocketTextMessage = WebsocketTextMessage.fromString(websocketTextMessageString);
         new WebsocketTextMessageHandlingThread(musicRoomSessionContainer, websocketTextMessage).run();
     }
 

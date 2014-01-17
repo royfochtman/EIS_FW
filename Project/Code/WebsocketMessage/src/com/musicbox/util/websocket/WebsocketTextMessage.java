@@ -25,16 +25,27 @@ public class WebsocketTextMessage implements Serializable {
      */
     private String textMessage;
 
+    private String username;
+
     public WebsocketTextMessage() {
         musicRoomName = "";
         textMessageType = WebsocketTextMessageType.CHAT;
         textMessage = "";
+        username = "";
+    }
+
+    public WebsocketTextMessage(String musicRoomName, WebsocketTextMessageType type, String textMessage, String username) {
+        textMessageType = type;
+        setMusicRoomName(musicRoomName);
+        setTextMessage(textMessage);
+        setUsername(username);
     }
 
     public WebsocketTextMessage(String musicRoomName, WebsocketTextMessageType type, String textMessage) {
         textMessageType = type;
         setMusicRoomName(musicRoomName);
         setTextMessage(textMessage);
+        setUsername("");
     }
 
     public String getMusicRoomName() {
@@ -76,7 +87,8 @@ public class WebsocketTextMessage implements Serializable {
         WebsocketTextMessage websocketTextMessage = (WebsocketTextMessage) obj;
 
         return musicRoomName != null && musicRoomName.equals(websocketTextMessage.getMusicRoomName())
-                && textMessage != null && textMessage.equals(websocketTextMessage.getTextMessage());
+                && textMessage != null && textMessage.equals(websocketTextMessage.getTextMessage())
+                && username != null && username.equals(websocketTextMessage.getUsername());
     }
 
     @Override
@@ -84,12 +96,13 @@ public class WebsocketTextMessage implements Serializable {
         int result = musicRoomName != null ? musicRoomName.hashCode() : 0;
         result = 31 * result + (textMessageType != null ? textMessageType.hashCode() : 0);
         result = 31 * result + (textMessage != null ? textMessage.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString(){
-        return musicRoomName + "," + textMessageType.toString() + "," + textMessage;
+        return musicRoomName + "," + textMessageType.toString() + "," + textMessage + "," + username;
     }
 
     /**
@@ -103,8 +116,19 @@ public class WebsocketTextMessage implements Serializable {
 
         String[] data = textMessageString.split(",");
         WebsocketTextMessage message = null;
-        if(data.length == 3)
-              message = new WebsocketTextMessage(data[0], WebsocketTextMessageType.fromString(data[1]), data[2]);
+        if(data.length == 4)
+              message = new WebsocketTextMessage(data[0], WebsocketTextMessageType.fromString(data[1]), data[2], data[3]);
         return message;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        if(username == null)
+            this.username = "";
+        else
+            this.username = username;
     }
 }

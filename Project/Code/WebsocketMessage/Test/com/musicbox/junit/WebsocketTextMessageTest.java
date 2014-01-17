@@ -18,7 +18,7 @@ public class WebsocketTextMessageTest {
 
     @Test
     public void testFromString() throws Exception {
-        WebsocketTextMessage websocketTextMessage = new WebsocketTextMessage("Test", WebsocketTextMessageType.CHAT, "dfvwefe");
+        WebsocketTextMessage websocketTextMessage = new WebsocketTextMessage("Test", WebsocketTextMessageType.CHAT, "dfvwefe", "efe");
         String string = websocketTextMessage.toString();
         WebsocketTextMessage message = WebsocketTextMessage.fromString(string);
         assertTrue(message.equals(websocketTextMessage));

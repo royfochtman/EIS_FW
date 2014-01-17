@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<musicBox>
+    <websocket-server>ws://localhost:8080/websocket-app/websocketEndpoint</websocket-server>
+    <streaming-server>http://localhost:8083/streaming-app/streaming</streaming-server>
+</musicBox>
+

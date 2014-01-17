@@ -27,16 +27,26 @@ public class WebsocketMessage implements Serializable {
      */
     private ArrayList<GlobalObject> data;
 
+    private String username;
+
     /**
      * Constructor
      * @param musicRoomName name of users music-room
      * @param messageType type of the message, e.g. WebsocketMessageType.JOIN_MUSIC_ROOM to join music room with the given name in parameter musicRoomName
      * @param data data to send of type GlobalObject. Could be MusicRoom-, MusicSegment-, Track-, Variation-, VariationTrack- or MusicRoomDataContainer-instances
      */
+    public WebsocketMessage(final String musicRoomName, WebsocketMessageType messageType, ArrayList<GlobalObject> data, String username) {
+        this.musicRoomName = musicRoomName;
+        this.messageType = messageType;
+        this.data = data;
+        this.username = username;
+    }
+
     public WebsocketMessage(final String musicRoomName, WebsocketMessageType messageType, ArrayList<GlobalObject> data) {
         this.musicRoomName = musicRoomName;
         this.messageType = messageType;
         this.data = data;
+        this.username = "";
     }
 
     public String getMusicRoomName() {
@@ -72,7 +82,8 @@ public class WebsocketMessage implements Serializable {
 
         return musicRoomName != null && musicRoomName.equals(websocketMessage.getMusicRoomName())
                 && messageType != null && messageType.equals(websocketMessage.getMessageType())
-                && data != null && data.equals(websocketMessage.getData());
+                && data != null && data.equals(websocketMessage.getData())
+                && username != null && username.equals(websocketMessage.getData());
     }
 
     @Override
@@ -80,6 +91,18 @@ public class WebsocketMessage implements Serializable {
         int result = musicRoomName != null ? musicRoomName.hashCode() : 0;
         result = 31 * result + (messageType != null ? messageType.hashCode() : 0);
         result = 31 * result + (data != null ? data.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        if(username == null)
+            this.username = "";
+        else
+            this.username = username;
     }
 }

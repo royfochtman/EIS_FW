@@ -8,6 +8,7 @@ import com.musicbox.util.Instrument;
 import com.musicbox.util.WorkingAreaType;
 import com.musicbox.util.database.entities.MusicRoom;
 import com.musicbox.util.database.entities.WorkingArea;
+import com.musicbox.util.websocket.WebsocketMessageType;
 import com.util.InputDevice;
 import com.util.InputLoader;
 import javafx.animation.Interpolator;
@@ -663,6 +664,7 @@ public class Controller {
                 && (choiceBoxInputDevice.getSelectionModel().getSelectedItem() != null)
                 && (choiceBoxInstrument.getSelectionModel().getSelectedItem() != null)) {
 
+            Main.username = labelUserName.getText();
             paneNewSession.setVisible(true);
             paneLogin.setVisible(false);
             paneNewSession.toFront();
@@ -689,6 +691,8 @@ public class Controller {
      */
     public void handleCreateSession(ActionEvent actionEvent) {
         if ((!textFieldRoomName.getText().isEmpty()) && (!textFieldLength.getText().isEmpty())) {
+            MusicRoom musicRoom = new MusicRoom(1, textFieldRoomName.getText());
+            Main.sendObjectMessage(musicRoom, WebsocketMessageType.NEW_MUSIC_ROOM);
             stackPaneLogin.toBack();
             stackPaneLogin.setVisible(false);
             textFieldTempo.setText(labelBPM.getText());

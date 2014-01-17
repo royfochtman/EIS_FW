@@ -1,11 +1,14 @@
 package com;
 
+import com.controller.WarningPopupController;
 import com.musicbox.util.globalobject.GlobalObject;
 import com.musicbox.util.websocket.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.websocket.*;
@@ -15,21 +18,29 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
+import javafx.stage.StageStyle;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.XMLOutputter;
+import jfx.messagebox.MessageBox;
 
 @ClientEndpoint(encoders = {WebsocketMessageEncoder.class, WebsocketTextMessageEncoder.class},
         decoders = {WebsocketMessageDecoder.class, WebsocketTextMessageDecoder.class})
 public class Main extends Application {
-    private String streamingServerURLString; // entweder fest definieren oder beim starten des Clients auslesen
-    private String websocketServerURIString; // muss hier fest definiert werden oder beim starten ausgelesen werden
+    private static String streamingServerURLString; // entweder fest definieren oder beim starten des Clients auslesen
+    private static String websocketServerURIString; // muss hier fest definiert werden oder beim starten ausgelesen werden
     private String audioFilePath; // Pfad in dem die Audiodateien gespeichert werden => Cache
-    private String roomName; // Der Name des MusikRooms in dem sich der Client befindet
-    private Session session; //Wird mit der Methode connectToWebsocketServer() gesetzt
-
+    private static String roomName; // Der Name des MusikRooms in dem sich der Client befindet
+    private static Session session; //Wird mit der Methode connectToWebsocketServer() gesetzt
+    public static String username;
     public static Stage primaryStage;
 
     @OnOpen
@@ -54,6 +65,7 @@ public class Main extends Application {
                  * Music Room erfolgreich erstellt, dann weitere verwarbeitung hier
                  * Die Variable roomName muss hier auf den Namen des MusicRooms der erstellt wurde gesetzt werden.
                  */
+                MessageBox.show(primaryStage, "Session created!", "Information", MessageBox.ICON_INFORMATION | MessageBox.OK);
                 break;
             case JOIN_MUSIC_ROOM:
                 /**
@@ -81,8 +93,9 @@ public class Main extends Application {
     }
 
     @OnMessage
-    public void onMessage(WebsocketTextMessage websocketChatMessage, Session session) {
-        switch (websocketChatMessage.getTextMessageType()){
+    public void onMessage(String websocketTextMessageString, Session session) {
+        WebsocketTextMessage websocketTextMessage = WebsocketTextMessage.fromString(websocketTextMessageString);
+        switch (websocketTextMessage.getTextMessageType()){
             case CHAT:
                 /**
                  * Hier Inhalt der Chat-Nachricht im Chat-Fenster darstellen
@@ -92,6 +105,7 @@ public class Main extends Application {
                 /**
                  * Hier Error-Nachricht verarbeiten
                  */
+                MessageBox.show(primaryStage, websocketTextMessage.getTextMessage(), "Error!", MessageBox.ICON_INFORMATION | MessageBox.OK );
                 break;
         }
 
@@ -168,10 +182,10 @@ public class Main extends Application {
         try{
             if(roomName != null)
             {
-                WebsocketTextMessage chatMessage = new WebsocketTextMessage(roomName, WebsocketTextMessageType.CHAT, message);
-                session.getBasicRemote().sendObject(chatMessage);
+                WebsocketTextMessage chatMessage = new WebsocketTextMessage(roomName, WebsocketTextMessageType.CHAT, message, this.username);
+                session.getBasicRemote().sendText(chatMessage.toString());
             }
-        }catch(IOException | EncodeException ex) {
+        }catch(IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -181,10 +195,12 @@ public class Main extends Application {
      * @param globalObject kann ein DatabaseEntity-Object sein
      * @param type MessageType (z.B. ELEMENT_CREATED)
      */
-    public void sendObjectMessage(GlobalObject globalObject, WebsocketMessageType type) {
+    public static void sendObjectMessage(GlobalObject globalObject, WebsocketMessageType type) {
         ArrayList<GlobalObject> data = new ArrayList<>();
         data.add(globalObject);
-        WebsocketMessage websocketMessage = new WebsocketMessage(roomName, type, data);
+        if(roomName == null)
+            roomName = "";
+        WebsocketMessage websocketMessage = new WebsocketMessage(roomName, type, data, username);
         try {
             session.getBasicRemote().sendObject(websocketMessage);
         } catch (IOException e) {
@@ -198,15 +214,14 @@ public class Main extends Application {
      * Baut eine Verbindung zum WebsocketServer auf
      * Muss beim Starten des Clients aufgerufen werden
      */
-    private void connectToWebsocketServer() {
-        try
-        {
+    private static boolean connectToWebsocketServer() {
+        try{
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             session = container.connectToServer(Main.class, new URI(websocketServerURIString));
-        }
-        catch(DeploymentException | IOException | URISyntaxException e)
-        {
+            return session.isOpen();
+        } catch(DeploymentException | IOException | URISyntaxException e){
             e.printStackTrace();
+            return false;
         }
 
     }
@@ -226,21 +241,60 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("view/client_ui.fxml"));
-        primaryStage.setTitle("Client UI");
-        primaryStage.setScene(new Scene(root, 1300, 700));
-        primaryStage.setMinWidth(1300);
-        primaryStage.setMinHeight(600);
-        primaryStage.centerOnScreen();
-        primaryStage.show();
+        if(session != null && session.isOpen()) {
+            MessageBox.show(primaryStage, "Connected to server!!", "Information", MessageBox.ICON_INFORMATION | MessageBox.OK);
+            Parent root = FXMLLoader.load(getClass().getResource("view/client_ui.fxml"));
+            primaryStage.setTitle("Client UI");
+            primaryStage.setScene(new Scene(root, 1300, 700));
+            primaryStage.setMinWidth(1300);
+            primaryStage.setMinHeight(600);
+            primaryStage.centerOnScreen();
+            primaryStage.show();
 
-        this.primaryStage = primaryStage;
-
+            this.primaryStage = primaryStage;
+        }
+        else
+            MessageBox.show(primaryStage, "Cannot connect to server! Please check config.xml for correct configuration", "Connection Error", MessageBox.ICON_ERROR | MessageBox.OK);
     }
 
 
     public static void main(String[] args) {
-        launch(args);
+        if(readConfig())
+            connectToWebsocketServer();
 
+        launch(args);
+    }
+
+    private static boolean readConfig() {
+        String  projectPath = null;
+        try {
+            projectPath = new File(".").getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        File configFile = new File(projectPath + "/config/config.xml");
+        Document doc;
+        if(configFile.exists()) {
+            try {
+                // Das Dokument erstellen
+                SAXBuilder builder = new SAXBuilder();
+                doc = builder.build(configFile);
+                XMLOutputter fmt = new XMLOutputter();
+
+                Element element = doc.getRootElement();
+
+                List children = (List) element.getChildren();
+                streamingServerURLString = ((Element) children.get(1)).getValue();
+                websocketServerURIString = ((Element) children.get(0)).getValue();
+                return !websocketServerURIString.isEmpty() && !streamingServerURLString.isEmpty();
+            } catch (JDOMException e) {
+                e.printStackTrace();
+                return false;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
     }
 }

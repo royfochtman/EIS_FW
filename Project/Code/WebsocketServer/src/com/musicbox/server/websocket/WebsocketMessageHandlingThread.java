@@ -35,12 +35,12 @@ public class WebsocketMessageHandlingThread implements Runnable {
             switch ( websocketMessage.getMessageType()){
                 case NEW_MUSIC_ROOM:
                     MusicRoom musicRoom = (MusicRoom)data.get(0);
-                    if(data != null && !data.isEmpty() && DatabaseManager.insertMusicRoom((MusicRoom) data.get(0))) {
+                    if(data != null && !data.isEmpty() && DatabaseManager.insertMusicRoom((MusicRoom)data.get(0))) {
                         musicRoomSessionContainer.putMusicRoomSession(musicRoom.getName(), session);
                         session.getBasicRemote().sendObject(new WebsocketMessage(musicRoom.getName(), WebsocketMessageType.NEW_MUSIC_ROOM, data));
                     }
                     else
-                        session.getBasicRemote().sendObject(new WebsocketTextMessage(musicRoom.getName(), WebsocketTextMessageType.ERROR, WebsocketServerEndpoint.ERROR_CREATE_ROOM));
+                        session.getBasicRemote().sendText(new WebsocketTextMessage(musicRoom.getName(), WebsocketTextMessageType.ERROR, WebsocketServerEndpoint.ERROR_CREATE_ROOM).toString());
                     break;
                 case JOIN_MUSIC_ROOM:
                     if(musicRoomSessionContainer.putNewMemberInSession(websocketMessage.getMusicRoomName(), session)) {
