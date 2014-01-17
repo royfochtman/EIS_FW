@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.controller.WarningPopupController">
+  <children>
+    <Label fx:id="labelWarning" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="252.0" text="Label">
+      <font>
+        <Font size="14.0" />
+      </font>
+    </Label>
+    <Button id="button" fx:id="buttonOkWarningPopup" layoutX="216.0" layoutY="60.0" minWidth="50.0" mnemonicParsing="false" onAction="#handleOkWarningPopup" text="Ok" />
+  </children>
+  <stylesheets>
+    <URL value="@../css/layoutstyles.css" />
+  </stylesheets>
+</AnchorPane>
