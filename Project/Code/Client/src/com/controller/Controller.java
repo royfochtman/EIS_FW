@@ -106,7 +106,7 @@ public class Controller {
     @FXML
     private StackPane stackPaneComposition;
     @FXML
-    private AnchorPane anchorPaneComposition;
+    public static AnchorPane anchorPaneComposition;
     @FXML
     private Slider sliderBPM;
     @FXML

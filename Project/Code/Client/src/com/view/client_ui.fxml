@@ -1378,7 +1378,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="How should I use this shit?" />
+                    <MenuItem mnemonicParsing="false" text="How should I use this program?" />
                     <SeparatorMenuItem mnemonicParsing="false" />
                     <MenuItem mnemonicParsing="false" text="About MusicBox" />
                   </items>
